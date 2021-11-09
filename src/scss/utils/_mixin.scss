@@ -1,0 +1,102 @@
+@use 'sass:math';
+@use './unit' as *;
+@use './media-query' as *;
+
+// 고해상도 배경이미지 처리
+@mixin bgRetina($file, $type, $width, $height) {
+  background-image: url('./../assets/images/' + $file + '.' + $type);
+  background-repeat: no-repeat;
+
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 144dpi) {
+    & {
+      background-image: url('./../assets/images/' + $file + '@2x.' + #{$type});
+      background-size: $width $height;
+    }
+  }
+}
+
+// Float 해제를 위한 clear 스타일
+@mixin clearFix {
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+
+// Auto Margin을 활용한 박스 가운데 정렬
+@mixin autoMargin($marginX: auto) {
+  margin-left: $marginX;
+  margin-right: $marginX;
+}
+
+// 요소 박스의 가로 크기를 뷰포트 기준 100vw로 설정
+@mixin boxSizeFull($width: 100vw) {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  margin-left: -50vw;
+  @content;
+}
+
+// 요소 박스의 최대 크기 설정
+@mixin boxSizeMax($width: 1000px, $paddingX: 0) {
+  max-width: $width;
+  padding-left: $paddingX;
+  padding-right: $paddingX;
+  @include autoMargin();
+  @content;
+}
+
+// 반응형 미디어
+@mixin responsive($width: max-width) {
+  #{$width}: 100%;
+  height: auto;
+}
+
+// 텍스트 ellipsis
+@mixin ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@mixin multiEllipsis($line-number) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line-number;
+  line-height: 1.5em;
+  max-height: $line-number * 1.5em;
+}
+
+// 반응형 iframe
+@mixin responsiveIframe($ratio-width, $ratio-height) {
+  position: relative;
+  width: 100%;
+  height: 0 !important;
+  padding-top: math.div($ratio-height, $ratio-width) * 100%;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// 헤딩 스타일
+@mixin headingStyle {
+  font-weight: 700;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  word-break: keep-all;
+  @include desktop {
+    font-size: rem(50px);
+  }
+  @include mobile {
+    font-size: rem(32px);
+  }
+}
