@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 
 const comment = require('./models/Comment');
 const user = require('./models/User');
@@ -8,7 +9,7 @@ const review = require('./models/Review');
 
 const app = express();
 
-app.use(express.static('src'));
+app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -36,6 +37,11 @@ app.get('/comments/:id', (req, res) => {});
 app.post('/comments/:id', (req, res) => {});
 app.put('/comments/:id', (req, res) => {});
 app.delete('/comments/:id', (req, res) => {});
+
+// ROUTER
+app.get('/mypage', (req, res) => {
+  res.sendFile(path.join(__dirname, '/../../template/mypage.html'));
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server listening at http://localhost:${PORT}`));
