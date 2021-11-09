@@ -59,9 +59,9 @@ module.exports = {
     open: true,
     port: 'auto',
     proxy: {
-      '/todos': {
-        target: 'http://localhost:3000/todos',
-        pathRewrite: { '^/todos': '' },
+      '/': {
+        target: 'http://localhost:3000/',
+        pathRewrite: { '^/': '/' },
       },
     },
   },
