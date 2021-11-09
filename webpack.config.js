@@ -1,9 +1,15 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: { app: './src/js/frontend/app.js' },
+  entry: {
+    style: './src/js/frontend/style.js',
+    main: './src/js/frontend/main.js',
+    mypage: './src/js/frontend/mypage.js',
+    reviewDetail: './src/js/frontend/reviewDetail.js',
+  },
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: 'js/[name].bundle.js',
@@ -11,8 +17,27 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'src/template/index.html',
+      chunks: ['style', 'main'],
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'mypage.html',
+      template: 'src/template/mypage.html',
+      chunks: ['style', 'mypage'],
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'reviewDetail.html',
+      template: 'src/template/reviewDetail.html',
+      chunks: ['style', 'reviewDetail'],
     }),
     new MiniCssExtractPlugin({ filename: 'css/style.css' }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.join(__dirname, 'src/images'),
+          to: path.join(__dirname, `public/images`),
+        },
+      ],
+    }),
   ],
   module: {
     rules: [
@@ -50,9 +75,9 @@ module.exports = {
     open: true,
     port: 'auto',
     proxy: {
-      '/todos': {
-        target: 'http://localhost:3000/todos',
-        pathRewrite: { '^/todos': '' },
+      '/': {
+        target: 'http://localhost:3000/',
+        pathRewrite: { '^/': '' },
       },
     },
   },
