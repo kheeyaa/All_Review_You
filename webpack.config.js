@@ -4,7 +4,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: { app: './src/js/frontend/app.js' },
+  entry: {
+    app: './src/js/frontend/app.js',
+    main: './src/js/frontend/main.js',
+    mypage: './src/js/frontend/mypage.js',
+    reviewDetail: './src/js/frontend/reviewDetail.js',
+  },
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: 'js/[name].bundle.js',
@@ -12,6 +17,17 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'src/template/index.html',
+      chunks: ['app', 'main'],
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'mypage.html',
+      template: 'src/template/mypage.html',
+      chunks: ['app', 'mypage'],
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'reviewDetail.html',
+      template: 'src/template/reviewDetail.html',
+      chunks: ['app', 'reviewDetail'],
     }),
     new MiniCssExtractPlugin({ filename: 'css/style.css' }),
     new CopyPlugin({
@@ -59,9 +75,9 @@ module.exports = {
     open: true,
     port: 'auto',
     proxy: {
-      '/todos': {
-        target: 'http://localhost:3000/todos',
-        pathRewrite: { '^/todos': '' },
+      '/': {
+        target: 'http://localhost:3000/',
+        pathRewrite: { '^/': '' },
       },
     },
   },
