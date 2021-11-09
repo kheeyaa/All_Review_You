@@ -1,5 +1,10 @@
 @use 'sass:math';
 
+// @include boxShadow; => 사용시
+@mixin boxShadow {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.11);
+}
+
 // 미디어 쿼리 중단점 (Breakpoints) --------------------------------------------------------------- /
 $break: 768px;
 
@@ -40,4 +45,37 @@ $rootUnit: 16px !default;
   justify-content: $justify-content;
   align-items: $align-items;
   flex-wrap: $flex-wrap;
+}
+
+// ---------------------------------------------------------------- /
+// Auto Margin을 활용한 박스 가운데 정렬
+@mixin autoMargin($marginX: auto) {
+  margin-left: $marginX;
+  margin-right: $marginX;
+}
+
+// 요소 박스의 최대 크기 설정
+@mixin boxSizeMax($width: 1000px, $paddingX: 0) {
+  max-width: $width;
+  padding-left: $paddingX;
+  padding-right: $paddingX;
+  @include autoMargin();
+  @content;
+}
+
+// 텍스트 ellipsis
+@mixin ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@mixin multiEllipsis($line-number) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line-number;
+  line-height: 1.5em;
+  max-height: $line-number * 1.5em;
 }
