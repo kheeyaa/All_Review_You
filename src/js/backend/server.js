@@ -2,18 +2,16 @@ require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
 
+const comment = require('./models/Comment');
+const user = require('./models/User');
+const review = require('./models/Review');
+
 const app = express();
 
-app.use(express.static('public'));
+app.use(express.static('src'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
-// MOCK DB
-const Users = [];
-const Posts = [];
-const Reviews = [];
-const Comments = [];
 
 // AUTH
 app.post('/auth/signin', (req, res) => {});
