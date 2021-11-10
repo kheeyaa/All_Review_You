@@ -8,7 +8,15 @@ reviewRouter.get('/', (req, res) => {});
 
 // reviews/mine/ -> GET 내가 쓴 리뷰
 reviewRouter.get('/mine/:id', (req, res) => {
-  res.send(Reviews.state.filter(({ userId }) => userId === req.params.id));
+  res.send(
+    Reviews.state
+      .filter(({ userId }) => userId === req.params.id)
+      .map(({ content, photos }, i, reviews) => ({
+        ...reviews[i],
+        content: content.slice(0, 50),
+        photos: photos.slice(0, 1),
+      }))
+  );
 });
 
 // reviews/review/id -> GET 특정 리뷰 for reviewDetail Page
