@@ -1,6 +1,6 @@
 @use '../base/' as *;
 
-.review-column {
+.review-row {
   @include desktop {
     padding-right: rem(20px);
     width: 80%;
@@ -48,7 +48,7 @@
   }
 }
 
-.review-row {
+.review-column {
   width: 100%;
   .review {
     &__list {
