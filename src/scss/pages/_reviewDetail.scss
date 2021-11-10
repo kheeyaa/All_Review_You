@@ -2,24 +2,49 @@
 
 .reviewDetail {
   @include boxSizeMax(1000px);
-  background-color: white;
-  @include boxShadow();
-  padding: rem(40px);
+  padding: rem(10px);
+  // background-color: $white;
+
+  &__contentWrap {
+    border-radius: rem(10px);
+    padding: rem(40px);
+    @include boxShadow();
+  }
 
   &__title {
     font-size: rem(60px);
     font-weight: bold;
     padding: rem(20px) 0;
+
+    @include mobile {
+      font-size: rem(38px);
+    }
   }
 
   &__header {
     border-bottom: 1px solid $gray3;
+    padding-bottom: rem(20px);
+    @include mobile {
+      padding-bottom: 0;
+    }
   }
 
   // header inform wrap
   &__informWrap {
     display: flex;
     justify-content: space-between;
+
+    @include mobile {
+      flex-flow: column;
+    }
+  }
+  @include mobile {
+    &__inform:after {
+      display: block;
+      content: '';
+      width: 100%;
+      border-bottom: 1px solid $gray3;
+    }
   }
 
   // header inform (left)
@@ -27,8 +52,12 @@
     &--userid {
       font-size: rem(20px);
       font-weight: bold;
-      padding: rem(10px) 0;
+      padding: 0 0 rem(10px) 0;
       display: inline-block;
+
+      @include mobile {
+        font-size: rem(16px);
+      }
     }
     &--beforeDay:before {
       content: '-';
@@ -37,9 +66,12 @@
     &--beforeDay {
       font-size: rem(16px);
       color: $gray1;
+      // @include mobile {
+      //   font-size: rem(20px);
+      // }
     }
     &--tag {
-      margin: rem(20px) rem(10px);
+      margin: rem(10px) 0;
       &--text {
         display: inline-block;
         padding: rem(6px);
@@ -51,99 +83,182 @@
       // }
     }
   }
-
   // header add inform (right)
   &__addInform {
     display: flex;
+    flex-flow: column;
+
+    @include mobile {
+      flex-flow: row;
+      justify-content: space-evenly;
+    }
     &--ratingWrap {
+      padding: rem(10px) rem(15px);
       display: flex;
       flex-flow: row;
+      align-items: center;
 
-      &--ratingText {
-        //TODO: 폰트 스타일 적용
+      @include mobile {
+        padding: rem(10px);
+        flex-flow: column;
+        align-items: flex-start;
+        width: 50%;
+      }
+    }
+    &--ratingText {
+      font-size: rem(20px);
+      font-weight: bold;
+      padding-right: rem(20px);
+
+      @include mobile {
         font-size: rem(20px);
-        font-weight: bold;
+        padding: rem(10px) 0;
       }
+    }
+    &--starsWrap {
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      @include mobile {
+        flex-flow: row;
+      }
+    }
+    &--starsCount {
+      font-size: rem(16px);
+      padding-right: rem(10px);
+    }
 
-      &--starsCount {
-        font-size: rem(12px);
-      }
-
-      &--stars {
-        //TODO:별 스타일 적용
-      }
+    &--stars {
+      //TODO:별 스타일 적용
     }
 
     &--likesWrap {
+      padding: rem(10px) rem(15px);
       display: flex;
+      flex-flow: row;
 
-      &--likesText {
-        //TODO: 폰트 스타일 적용
-        font-size: rem(20px);
-        font-weight: bold;
+      @include mobile {
+        flex-flow: column;
+        align-self: flex-start;
+        width: 50%;
       }
+    }
 
-      // TODO: 강희님 하트 개수, 하트 스타일 적용
+    &--likesText {
+      font-size: rem(20px);
+      font-weight: bold;
+      padding-right: rem(50px);
+      @include mobile {
+        padding: rem(10px) 0;
+        font-size: rem(20px);
+      }
+    }
+
+    &--likesSubWrap {
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      @include mobile {
+        align-items: flex-start;
+      }
+    }
+    &--likesCount {
+      padding-right: rem(15px);
+      font-size: rem(16px);
+
+      @include mobile {
+        padding-right: rem(8px);
+      }
     }
   }
 
-  // TODO: 리뷰 디테일 (본문)
-  &__reviewDetail {
+  // 본문
+  &__content {
+    padding: rem(20px);
+    font-size: rem(20px);
+    @include mobile {
+      padding: rem(6px);
+      font-size: rem(18px);
+    }
   }
 
   // 댓글 작성하기
   &__addComments {
+    padding: rem(40px) rem(20px);
+
+    &--form {
+      text-align: center;
+    }
     &--count {
+      text-align: left;
       font-size: rem(16px);
-      margin: rem(10px);
+      margin: rem(20px) 0 rem(20px) rem(5px);
+      display: block;
     }
     &--input {
       background: white;
       border-radius: rem(10px);
       padding: rem(20px);
-      margin: rem(10px);
+      width: 98%;
+      @include boxShadow();
+    }
+    &--btnWrap {
+      text-align: right;
+    }
+    &--cancel,
+    &--confirm {
+      border-radius: rem(10px);
+      border: none;
+      padding: rem(8px) rem(16px);
+      @include boxShadow();
     }
     &--cancel {
-      background: gray1;
+      background: $gray2;
       color: white;
-      padding: rem(10px);
       margin: rem(6px);
     }
     &--confirm {
       background: black;
       color: white;
-      padding: rem(10px);
-      margin: rem(6px);
+      margin: rem(10px);
     }
   }
 
   // 댓글 리스트
   &__comments {
-    padding: rem(10px);
+    @include boxShadow();
+    border-radius: rem(10px);
+    padding: rem(20px);
+    background: $white;
     &--items {
-      padding: rem(10px);
+      padding: rem(10px) rem(10px) 0 rem(10px);
+      display: flex;
+      flex-flow: column;
     }
     &--items:after {
       display: block;
-      width: rem(400px);
-      border-bottom: 1px solid $gray2;
+      content: '';
+      width: 100%;
+      border-bottom: 1px solid $gray3;
       margin: rem(10px) 0;
     }
     &--user {
-      font-size: rem(16px);
+      font-size: rem(20px);
       font-weight: bold;
     }
     &--content {
-      font-size: rem(14px);
+      padding: rem(14px) rem(5px);
+      font-size: rem(16px);
     }
   }
 
   // TODO: 관련 있는 리뷰 : 강희님 공통 사항 적용
   &__relatedReview {
+    padding: rem(40px) rem(20px);
     &--title {
-      font-size: rem(16px);
+      font-size: rem(24px);
       text-align: center;
-      margin: rem(20px) 0;
+      margin: rem(40px) 0;
     }
   }
 }
