@@ -21,6 +21,7 @@ app.use('/auth', authRouter);
 app.use('/users', userRouter);
 app.use('/reviews', reviewRouter);
 app.use('/comments', commentRouter);
+app.use('/search', searchRouter);
 
 // ROUTER
 app.get('/mypage', (req, res) => {
