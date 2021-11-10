@@ -2,12 +2,14 @@
 @use './../components' as *;
 
 .mypage {
-  &.review {
+  &.review-column {
     @include desktop {
       padding-right: rem(20px);
       width: 80%;
     }
+  }
 
+  &.review {
     &__card {
       width: 100%;
       height: 100%;

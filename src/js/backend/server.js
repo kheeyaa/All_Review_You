@@ -6,7 +6,6 @@ const path = require('path');
 const authRouter = require('./routers/authRouter');
 const userRouter = require('./routers/userRouter');
 const reviewRouter = require('./routers/reviewRouter');
-const commentRouter = require('./routers/commentRouter');
 const searchRouter = require('./routers/searchRouter');
 
 const app = express();
@@ -19,7 +18,6 @@ app.use(cookieParser());
 app.use('/auth', authRouter);
 app.use('/users', userRouter);
 app.use('/reviews', reviewRouter);
-app.use('/comments', commentRouter);
 app.use('/search', searchRouter);
 
 // ROUTER
