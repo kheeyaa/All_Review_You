@@ -7,7 +7,12 @@ const convertTime = date => {
   return `${year}년 ${month}월 ${day}일`;
 };
 
+const renderMessage = reviewsLen => {
+  document.querySelector('.search__message').textContent = `총 ${reviewsLen}개의 리뷰를 찾았습니다.`;
+};
+
 const renderTemp = reviews => {
+  renderMessage(reviews.length);
   document.querySelector('.review__list').innerHTML = reviews
     .map(
       ({ title, content, userId, likes, createdAt }) =>
@@ -39,7 +44,11 @@ document.querySelector('.search__form').onsubmit = async e => {
   const $searchInput = e.target.querySelector('input');
 
   try {
-    const { data: reviews } = await axios.get(`/search/${$searchInput.value.trim()}`);
+    const { data: reviews } = await axios.get(`/search`, {
+      params: {
+        keyword: $searchInput.value.trim(),
+      },
+    });
     renderTemp(reviews);
   } catch (e) {
     console.error(e);
