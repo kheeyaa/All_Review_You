@@ -5,6 +5,7 @@ const User = require('../models/User');
 const { signinSchema, signupSchema } = require('../validSchema');
 
 exports.signin = async (req, res) => {
+  const backUrl = req.header('Referer').split('http://localhost:8080')[1] || '/';
   const { error } = signinSchema.validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -22,10 +23,11 @@ exports.signin = async (req, res) => {
     maxAge: 1000 * 60 * 60 * 24 * 7,
     httpOnly: true,
   });
-  res.send(user.userId);
+  res.redirect(backUrl);
 };
 
 exports.signup = async (req, res) => {
+  const backUrl = req.header('Referer').split('http://localhost:8080')[1] || '/';
   const { error } = signupSchema.validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -38,10 +40,19 @@ exports.signup = async (req, res) => {
 
   const newUser = { userId: id, password: hashedPassword, createdAt: new Date() };
   User.state = newUser;
-  res.send(newUser.userId);
+  const token = jwt.sign({ userId: id }, process.env.JWT_SECRET, {
+    expiresIn: '7d',
+  });
+  res.cookie('access_token', token, {
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+    httpOnly: true,
+  });
+  res.redirect(backUrl);
 };
 
 exports.logout = (req, res) => {
-  res.cookie('access_token');
+  const backUrl = req.header('Referer').split('http://localhost:8080')[1] || '/';
+  res.clearCookie('access_token');
   res.status(204);
+  res.redirect(backUrl);
 };

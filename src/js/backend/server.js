@@ -7,6 +7,7 @@ const authRouter = require('./routers/authRouter');
 const userRouter = require('./routers/userRouter');
 const reviewRouter = require('./routers/reviewRouter');
 const searchRouter = require('./routers/searchRouter');
+const { checkLoggedIn, jwtMiddleware } = require('./middleware.js');
 
 const app = express();
 
@@ -14,6 +15,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(jwtMiddleware);
 
 app.use('/auth', authRouter);
 app.use('/users', userRouter);

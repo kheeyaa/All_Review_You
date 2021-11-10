@@ -1,16 +1,21 @@
 @use './../base' as *;
 
 .modal-container {
-  background-color: rgba($black, 0.2);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  background-color: rgba($black, 0.4);
 }
 
 .modal {
   position: relative;
+  top: rem(150px);
+  left: 50%;
+  transform: translateX(-50%);
   border-radius: 10px;
   background-color: $white;
   &__title {
@@ -57,7 +62,7 @@
 
 .switch-auth-button {
   margin: 0 auto;
-  margin-top: rem(100px);
+  margin-top: rem(50px);
   display: block;
   padding: rem(12px) rem(24px);
   border: 1px solid $gray1;

@@ -30,6 +30,10 @@ window.addEventListener('DOMContentLoaded', async () => {
 //   }
 // };
 
+window.onpopstate = e => {
+  alert(`location: ${document.location}, state: ${JSON.stringify(e.state)}`);
+};
+
 // window.onpopstate = e => {
 //   alert(`location: ${document.location}, state: ${JSON.stringify(e.state)}`);
 // };
