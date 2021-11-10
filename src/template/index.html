@@ -157,72 +157,72 @@
           <li class="tag"><a href="" type="button">#아이폰</a></li>
         </ul>
       </aside>
-      <div class="modal-container hidden">
-        <div class="modal">
-          <div class="signup-wrapper hidden">
-            <h2 class="modal__title">회원가입</h2>
-            <form class="signup__form" action="/auth/signup" method="post">
-              <fieldset>
-                <legend class="a11y-hidden">회원가입 정보</legend>
-                <div class="input-wrapper">
-                  <label class="a11y-hidden" for="signupId">아이디</label>
-                  <input type="text" id="signupId" name="id" placeholder="아이디를 입력해주세요" />
-                  <p class="error-message hidden">로그인 실패</p>
-                </div>
-                <div class="input-wrapper">
-                  <label class="a11y-hidden" for="signupPassword">비밀번호</label>
-                  <input
-                    type="password"
-                    id="signupPassword"
-                    name="password"
-                    placeholder="비밀번호를 입력해주세요"
-                    autocomplete="on"
-                  />
-                  <p class="error-message hidden">로그인 실패</p>
-                </div>
-                <div class="input-wrapper">
-                  <label class="a11y-hidden" for="repeatPassword">비밀번호 확인</label>
-                  <input
-                    type="password"
-                    id="repeatPassword"
-                    name="repeatPassword"
-                    placeholder="비밀번호를 한번 더 입력해주세요"
-                    autocomplete="on"
-                  />
-                  <p class="error-message hidden">로그인 실패</p>
-                </div>
-                <button type="submit" class="primary-button submit-button">회원가입</button>
-              </fieldset>
-            </form>
-          </div>
-          <div class="signin-wrapper">
-            <h2 class="modal__title">로그인</h2>
-            <form class="signin__form" action="/auth/signin" method="post">
-              <fieldset>
-                <legend class="a11y-hidden">로그인 정보</legend>
-                <div class="input-wrapper">
-                  <label class="a11y-hidden" for="signinId">아이디</label>
-                  <input type="text" id="sgininId" name="id" placeholder="아이디를 입력해주세요" />
-                  <p class="error-message hidden">로그인 실패</p>
-                </div>
-                <div class="input-wrapper">
-                  <label class="a11y-hidden" for="signinPassword">비밀번호</label>
-                  <input
-                    type="password"
-                    id="signinPassword"
-                    name="password"
-                    placeholder="비밀번호를 입력해주세요"
-                    autocomplete="on"
-                  />
-                  <p class="error-message hidden">로그인 실패</p>
-                </div>
-                <button type="submit" class="primary-button submit-button">로그인</button>
-              </fieldset>
-            </form>
-          </div>
-          <button class="switch-auth-button">회원가입 하러가기</button>
-          <button class="cancel-button">X</button>
+    </div>
+    <div class="modal-container hidden">
+      <div class="modal">
+        <div class="signup-wrapper hidden">
+          <h2 class="modal__title">회원가입</h2>
+          <form class="signup__form" action="/auth/signup" method="post">
+            <fieldset>
+              <legend class="a11y-hidden">회원가입 정보</legend>
+              <div class="input-wrapper">
+                <label class="a11y-hidden" for="signupId">아이디</label>
+                <input type="text" id="signupId" name="id" placeholder="아이디를 입력해주세요" />
+                <p class="error-message hidden">로그인 실패</p>
+              </div>
+              <div class="input-wrapper">
+                <label class="a11y-hidden" for="signupPassword">비밀번호</label>
+                <input
+                  type="password"
+                  id="signupPassword"
+                  name="password"
+                  placeholder="비밀번호를 입력해주세요"
+                  autocomplete="on"
+                />
+                <p class="error-message hidden">로그인 실패</p>
+              </div>
+              <div class="input-wrapper">
+                <label class="a11y-hidden" for="repeatPassword">비밀번호 확인</label>
+                <input
+                  type="password"
+                  id="repeatPassword"
+                  name="repeatPassword"
+                  placeholder="비밀번호를 한번 더 입력해주세요"
+                  autocomplete="on"
+                />
+                <p class="error-message hidden">로그인 실패</p>
+              </div>
+              <button type="submit" class="primary-button submit-button">회원가입</button>
+            </fieldset>
+          </form>
         </div>
+        <div class="signin-wrapper">
+          <h2 class="modal__title">로그인</h2>
+          <form class="signin__form" action="/auth/signin" method="post">
+            <fieldset>
+              <legend class="a11y-hidden">로그인 정보</legend>
+              <div class="input-wrapper">
+                <label class="a11y-hidden" for="signinId">아이디</label>
+                <input type="text" id="sgininId" name="id" placeholder="아이디를 입력해주세요" />
+                <p class="error-message hidden">로그인 실패</p>
+              </div>
+              <div class="input-wrapper">
+                <label class="a11y-hidden" for="signinPassword">비밀번호</label>
+                <input
+                  type="password"
+                  id="signinPassword"
+                  name="password"
+                  placeholder="비밀번호를 입력해주세요"
+                  autocomplete="on"
+                />
+                <p class="error-message hidden">로그인 실패</p>
+              </div>
+              <button type="submit" class="primary-button submit-button">로그인</button>
+            </fieldset>
+          </form>
+        </div>
+        <button class="switch-auth-button">회원가입 하러가기</button>
+        <button class="cancel-button">X</button>
       </div>
     </div>
   </body>
