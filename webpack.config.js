@@ -9,6 +9,7 @@ module.exports = {
     main: './src/js/frontend/main.js',
     mypage: './src/js/frontend/mypage.js',
     reviewDetail: './src/js/frontend/reviewDetail.js',
+    search: './src/js/frontend/search.js',
   },
   output: {
     path: path.resolve(__dirname, 'public'),

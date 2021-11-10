@@ -1,6 +1,9 @@
 import axios from 'axios';
+import render from './render';
 
-console.log('main');
+window.addEventListener('DOMContentLoaded', () => {});
+
+// console.log('main');
 
 // document.querySelector('.router').onclick = async e => {
 //   e.preventDefault();
@@ -15,6 +18,6 @@ console.log('main');
 //   }
 // };
 
-window.onpopstate = e => {
-  alert(`location: ${document.location}, state: ${JSON.stringify(e.state)}`);
-};
+// window.onpopstate = e => {
+//   alert(`location: ${document.location}, state: ${JSON.stringify(e.state)}`);
+// };
