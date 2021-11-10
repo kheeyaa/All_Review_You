@@ -22,7 +22,7 @@ exports.signin = async (req, res) => {
     maxAge: 1000 * 60 * 60 * 24 * 7,
     httpOnly: true,
   });
-  res.send(user.userId);
+  res.redirect('/');
 };
 
 exports.signup = async (req, res) => {
@@ -38,10 +38,18 @@ exports.signup = async (req, res) => {
 
   const newUser = { userId: id, password: hashedPassword, createdAt: new Date() };
   User.state = newUser;
-  res.send(newUser.userId);
+  const token = jwt.sign({ userId: id }, process.env.JWT_SECRET, {
+    expiresIn: '7d',
+  });
+  res.cookie('access_token', token, {
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+    httpOnly: true,
+  });
+  res.redirect('/');
 };
 
 exports.logout = (req, res) => {
-  res.cookie('access_token');
+  res.clearCookie('access_token');
   res.status(204);
+  res.redirect('/');
 };
