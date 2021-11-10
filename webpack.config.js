@@ -29,6 +29,11 @@ module.exports = {
       template: 'src/template/reviewDetail.html',
       chunks: ['style', 'reviewDetail'],
     }),
+    new HtmlWebpackPlugin({
+      filename: 'modal.html',
+      template: 'src/template/modal.html',
+      chunks: ['style'],
+    }),
     new MiniCssExtractPlugin({ filename: 'css/style.css' }),
     new CopyPlugin({
       patterns: [
