@@ -30,8 +30,9 @@ module.exports = {
       chunks: ['style', 'reviewDetail'],
     }),
     new HtmlWebpackPlugin({
+      filename: 'search.html',
       template: 'src/template/search.html',
-      chunks: ['app', 'search'],
+      chunks: ['style', 'search'],
     }),
     new MiniCssExtractPlugin({ filename: 'css/style.css' }),
     new CopyPlugin({

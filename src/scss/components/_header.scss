@@ -1,0 +1,67 @@
+@use './../base' as *;
+
+.header {
+  width: 100%;
+  @include flexbox($justify-content: space-between);
+
+  &__logo {
+    a > img {
+      width: 100%;
+    }
+  }
+
+  @include desktop {
+    margin: rem(40px) 0;
+
+    &__logo {
+      width: rem(256px);
+    }
+  }
+
+  @include mobile {
+    margin: rem(40px) 0 rem(90px);
+
+    &__logo {
+      width: rem(150px);
+    }
+  }
+
+  &__user-service {
+    button {
+      border: 0;
+      background-color: transparent;
+    }
+
+    @include desktop {
+      button,
+      a {
+        margin-left: rem(10px);
+      }
+      .new-review {
+        padding: rem(6px) rem(10px);
+        min-width: rem(100px);
+        border: 2px solid $gray1;
+        border-radius: rem(30px);
+        img {
+          display: none;
+        }
+      }
+      img {
+        width: rem(25px);
+      }
+      .new-review::before {
+        content: '새 리뷰 올리기';
+      }
+    }
+
+    @include mobile {
+      img {
+        width: rem(20px);
+      }
+      button,
+      a {
+        margin-left: rem(3px);
+      }
+    }
+  }
+}

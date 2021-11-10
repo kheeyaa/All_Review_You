@@ -1,0 +1,18 @@
+@use './../base' as *;
+
+.nav {
+  width: 100%;
+  margin: rem(30px) 0;
+
+  &__list {
+    @include flexbox;
+
+    li {
+      margin-right: rem(20px);
+      padding: rem(8px);
+    }
+  }
+  &__now {
+    border-bottom: 3px solid $black;
+  }
+}
