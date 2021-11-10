@@ -30,6 +30,11 @@ module.exports = {
       chunks: ['style', 'reviewDetail'],
     }),
     new HtmlWebpackPlugin({
+      filename: 'search.html',
+      template: 'src/template/search.html',
+      chunks: ['style', 'search'],
+    }),
+    new HtmlWebpackPlugin({
       filename: 'modal.html',
       template: 'src/template/modal.html',
       chunks: ['style'],
