@@ -15,7 +15,6 @@ exports.checkLoggedIn = (req, res, next) => {
 };
 
 exports.jwtMiddleware = (req, res, next) => {
-  console.log(req.headers);
   const token = req.cookies.access_token;
   if (!token) return next();
   try {
