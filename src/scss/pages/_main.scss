@@ -90,6 +90,12 @@
 }
 
 .review {
+  &__card:hover {
+    transform: translateY(rem(-10px));
+  }
+  &__card {
+    transition: transform 0.2s ease;
+  }
   @include desktop {
     padding-right: rem(20px);
     width: 80%;
@@ -192,6 +198,7 @@
     top: rem(130px);
     left: 10%;
     padding: rem(10px);
+    padding-right: 0;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 
@@ -211,8 +218,7 @@
       // width: rem(200px);
       a {
         min-width: 100%;
-        // width: rem(200px);
-        // overflow-wrap: break-word;
+        white-space: nowrap;
         word-break: break-all;
         display: block;
       }
