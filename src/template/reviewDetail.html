@@ -4,9 +4,78 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>m1 mac review</title>
   </head>
   <body>
-    reviewDetail
+    <div class="reviewDetail">
+      <header class="reviewDetail__header">
+        <h2 class="reviewDetail__title">m1 mac review</h2>
+        <div class="reviewDetail__informWrap">
+          <div class="reviewDetail__inform">
+            <span class="reviewDetail__inform--userid">작성한 유저 id</span
+            ><span class="reviewDetail__inform--beforeDay">3일 전</span>
+            <div class="reviewDetail__inform--tag"><span class="reviewDetail__inform--tag--text"># 맥북프로</span></div>
+          </div>
+          <div class="reviewDetail__addInform">
+            <div class="reviewDetail__addInform--ratingWrap">
+              <span class="reviewDetail__addInform--ratingText">Ratings</span>
+              <span class="reviewDetail__addInform--starsCount">4.0</span>
+              <!-------------- TODO: 별이 들어올자리 ----------------->
+              <div class="reviewDetail__addInform--stars"></div>
+            </div>
+            <div class="reviewDetail__likesWrap">
+              <span class="reviewDetail__likesWrap--likesText">likes</span>
+              <div class="likes__container">
+                <span class="likes__count">20</span>
+                <button class="likes__button">
+                  <img src="../images/like.png" class="likes-img" aria-hidden="true" />
+                  <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main class="reviewDetail__content">
+        <!-- quill한테 데이터 받기 -->
+        맥북 이미지 wekfnweoinfwoenfweinfwf
+      </main>
+
+      <!-- 댓글 작성하기-->
+      <section class="reviewDetail__addComments">
+        <form action="" class="creviewDetail__addComments--form">
+          <label for="comment" class="reviewDetail__addComments--count">n개의 댓글</label>
+          <input
+            type="text"
+            id="comment"
+            class="reviewDetail__addComments--input"
+            name="comment"
+            placeholder="댓글을 작성하세요"
+          />
+          <button type="submit" class="reviewDetail__addComments--cancel">취소</button>
+          <button type="submit" class="reviewDetail__addComments--confirm">댓글 작성</button>
+        </form>
+      </section>
+
+      <!-- 댓글 리스트 -->
+      <section class="reviewDetail__comments">
+        <ul>
+          <li class="reviewDetail__comments--items">
+            <span class="reviewDetail__comments--user">유저 id</span>
+            <span class="reviewDetail__comments--content">너두? 나두</span>
+          </li>
+          <li class="reviewDetail__comments--items">
+            <span class="reviewDetail__comments--user">유저 id</span>
+            <span class="reviewDetail__comments--content">나두 가지구 싶어요</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- 관련 있는 리뷰 -->
+      <aside class="reviewDetail__relatedReview">
+        <h2 class="reviewDetail__relatedReview--title">관련 있는 리뷰</h2>
+        <!-- 공통 영역 -->
+      </aside>
+    </div>
   </body>
 </html>

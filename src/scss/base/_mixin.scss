@@ -55,7 +55,7 @@ $rootUnit: 16px !default;
 }
 
 // 요소 박스의 최대 크기 설정
-@mixin boxSizeMax($width: 1000px, $paddingX: 0) {
+@mixin boxSizeMax($width: 1200px, $paddingX: 0) {
   max-width: $width;
   padding-left: $paddingX;
   padding-right: $paddingX;
