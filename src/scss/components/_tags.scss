@@ -1,0 +1,56 @@
+@use './../base' as *;
+
+.tags {
+  border-radius: rem(10px);
+  @include boxShadow;
+  background-color: $white;
+  &__title {
+    font-size: rem(25px);
+    font-weight: 800;
+    margin-bottom: rem(25px);
+  }
+  .tag {
+    a {
+      margin-bottom: rem(5px);
+      background-color: rgba($olive, 0.3);
+      padding: rem(10px);
+      border-radius: rem(5px);
+    }
+  }
+
+  @include desktop {
+    width: 20%;
+    padding: rem(30px) rem(16px);
+  }
+  @include mobile {
+    position: absolute;
+    top: rem(130px);
+    left: 10%;
+    padding: rem(10px);
+    padding-right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+
+    width: 90%;
+
+    &__title {
+      display: none;
+    }
+    &__list {
+      @include flexbox;
+      overflow-x: scroll;
+    }
+    // 태그 수정 필요
+    .tag {
+      word-wrap: keep-all;
+      margin-right: rem(10px);
+      // width: rem(200px);
+      a {
+        min-width: 100%;
+        white-space: nowrap;
+        word-break: break-all;
+        display: block;
+      }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+@use '../base/' as *;
+
+.review {
+  &__card:hover {
+    transform: translateY(rem(-10px));
+  }
+  &__card {
+    transition: transform 0.2s ease;
+  }
+  @include desktop {
+    padding-right: rem(20px);
+    width: 80%;
+    &__list {
+      @include flexbox($justify-content: space-between, $flex-wrap: wrap);
+    }
+    &__card {
+      width: 31%;
+      height: rem(330px);
+    }
+  }
+
+  @include mobile {
+    @include autoMargin;
+    width: 100%;
+
+    &__list {
+      width: 100%;
+      @include flexbox($justify-content: space-between, $align-items: center, $flex-wrap: wrap);
+    }
+    &__card {
+      height: rem(330px);
+    }
+    @media (max-width: 449px) {
+      &__card {
+        width: 100%;
+        min-width: rem(300px);
+      }
+    }
+    @media (min-width: 450px) {
+      &__card {
+        width: 48%;
+      }
+    }
+    @media (min-width: 700px) {
+      &__card {
+        width: 31%;
+      }
+    }
+  }
+}

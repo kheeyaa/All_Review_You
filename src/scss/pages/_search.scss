@@ -1,0 +1,36 @@
+@use './../base' as *;
+@use './../components' as *;
+
+.search {
+  width: 100%;
+  @include flexbox($justify-content: center, $align-items: center);
+
+  &__form {
+    position: relative;
+    width: 80%;
+  }
+  &__input {
+    width: 100%;
+    font-size: rem(30px);
+    border: 0;
+    background-color: $white;
+    min-width: rem(300px);
+    border: 1px solid $gray2;
+    padding: rem(16px);
+    padding-left: rem(60px);
+  }
+  &__input::placeholder {
+    color: $gray2;
+  }
+
+  &__img {
+    position: absolute;
+    left: rem(10px);
+    top: 0;
+    width: rem(40px);
+    img {
+      width: 100%;
+      padding-top: 25%;
+    }
+  }
+}
