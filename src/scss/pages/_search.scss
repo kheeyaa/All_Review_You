@@ -1,23 +1,23 @@
 @use './../base' as *;
 @use './../components' as *;
 
+.header-search {
+  margin: rem(40px) 0;
+}
 .search {
   width: 100%;
-  @include flexbox($justify-content: center, $align-items: center);
-
-  &__form {
+  @include flexbox($justify-content: center, $align-items: center, $direction: column);
+  margin-bottom: rem(40px);
+  &__form,
+  &__message {
     position: relative;
     width: 80%;
   }
   &__input {
     width: 100%;
-    font-size: rem(30px);
     border: 0;
     background-color: $white;
-    min-width: rem(300px);
     border: 1px solid $gray2;
-    padding: rem(16px);
-    padding-left: rem(60px);
   }
   &__input::placeholder {
     color: $gray2;
@@ -26,11 +26,53 @@
   &__img {
     position: absolute;
     left: rem(10px);
-    top: 0;
+    top: 50%;
+    transform: translate(0, -50%);
     width: rem(40px);
     img {
       width: 100%;
-      padding-top: 25%;
+    }
+  }
+  &__message {
+    margin-top: rem(20px);
+  }
+
+  @include desktop {
+    &__form,
+    &__message {
+      min-width: rem(300px);
+      max-width: rem(700px);
+    }
+    &__input {
+      font-size: rem(25px);
+      padding: rem(16px);
+      padding-left: rem(60px);
+    }
+    &__img {
+      width: rem(30px);
+      left: rem(20px);
+      img {
+        width: 100%;
+      }
+    }
+  }
+  @include mobile {
+    &__form,
+    &__message {
+      min-width: rem(300px);
+      max-width: rem(500px);
+    }
+    &__input {
+      font-size: rem(18px);
+      padding: rem(10px);
+      padding-left: rem(40px);
+    }
+    &__img {
+      width: rem(20px);
+      left: rem(13px);
+      img {
+        width: 100%;
+      }
     }
   }
 }

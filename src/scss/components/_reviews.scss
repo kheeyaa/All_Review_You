@@ -6,6 +6,10 @@
     border-radius: rem(10px);
     overflow: hidden;
     margin-bottom: rem(20px);
+    transition: transform 0.2s ease;
+  }
+  &__card:hover {
+    transform: translateY(rem(-10px));
   }
   &__img {
     width: 100%;
@@ -34,6 +38,12 @@
     }
     .author {
       font-size: rem(14px);
+    }
+    .title,
+    time,
+    .author,
+    .detail {
+      margin-bottom: rem(15px);
     }
   }
 }

@@ -8,7 +8,7 @@
   </head>
   <body>
     <div class="container">
-      <header class="header">
+      <header class="header header-search">
         <div class="header__logo">
           <h1 class="a11y-hidden">All Review You</h1>
           <a href="./index.html"><img src="../images/logo.png" class="logo" aria-hidden="true" /></a>
@@ -24,13 +24,128 @@
         </div>
       </header>
 
-      <main class="search">
+      <div class="search">
         <form action="submit" class="search__form">
           <input type="text" class="search__input" placeholder="검색어를 입력하세요." />
           <div class="search__img">
             <img src="../images/search.svg" alt="검색" />
           </div>
         </form>
+        <span class="search__message">총 n개의 리뷰를 찾았습니다.</span>
+      </div>
+
+      <main class="review-row">
+        <h2 class="a11y-hidden">리뷰 리스트</h2>
+        <ul class="review__list">
+          <li class="review__card">
+            <a href="#">
+              <div class="review__img"><img src="../images/test.jpg" alt="" /></div>
+              <div class="review__details">
+                <h2 class="title">제목</h2>
+                <span class="detail">설명글</span>
+                <time datetime="2021-11-07">2021년 11월 07일</time>
+                <span class="author">작성자 아이디</span>
+                <div class="likes__container">
+                  <span class="likes__count">20</span>
+                  <button class="likes__button">
+                    <img src="../images/like.png" class="likes-img" aria-hidden="true" />
+                    <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
+                  </button>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li class="review__card">
+            <a href="#">
+              <div class="review__img"><img src="../images/test.jpg" alt="" /></div>
+              <div class="review__details">
+                <h2 class="title">제목</h2>
+                <span class="detail">설명글</span>
+                <time datetime="2021-11-07">2021년 11월 07일</time>
+                <span class="author">작성자 아이디</span>
+                <div class="likes__container">
+                  <span class="likes__count">20</span>
+                  <button class="likes__button">
+                    <img src="../images/like.png" class="likes-img" aria-hidden="true" />
+                    <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
+                  </button>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li class="review__card">
+            <a href="#">
+              <div class="review__img"><img src="../images/test.jpg" alt="" /></div>
+              <div class="review__details">
+                <h2 class="title">제목</h2>
+                <span class="detail">설명글</span>
+                <time datetime="2021-11-07">2021년 11월 07일</time>
+                <span class="author">작성자 아이디</span>
+                <div class="likes__container">
+                  <span class="likes__count">20</span>
+                  <button class="likes__button">
+                    <img src="../images/like.png" class="likes-img" aria-hidden="true" />
+                    <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
+                  </button>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li class="review__card">
+            <a href="#">
+              <div class="review__img"><img src="../images/test.jpg" alt="" /></div>
+              <div class="review__details">
+                <h2 class="title">제목</h2>
+                <span class="detail">설명글</span>
+                <time datetime="2021-11-07">2021년 11월 07일</time>
+                <span class="author">작성자 아이디</span>
+                <div class="likes__container">
+                  <span class="likes__count">20</span>
+                  <button class="likes__button">
+                    <img src="../images/like.png" class="likes-img" aria-hidden="true" />
+                    <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
+                  </button>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li class="review__card">
+            <a href="#">
+              <div class="review__img"><img src="../images/test.jpg" alt="" /></div>
+              <div class="review__details">
+                <h2 class="title">제목</h2>
+                <span class="detail">설명글</span>
+                <time datetime="2021-11-07">2021년 11월 07일</time>
+                <span class="author">작성자 아이디</span>
+                <div class="likes__container">
+                  <span class="likes__count">20</span>
+                  <button class="likes__button">
+                    <img src="../images/like.png" class="likes-img" aria-hidden="true" />
+                    <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
+                  </button>
+                </div>
+              </div>
+            </a>
+          </li>
+          <li class="review__card">
+            <a href="#">
+              <div class="review__img"><img src="../images/test.jpg" alt="" /></div>
+              <div class="review__details">
+                <h2 class="title">제목</h2>
+                <span class="detail">설명글</span>
+                <time datetime="2021-11-07">2021년 11월 07일</time>
+                <span class="author">작성자 아이디</span>
+                <div class="likes__container">
+                  <span class="likes__count">20</span>
+                  <button class="likes__button">
+                    <img src="../images/like.png" class="likes-img" aria-hidden="true" />
+                    <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
+                  </button>
+                </div>
+              </div>
+            </a>
+          </li>
+        </ul>
       </main>
     </div>
   </body>
