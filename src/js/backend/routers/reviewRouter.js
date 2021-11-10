@@ -5,9 +5,17 @@ const reviewRouter = Router();
 const Reviews = require('../models/Review');
 
 reviewRouter.get('/', (req, res) => {});
-reviewRouter.get('/:id', (req, res) => {
-  res.send(Reviews.state.filter(({ userId }) => userId === +req.params.id));
+
+// reviews/mine/ -> GET 내가 쓴 리뷰
+reviewRouter.get('/mine/:id', (req, res) => {
+  res.send(Reviews.state.filter(({ userId }) => userId === req.params.id));
 });
+
+// reviews/review/id -> GET 특정 리뷰 for reviewDetail Page
+reviewRouter.get('/review/:id', (req, res) => {
+  res.send(Reviews.state.filter(({ reviewId }) => reviewId === +req.params.id));
+});
+
 reviewRouter.post('/', (req, res) => {});
 reviewRouter.patch('/:id', (req, res) => {});
 reviewRouter.put('/:id', (req, res) => {});
