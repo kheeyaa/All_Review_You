@@ -28,8 +28,12 @@ export default (() => {
     return `${Math.floor(betweenTimeDay / 365)}년 전`;
   };
 
+  const renderMessage = reviewsLen => {
+    document.querySelector('.search__message').textContent = `총 ${reviewsLen}개의 리뷰를 찾았습니다.`;
+  };
+
   const renderReviews = (reviews, $target) => {
-    const page = window.location.pathname.replace(/\/|.html/g, '');
+    const page = window.location.pathname.replace(/\/|.html/g, '') === 'mypage' ? 'mypage' : '';
 
     $target.innerHTML = reviews
       .map(
@@ -237,6 +241,11 @@ export default (() => {
     reviewDetail(review, targets) {
       renderReviewDetailContent(review, targets.$reviewDetail);
       renderReviewDetailAdd(review, targets.$reviewDetail);
+    },
+
+    search(reviews, targets) {
+      renderReviews(reviews, targets.$reviewList);
+      renderMessage(reviews.length);
     },
   };
 })();
