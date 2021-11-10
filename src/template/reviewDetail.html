@@ -7,6 +7,7 @@
     <title>m1 mac review</title>
   </head>
   <body>
+    <div id="rater"></div>
     <div class="reviewDetail">
       <!-- 헤더 -->
       <header class="header reviewDetail__mainheader">
@@ -125,6 +126,7 @@
         <!-- 관련 있는 리뷰 -->
         <section class="reviewDetail__relatedReview">
           <h2 class="reviewDetail__relatedReview--title">관련 있는 리뷰</h2>
+          <div class="review-column review-column-changewidth">
           <ul class="review__list">
             <li class="review__card">
               <div class="review__img"><img src="../images/test.jpg" alt="" /></div>
@@ -175,8 +177,10 @@
               </div>
             </li>
           </ul>
+        </div>
         </aside>
       </div>
     </div>
+    <script src="node-modules/rater-js/index.js"></script>
   </body>
 </html>
