@@ -1,0 +1,71 @@
+@use './../base' as *;
+
+.modal-container {
+  background-color: rgba($black, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.modal {
+  padding: rem(50px);
+  position: relative;
+  width: rem(505px);
+  background-color: $white;
+  &__title {
+    margin-bottom: 33px;
+    font-size: rem(20px);
+    font-weight: 700;
+  }
+}
+
+.input-wrapper {
+  margin-bottom: rem(18px);
+  input {
+    padding: rem(15px);
+    width: 100%;
+    border: solid 1px $gray3;
+    border-radius: rem(5px);
+  }
+}
+
+.primary-button {
+  background-color: $olive;
+  border-radius: rem(5px);
+  color: $white;
+  font-weight: 700;
+  border: none;
+}
+
+.submit-button {
+  margin-top: rem(18px);
+  padding: rem(15px) 0;
+  width: 100%;
+}
+
+.error-message {
+  color: $red;
+  text-align: center;
+}
+
+.switch-auth-button {
+  margin: 0 auto;
+  margin-top: rem(100px);
+  display: block;
+  padding: rem(12px) rem(24px);
+  border: 1px solid $gray1;
+  border-radius: rem(30px);
+  background-color: $white;
+  color: $gray1;
+}
+
+.cancel-button {
+  padding: rem(7px);
+  position: absolute;
+  top: rem(43px);
+  right: rem(43px);
+  background-color: $white;
+  border: none;
+}
