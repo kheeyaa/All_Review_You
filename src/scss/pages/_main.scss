@@ -34,26 +34,27 @@
     }
   }
 
-  &__nav {
+  &__button-group {
     button {
       border: 0;
       background-color: transparent;
     }
 
     @include desktop {
-      .login,
+      button {
+        margin-left: rem(10px);
+      }
       .new-review {
         padding: rem(6px) rem(10px);
         min-width: rem(100px);
         border: 2px solid $gray1;
         border-radius: rem(30px);
-        margin-left: rem(20px);
         img {
           display: none;
         }
       }
-      .login::before {
-        content: '로그인';
+      img {
+        width: rem(25px);
       }
       .new-review::before {
         content: '새 리뷰 올리기';
@@ -61,12 +62,11 @@
     }
 
     @include mobile {
-      .login,
-      .new-review {
-        margin-left: rem(20px);
-        img {
-          width: rem(25px);
-        }
+      img {
+        width: rem(20px);
+      }
+      button {
+        margin-left: rem(3px);
       }
     }
   }
