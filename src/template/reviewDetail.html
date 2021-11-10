@@ -8,74 +8,176 @@
   </head>
   <body>
     <div class="reviewDetail">
-      <header class="reviewDetail__header">
-        <h2 class="reviewDetail__title">m1 mac review</h2>
-        <div class="reviewDetail__informWrap">
-          <div class="reviewDetail__inform">
-            <span class="reviewDetail__inform--userid">작성한 유저 id</span
-            ><span class="reviewDetail__inform--beforeDay">3일 전</span>
-            <div class="reviewDetail__inform--tag"><span class="reviewDetail__inform--tag--text"># 맥북프로</span></div>
-          </div>
-          <div class="reviewDetail__addInform">
-            <div class="reviewDetail__addInform--ratingWrap">
-              <span class="reviewDetail__addInform--ratingText">Ratings</span>
-              <span class="reviewDetail__addInform--starsCount">4.0</span>
-              <!-------------- TODO: 별이 들어올자리 ----------------->
-              <div class="reviewDetail__addInform--stars"></div>
+      <!-- 헤더 -->
+      <header class="header">
+        <div class="header__logo">
+          <h1 class="a11y-hidden">All Review You</h1>
+          <a href="./index.html"><img src="../images/logo.png" class="logo" aria-hidden="true" /></a>
+        </div>
+
+        <div class="header__user-service">
+          <h2 class="a11y-hidden">사용자 서비스</h2>
+          <a href="./search.html"><img src="../images/search.svg" alt="" /></a>
+          <button class="login hidden"><img src="../images/login.svg" alt="로그인" /></button>
+          <button class="logout"><img src="../images/logout.svg" alt="로그아웃" /></button>
+          <a class="my-page"><img src="../images/mypage.svg" alt="마이 페이지" /></a>
+          <a class="new-review"><img src="../images/newReview.svg" alt="새 리뷰 올리기" /></a>
+        </div>
+      </header>
+      <!-- 리뷰 본문 -->
+      <div class="reviewDetail__contentWrap">
+        <h1 class="a11y-hidden">본문 영역</h1>
+        <header class="reviewDetail__header">
+          <h2 class="a11y-hidden">제목 영역</h2>
+          <p class="reviewDetail__title">m1 mac review</p>
+          <div class="reviewDetail__informWrap">
+            <div class="reviewDetail__inform">
+              <span class="reviewDetail__inform--userid">작성한 유저 id</span
+              ><span class="reviewDetail__inform--beforeDay">3일 전</span>
+              <div class="reviewDetail__inform--tag">
+                <span class="reviewDetail__inform--tag--text"># 맥북프로</span>
+              </div>
             </div>
-            <div class="reviewDetail__likesWrap">
-              <span class="reviewDetail__likesWrap--likesText">likes</span>
-              <div class="likes__container">
-                <span class="likes__count">20</span>
-                <button class="likes__button">
-                  <img src="../images/like.png" class="likes-img" aria-hidden="true" />
-                  <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
-                </button>
+            <div class="reviewDetail__addInform">
+              <div class="reviewDetail__addInform--ratingWrap">
+                <span class="reviewDetail__addInform--ratingText">Ratings</span>
+                <div class="reviewDetail__addInform--starsWrap">
+                  <span class="reviewDetail__addInform--starsCount">4.0</span>
+                  <div class="reviewDetail__addInform--stars">🌟🌟🌟🌟🌟</div>
+                </div>
+              </div>
+              <div class="reviewDetail__addInform--likesWrap">
+                <span class="reviewDetail__addInform--likesText">likes</span>
+                <div class="reviewDetail__addInform--likesSubWrap">
+                  <span class="reviewDetail__addInform--likesCount">20</span>
+                  <button class="likes__button">
+                    <img src="../images/like.png" class="likes-img" aria-hidden="true" />
+                    <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </header>
-      <main class="reviewDetail__content">
-        <!-- quill한테 데이터 받기 -->
-        맥북 이미지 wekfnweoinfwoenfweinfwf
-      </main>
+        </header>
+        <main class="reviewDetail__content">
+          <!-- quill한테 데이터 받기 -->
+          <p>맥북 이미지</p>
+          <p>this is macbook</p>
+        </main>
+      </div>
+      
+      <!-- 리뷰 본문 외 -->
+      <div class="reviewDetail__addWrap">
+        <h2 class="a11y-hidden">댓글 및 관련 리뷰</h2>
+        <!-- 댓글 작성하기-->
+        <section class="reviewDetail__addComments">
+          <h3 class="a11y-hidden">댓글 작성</h3>
+          <form action="" class="reviewDetail__addComments--form">
+            <label for="comment" class="reviewDetail__addComments--count">n개의 댓글</label>
+            <input
+              type="text"
+              id="comment"
+              class="reviewDetail__addComments--input"
+              name="comment"
+              placeholder="댓글을 작성하세요"
+            />
+            <div class="reviewDetail__addComments--btnWrap">
+              <button type="submit" class="reviewDetail__addComments--cancel">취소</button>
+              <button type="submit" class="reviewDetail__addComments--confirm">댓글 작성</button>
+            </div>
+          </form>
+        </section>
 
-      <!-- 댓글 작성하기-->
-      <section class="reviewDetail__addComments">
-        <form action="" class="creviewDetail__addComments--form">
-          <label for="comment" class="reviewDetail__addComments--count">n개의 댓글</label>
-          <input
-            type="text"
-            id="comment"
-            class="reviewDetail__addComments--input"
-            name="comment"
-            placeholder="댓글을 작성하세요"
-          />
-          <button type="submit" class="reviewDetail__addComments--cancel">취소</button>
-          <button type="submit" class="reviewDetail__addComments--confirm">댓글 작성</button>
-        </form>
-      </section>
+        <!-- 댓글 리스트 -->
+        <section class="reviewDetail__comments">
+          <h3 class="a11y-hidden">댓글 리스트</h3>
+          <ul>
+            <li class="reviewDetail__comments--items">
+              <span class="reviewDetail__comments--user">작성한 유저 id</span>
+              <span class="reviewDetail__comments--content">너두? 나두</span>
+            </li>
+            <li class="reviewDetail__comments--items">
+              <span class="reviewDetail__comments--user">작성한 유저 id</span>
+              <span class="reviewDetail__comments--content">나두 가지구 싶어요</span>
+            </li>
+            <li class="reviewDetail__comments--items">
+              <span class="reviewDetail__comments--user">작성한 유저 id</span>
+              <span class="reviewDetail__comments--content">나두 가지구 싶어요</span>
+            </li>
+            <li class="reviewDetail__comments--items">
+              <span class="reviewDetail__comments--user">작성한 유저 id</span>
+              <span class="reviewDetail__comments--content">나두 가지구 싶어요</span>
+            </li>
+            <li class="reviewDetail__comments--items">
+              <span class="reviewDetail__comments--user">작성한 유저 id</span>
+              <span class="reviewDetail__comments--content">나두 가지구 싶어요</span>
+            </li>
+            <li class="reviewDetail__comments--items">
+              <span class="reviewDetail__comments--user">작성한 유저 id</span>
+              <span class="reviewDetail__comments--content">나두 가지구 싶어요</span>
+            </li>
+            <li class="reviewDetail__comments--items">
+              <span class="reviewDetail__comments--user">작성한 유저 id</span>
+              <span class="reviewDetail__comments--content">나두 가지구 싶어요</span>
+            </li>
+          </ul>
+        </section>
 
-      <!-- 댓글 리스트 -->
-      <section class="reviewDetail__comments">
-        <ul>
-          <li class="reviewDetail__comments--items">
-            <span class="reviewDetail__comments--user">유저 id</span>
-            <span class="reviewDetail__comments--content">너두? 나두</span>
-          </li>
-          <li class="reviewDetail__comments--items">
-            <span class="reviewDetail__comments--user">유저 id</span>
-            <span class="reviewDetail__comments--content">나두 가지구 싶어요</span>
-          </li>
-        </ul>
-      </section>
-
-      <!-- 관련 있는 리뷰 -->
-      <aside class="reviewDetail__relatedReview">
-        <h2 class="reviewDetail__relatedReview--title">관련 있는 리뷰</h2>
-        <!-- 공통 영역 -->
-      </aside>
+        <!-- 관련 있는 리뷰 -->
+        <aside class="reviewDetail__relatedReview">
+          <h3 class="reviewDetail__relatedReview--title">관련 있는 리뷰</h2>
+            <ul class="review__list">
+              <li class="review__card">
+                <div class="review__img"><img src="../images/test.jpg" alt="" /></div>
+                <div class="review__details">
+                  <h2 class="title">제목</h2>
+                  <span class="detail">설명글</span>
+                  <time datetime="2021-11-07">2021년 11월 07일</time>
+                  <span class="author">작성자 아이디</span>
+                  <div class="likes__container">
+                    <span class="likes__count">20</span>
+                    <button class="likes__button">
+                      <img src="../images/like.png" class="likes-img" aria-hidden="true" />
+                      <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
+                    </button>
+                  </div>
+                </div>
+              </li>
+              <li class="review__card">
+                <div class="review__img"><img src="../images/test.jpg" alt="" /></div>
+                <div class="review__details">
+                  <h2 class="title">제목</h2>
+                  <span class="detail">설명글</span>
+                  <time datetime="2021-11-07">2021년 11월 07일</time>
+                  <span class="author">작성자 아이디</span>
+                  <div class="likes__container">
+                    <span class="likes__count">20</span>
+                    <button class="likes__button">
+                      <img src="../images/like.png" class="likes-img" aria-hidden="true" />
+                      <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
+                    </button>
+                  </div>
+                </div>
+              </li>
+              <li class="review__card">
+                <div class="review__img"><img src="../images/test.jpg" alt="" /></div>
+                <div class="review__details">
+                  <h2 class="title">제목</h2>
+                  <span class="detail">설명글</span>
+                  <time datetime="2021-11-07">2021년 11월 07일</time>
+                  <span class="author">작성자 아이디</span>
+                  <div class="likes__container">
+                    <span class="likes__count">20</span>
+                    <button class="likes__button">
+                      <img src="../images/like.png" class="likes-img" aria-hidden="true" />
+                      <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
+                    </button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+        </aside>
+      </div>
     </div>
   </body>
 </html>
