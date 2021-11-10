@@ -1,0 +1,149 @@
+@use '../base/' as *;
+
+.reviewDetail {
+  @include boxSizeMax(1000px);
+  background-color: white;
+  @include boxShadow();
+  padding: rem(40px);
+
+  &__title {
+    font-size: rem(60px);
+    font-weight: bold;
+    padding: rem(20px) 0;
+  }
+
+  &__header {
+    border-bottom: 1px solid $gray3;
+  }
+
+  // header inform wrap
+  &__informWrap {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  // header inform (left)
+  &__inform {
+    &--userid {
+      font-size: rem(20px);
+      font-weight: bold;
+      padding: rem(10px) 0;
+      display: inline-block;
+    }
+    &--beforeDay:before {
+      content: '-';
+      padding: 0 rem(20px);
+    }
+    &--beforeDay {
+      font-size: rem(16px);
+      color: $gray1;
+    }
+    &--tag {
+      margin: rem(20px) rem(10px);
+      &--text {
+        display: inline-block;
+        padding: rem(6px);
+        background-color: rgba($olive, 0.3);
+        border-radius: rem(5px);
+      }
+      // &--text:before {
+      //   content: '# ';
+      // }
+    }
+  }
+
+  // header add inform (right)
+  &__addInform {
+    display: flex;
+    &--ratingWrap {
+      display: flex;
+      flex-flow: row;
+
+      &--ratingText {
+        //TODO: 폰트 스타일 적용
+        font-size: rem(20px);
+        font-weight: bold;
+      }
+
+      &--starsCount {
+        font-size: rem(12px);
+      }
+
+      &--stars {
+        //TODO:별 스타일 적용
+      }
+    }
+
+    &--likesWrap {
+      display: flex;
+
+      &--likesText {
+        //TODO: 폰트 스타일 적용
+        font-size: rem(20px);
+        font-weight: bold;
+      }
+
+      // TODO: 강희님 하트 개수, 하트 스타일 적용
+    }
+  }
+
+  // TODO: 리뷰 디테일 (본문)
+  &__reviewDetail {
+  }
+
+  // 댓글 작성하기
+  &__addComments {
+    &--count {
+      font-size: rem(16px);
+      margin: rem(10px);
+    }
+    &--input {
+      background: white;
+      border-radius: rem(10px);
+      padding: rem(20px);
+      margin: rem(10px);
+    }
+    &--cancel {
+      background: gray1;
+      color: white;
+      padding: rem(10px);
+      margin: rem(6px);
+    }
+    &--confirm {
+      background: black;
+      color: white;
+      padding: rem(10px);
+      margin: rem(6px);
+    }
+  }
+
+  // 댓글 리스트
+  &__comments {
+    padding: rem(10px);
+    &--items {
+      padding: rem(10px);
+    }
+    &--items:after {
+      display: block;
+      width: rem(400px);
+      border-bottom: 1px solid $gray2;
+      margin: rem(10px) 0;
+    }
+    &--user {
+      font-size: rem(16px);
+      font-weight: bold;
+    }
+    &--content {
+      font-size: rem(14px);
+    }
+  }
+
+  // TODO: 관련 있는 리뷰 : 강희님 공통 사항 적용
+  &__relatedReview {
+    &--title {
+      font-size: rem(16px);
+      text-align: center;
+      margin: rem(20px) 0;
+    }
+  }
+}
