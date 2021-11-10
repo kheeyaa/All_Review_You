@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -7,6 +7,49 @@
     <title>Document</title>
   </head>
   <body>
-    mypage
+    <div class="container">
+      <header class="header">
+        <div class="header__logo">
+          <h1 class="title a11y-hidden">All Review You</h1>
+          <a href="./index.html"><img src="../images/logo.png" class="logo" aria-hidden="true" /></a>
+        </div>
+
+        <div class="header__nav">
+          <button class="search"><img src="../images/search.svg" alt="" /></button>
+          <button class="login hidden"><img src="../images/login.svg" alt="로그인" /></button>
+          <button class="new-review"><img src="../images/newReview.svg" alt="새 리뷰 올리기" /></button>
+        </div>
+      </header>
+
+      <nav class="nav">
+        <ul class="nav__list">
+          <li class="nav__now"><a href="" type="button">내가 작성한 리뷰</a></li>
+          <li><a href="" type="button">좋아한 리뷰</a></li>
+          <li><a href="" type="button">최근 읽은 리뷰</a></li>
+        </ul>
+      </nav>
+
+      <nav class="nav">
+        <ul class="nav__list">
+          <li class="nav__now"><a href="" type="button">좋아요순</a></li>
+          <li><a href="" type="button">최신순</a></li>
+        </ul>
+      </nav>
+
+      <main class="mypage review">
+        <ul class="mypage review__list"></ul>
+      </main>
+
+      <aside class="tags">
+        <h2 class="tags__title">Tag List</h2>
+        <ul class="tags__list">
+          <!-- <li class="tag"><a href="" type="button">#곱창</a></li>
+          <li class="tag"><a href="" type="button">#맛집</a></li>
+          <li class="tag"><a href="" type="button">#강남역-맛집</a></li>
+          <li class="tag"><a href="" type="button">#햄버거</a></li>
+          <li class="tag"><a href="" type="button">#영화-추천</a></li>
+          <li class="tag"><a href="" type="button">#아이폰</a></li> -->
+        </ul>
+      </aside>
   </body>
 </html>
