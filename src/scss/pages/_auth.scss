@@ -10,24 +10,35 @@
 }
 
 .modal {
-  padding: rem(50px);
   position: relative;
-  width: rem(505px);
+  border-radius: 10px;
   background-color: $white;
   &__title {
     margin-bottom: 33px;
     font-size: rem(20px);
     font-weight: 700;
   }
+  @include mobile {
+    padding: rem(24px);
+    width: rem(397px);
+  }
+  @include desktop {
+    padding: rem(50px);
+    width: rem(505px);
+  }
 }
 
 .input-wrapper {
-  margin-bottom: rem(18px);
+  margin-bottom: rem(10px);
   input {
     padding: rem(15px);
     width: 100%;
     border: solid 1px $gray3;
     border-radius: rem(5px);
+  }
+  .error-message {
+    margin-top: rem(10px);
+    color: $red;
   }
 }
 
@@ -40,14 +51,8 @@
 }
 
 .submit-button {
-  margin-top: rem(18px);
   padding: rem(15px) 0;
   width: 100%;
-}
-
-.error-message {
-  color: $red;
-  text-align: center;
 }
 
 .switch-auth-button {
@@ -64,8 +69,14 @@
 .cancel-button {
   padding: rem(7px);
   position: absolute;
-  top: rem(43px);
-  right: rem(43px);
   background-color: $white;
   border: none;
+  @include mobile {
+    top: rem(17px);
+    right: rem(17px);
+  }
+  @include desktop {
+    top: rem(43px);
+    right: rem(43px);
+  }
 }
