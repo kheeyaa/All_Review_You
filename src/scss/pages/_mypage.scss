@@ -1,0 +1,44 @@
+@use './../base' as *;
+@use './../components' as *;
+
+.mypage {
+  &.review {
+    @include desktop {
+      padding-right: rem(20px);
+      width: 80%;
+    }
+
+    &__card {
+      width: 100%;
+      height: 100%;
+    }
+
+    &__img {
+      aspect-ratio: 818 / 381;
+    }
+
+    &__details {
+      padding: rem(24px) rem(14px);
+    }
+  }
+
+  &.detail,
+  &.time {
+    margin-bottom: rem(8px);
+  }
+
+  &.likes {
+    &__container {
+      top: inherit;
+      bottom: rem(24px);
+    }
+    &__button {
+      border: 0;
+      padding: 0;
+      background-color: transparent;
+      img {
+        width: rem(23px);
+      }
+    }
+  }
+}

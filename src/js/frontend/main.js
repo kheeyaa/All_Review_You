@@ -1,20 +1,23 @@
 import axios from 'axios';
+import render from './render';
 
-console.log('main');
+window.addEventListener('DOMContentLoaded', () => {});
 
-document.querySelector('.router').onclick = async e => {
-  e.preventDefault();
-  const path = e.target.getAttribute('href');
-  console.log(path);
-  window.history.pushState({ path }, null, path);
+// console.log('main');
 
-  try {
-    const { data } = await axios.get('/mypage');
-  } catch (e) {
-    console.error(e);
-  }
-};
+// document.querySelector('.router').onclick = async e => {
+//   e.preventDefault();
+//   const path = e.target.getAttribute('href');
+//   console.log(path);
+//   window.history.pushState({ path }, null, path);
 
-window.onpopstate = e => {
-  alert(`location: ${document.location}, state: ${JSON.stringify(e.state)}`);
-};
+//   try {
+//     const { data } = await axios.get('/mypage');
+//   } catch (e) {
+//     console.error(e);
+//   }
+// };
+
+// window.onpopstate = e => {
+//   alert(`location: ${document.location}, state: ${JSON.stringify(e.state)}`);
+// };
