@@ -1,0 +1,29 @@
+@use './../base' as *;
+
+.likes {
+  &__button {
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+    img {
+      width: rem(23px);
+    }
+  }
+  &__button:hover {
+    img {
+      animation: hartbit 0.7s ease infinite;
+    }
+  }
+}
+
+@keyframes hartbit {
+  0% {
+    transform: scale((1));
+  }
+  70% {
+    transform: scale((0.7));
+  }
+  100% {
+    transform: scale((1));
+  }
+}

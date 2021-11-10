@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <div class="header__logo">
+          <h1 class="a11y-hidden">All Review You</h1>
+          <a href="./index.html"><img src="../images/logo.png" class="logo" aria-hidden="true" /></a>
+        </div>
+
+        <div class="header__user-service">
+          <h2 class="a11y-hidden">사용자 서비스</h2>
+          <a href="./search.html"><img src="../images/search.svg" alt="검색" /></a>
+          <button class="login hidden"><img src="../images/login.svg" alt="로그인" /></button>
+          <button class="logout"><img src="../images/logout.svg" alt="로그아웃" /></button>
+          <a class="my-page"><img src="../images/mypage.svg" alt="마이 페이지" /></a>
+          <a class="new-review"><img src="../images/newReview.svg" alt="새 리뷰 올리기" /></a>
+        </div>
+      </header>
+
+      <main class="search">
+        <form action="submit" class="search__form">
+          <input type="text" class="search__input" placeholder="검색어를 입력하세요." />
+          <div class="search__img">
+            <img src="../images/search.svg" alt="검색" />
+          </div>
+        </form>
+      </main>
+    </div>
+  </body>
+</html>
