@@ -11,7 +11,7 @@ exports.findSearchResult = (req, res) => {
       .filter(({ title, content, tags }) => title.match(keyword) || content.match(keyword) || isExistTag(tags, keyword))
       .map(({ content, photos }, i, reviews) => ({
         ...reviews[i],
-        content: content.slice(0, 100),
+        content: content.slice(0, 300),
         photos: photos.slice(0, 1),
       }))
   );
