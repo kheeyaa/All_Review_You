@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import userData from './userData';
+
 let isLoggedIn = false;
 
 const $login = document.querySelector('.login');
@@ -23,6 +25,7 @@ const setIsLoggedIn = newIsLoggedIn => {
 window.addEventListener('DOMContentLoaded', async () => {
   try {
     const { data } = await axios.get('/users/me');
+    userData.id = data;
     setIsLoggedIn(data);
   } catch (e) {
     console.error(e.message);
@@ -35,6 +38,7 @@ $login.addEventListener('click', () => {
 
 $logout.addEventListener('click', async () => {
   await axios.post('/auth/logout');
+  userData.id = null;
   setIsLoggedIn(false);
 });
 

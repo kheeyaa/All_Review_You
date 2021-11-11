@@ -38,7 +38,7 @@ export default (() => {
     $target.innerHTML = reviews
       .map(
         ({ title, userId, reviewId, content, photos, tags, ratings, likes, comments, createdAt, updatedAt }) => `
-      <li class="${page} review__card">
+      <li class="${page} review__card" data-reviewid = "${reviewId}">
         <a href="./reviewDetail.html">
           <div class="${page} review__img"><img src="../images/test.jpg" alt="" /></div>
           <div class="${page} review__details">
