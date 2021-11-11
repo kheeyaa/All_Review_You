@@ -1,3 +1,5 @@
+const rater = require('rater-js');
+
 export default (() => {
   const convertTimeFormat = date => {
     const [year, month, day] = date.toString().slice(0, 10).split('-');
@@ -55,11 +57,21 @@ export default (() => {
                 <img src="../images/unlike.png" class="${page} unlikes-img hidden" aria-hidden="true" />
               </button>
             </div>
+            <div class="${page} rater__wrap"><div id="rater"></div></div>
           </div>
         </a>
       </li>`
       )
       .join('');
+
+    [...document.querySelectorAll('#rater')].forEach((el, i) => {
+      rater({
+        element: el,
+        rating: reviews[i].ratings,
+        readOnly: true,
+        starSize: 24,
+      });
+    });
   };
 
   const renderTags = (tags, $target) => {
@@ -94,7 +106,7 @@ export default (() => {
               <span class="reviewDetail__addInform--ratingText">Ratings</span>
               <div class="reviewDetail__addInform--starsWrap">
                 <span class="reviewDetail__addInform--starsCount">${ratings}</span>
-                <div class="reviewDetail__addInform--stars">🌟🌟🌟🌟🌟</div>
+                <div class="reviewDetail__addInform--stars"><div id="rater"></div></div>
               </div>
             </div>
             <div class="reviewDetail__addInform--likesWrap">
@@ -112,6 +124,12 @@ export default (() => {
       </header>`;
 
     $target.appendChild($newDiv);
+    rater({
+      element: document.querySelector('#rater'),
+      rating: ratings,
+      readOnly: true,
+      starSize: 24,
+    });
   };
 
   const renderReviewDetailAdd = (reviewData, $target) => {
