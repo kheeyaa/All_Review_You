@@ -3,9 +3,10 @@
 
 .container {
   @include boxSizeMax;
-  @include flexbox($flex-wrap: wrap);
+  @include flexbox($flex-wrap: wrap, $align-items: flex-start);
   padding: rem(14px);
   overflow: hidden;
+  min-width: rem(300px);
 }
 
 .likes {
@@ -14,4 +15,10 @@
     top: rem(10px);
     right: rem(10px);
   }
+}
+
+.rater__wrap {
+  position: absolute;
+  right: rem(10px);
+  bottom: rem(20px);
 }

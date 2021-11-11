@@ -26,6 +26,31 @@ const Review = (() => {
       updatedAt: new Date(),
     },
     {
+      title: '곱창',
+      userId: 'jkrang104',
+      reviewId: 1,
+      content:
+        '메롱 음식 오늘은 곱창 맛집에 찾아왔다. 강남 곱창 맛집은 정말 맛있었다. 냠냠냠...오늘은 곱창 맛집에 찾아왔다. 강남 곱창 맛집은 정말 맛있었다. 냠냠냠...오늘은 곱창 맛집에 찾아왔다. 강남 곱창 맛집은 정말 맛있었다. 냠냠냠...오늘은 곱창 맛집에 찾아왔다. 강남 곱창 맛집은 정말 맛있었다. 냠냠냠...오늘은 곱창 맛집에 찾아왔다. 강남 곱창 맛집은 정말 맛있었다. 냠냠냠...오늘은 곱창 맛집에 찾아왔다. 강남 곱창 맛집은 정말 맛있었다. 냠냠냠...오늘은 곱창 맛집에 찾아왔다. 강남 곱창 맛집은 정말 맛있었다. 냠냠냠...',
+      photos: [],
+      tags: ['곱창맛집'],
+      ratings: 4.5,
+      likes: ['jkrang1702', 'jkrang105', 'jkrang104'],
+      comments: [
+        {
+          commentId: 1,
+          userId: 'jkrang1702',
+          content: '너무 맛이 없네요',
+        },
+        {
+          commentId: 2,
+          userId: 'jkrang105',
+          content: '난 맛있는데',
+        },
+      ],
+      createdAt: new Date(2008, 11, 3),
+      updatedAt: new Date(),
+    },
+    {
       title: '올리브',
       userId: 'jkrang1702',
       reviewId: 2,

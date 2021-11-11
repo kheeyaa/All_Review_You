@@ -1,3 +1,5 @@
+const rater = require('rater-js');
+
 export default (() => {
   const convertTimeFormat = date => {
     const [year, month, day] = date.toString().slice(0, 10).split('-');
@@ -32,6 +34,15 @@ export default (() => {
     document.querySelector('.search__message').textContent = `총 ${reviewsLen}개의 리뷰를 찾았습니다.`;
   };
 
+  const createReadOnlyRater = (el, rate) => {
+    rater({
+      element: el,
+      rating: rate,
+      readOnly: true,
+      starSize: 24,
+    });
+  };
+
   const renderReviews = (reviews, $target) => {
     const page = window.location.pathname.replace(/\/|.html/g, '') === 'mypage' ? 'mypage' : '';
 
@@ -55,11 +66,14 @@ export default (() => {
                 <img src="../images/unlike.png" class="${page} unlikes-img hidden" aria-hidden="true" />
               </button>
             </div>
+            <div class="${page} rater__wrap"><div id="rater"></div></div>
           </div>
         </a>
       </li>`
       )
       .join('');
+
+    [...document.querySelectorAll('#rater')].forEach((el, i) => createReadOnlyRater(el, reviews[i].ratings));
   };
 
   const renderTags = (tags, $target) => {
@@ -94,7 +108,7 @@ export default (() => {
               <span class="reviewDetail__addInform--ratingText">Ratings</span>
               <div class="reviewDetail__addInform--starsWrap">
                 <span class="reviewDetail__addInform--starsCount">${ratings}</span>
-                <div class="reviewDetail__addInform--stars">🌟🌟🌟🌟🌟</div>
+                <div class="reviewDetail__addInform--stars"><div id="rater"></div></div>
               </div>
             </div>
             <div class="reviewDetail__addInform--likesWrap">
@@ -112,6 +126,7 @@ export default (() => {
       </header>`;
 
     $target.appendChild($newDiv);
+    createReadOnlyRater(document.querySelector('#rater'), ratings);
   };
 
   const renderReviewDetailAdd = (reviewData, $target) => {
