@@ -13,7 +13,7 @@ reviewRouter.get('/mine/:id', (req, res) => {
       .filter(({ userId }) => userId === req.params.id)
       .map(({ content, photos }, i, reviews) => ({
         ...reviews[i],
-        content: content.slice(0, 50),
+        content: content.slice(0, 300),
         photos: photos.slice(0, 1),
       }))
   );
