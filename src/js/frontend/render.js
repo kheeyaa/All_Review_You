@@ -164,6 +164,7 @@ export default (() => {
       <!-- 관련 있는 리뷰 -->
       <section class="reviewDetail__relatedReview review-column-changewidth">
         <h2 class="reviewDetail__relatedReview--title">관련 있는 리뷰</h2>
+        <div class="review-row review-column-changewidth">
           <ul class="review__list">
             <li class="review__card">
               <div class="review__img"><img src="../images/test.jpg" alt="" /></div>
@@ -214,6 +215,7 @@ export default (() => {
               </div>
             </li>
           </ul>
+        </div>
       </section>`;
 
     $target.appendChild($newDiv);
