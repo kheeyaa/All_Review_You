@@ -77,9 +77,9 @@ export default (() => {
       reviewData;
 
     $newDiv.innerHTML = `
-      <h1 class="a11y-hidden">본문 영역</h1>
+      <h2 class="a11y-hidden">리뷰</h2>
       <header class="reviewDetail__header">
-        <h2 class="a11y-hidden">제목 영역</h2>
+        <h3 class="a11y-hidden">리뷰-제목</h3>
         <p class="reviewDetail__title">${title}</p>
         <div class="reviewDetail__informWrap">
           <div class="reviewDetail__inform">
@@ -125,7 +125,7 @@ export default (() => {
 
     $newDiv.innerHTML = `
     <!-- 리뷰 본문 외 -->
-      <h2 class="a11y-hidden">댓글 및 관련 리뷰</h2>
+      <h2 class="a11y-hidden">댓글</h2>
       <!-- 댓글 작성하기-->
       <section class="reviewDetail__addComments">
         <h3 class="a11y-hidden">댓글 작성</h3>
@@ -162,13 +162,14 @@ export default (() => {
       </section>
 
       <!-- 관련 있는 리뷰 -->
-      <aside class="reviewDetail__relatedReview">
-        <h3 class="reviewDetail__relatedReview--title">관련 있는 리뷰</h2>
+      <section class="reviewDetail__relatedReview review-column-changewidth">
+        <h2 class="reviewDetail__relatedReview--title">관련 있는 리뷰</h2>
+        <div class="review-row review-column-changewidth">
           <ul class="review__list">
             <li class="review__card">
               <div class="review__img"><img src="../images/test.jpg" alt="" /></div>
               <div class="review__details">
-                <h2 class="title">제목</h2>
+                <h3 class="title">제목</h3>
                 <span class="detail">설명글</span>
                 <time datetime="2021-11-07">2021년 11월 07일</time>
                 <span class="author">작성자 아이디</span>
@@ -184,7 +185,7 @@ export default (() => {
             <li class="review__card">
               <div class="review__img"><img src="../images/test.jpg" alt="" /></div>
               <div class="review__details">
-                <h2 class="title">제목</h2>
+                <h3 class="title">제목</h3>
                 <span class="detail">설명글</span>
                 <time datetime="2021-11-07">2021년 11월 07일</time>
                 <span class="author">작성자 아이디</span>
@@ -200,7 +201,7 @@ export default (() => {
             <li class="review__card">
               <div class="review__img"><img src="../images/test.jpg" alt="" /></div>
               <div class="review__details">
-                <h2 class="title">제목</h2>
+                <h3 class="title">제목</h3>
                 <span class="detail">설명글</span>
                 <time datetime="2021-11-07">2021년 11월 07일</time>
                 <span class="author">작성자 아이디</span>
@@ -214,7 +215,8 @@ export default (() => {
               </div>
             </li>
           </ul>
-      </aside>`;
+        </div>
+      </section>`;
 
     $target.appendChild($newDiv);
   };
