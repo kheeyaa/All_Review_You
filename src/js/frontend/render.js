@@ -34,6 +34,15 @@ export default (() => {
     document.querySelector('.search__message').textContent = `총 ${reviewsLen}개의 리뷰를 찾았습니다.`;
   };
 
+  const createReadOnlyRater = (el, rate) => {
+    rater({
+      element: el,
+      rating: rate,
+      readOnly: true,
+      starSize: 24,
+    });
+  };
+
   const renderReviews = (reviews, $target) => {
     const page = window.location.pathname.replace(/\/|.html/g, '') === 'mypage' ? 'mypage' : '';
 
@@ -64,14 +73,7 @@ export default (() => {
       )
       .join('');
 
-    [...document.querySelectorAll('#rater')].forEach((el, i) => {
-      rater({
-        element: el,
-        rating: reviews[i].ratings,
-        readOnly: true,
-        starSize: 24,
-      });
-    });
+    [...document.querySelectorAll('#rater')].forEach((el, i) => createReadOnlyRater(el, reviews[i].ratings));
   };
 
   const renderTags = (tags, $target) => {
@@ -124,12 +126,7 @@ export default (() => {
       </header>`;
 
     $target.appendChild($newDiv);
-    rater({
-      element: document.querySelector('#rater'),
-      rating: ratings,
-      readOnly: true,
-      starSize: 24,
-    });
+    createReadOnlyRater(document.querySelector('#rater'), ratings);
   };
 
   const renderReviewDetailAdd = (reviewData, $target) => {
