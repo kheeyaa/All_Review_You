@@ -6,6 +6,7 @@
   @include flexbox($flex-wrap: wrap);
   padding: rem(14px);
   overflow: hidden;
+  min-width: rem(300px);
 }
 
 .likes {

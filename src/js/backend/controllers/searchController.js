@@ -1,6 +1,6 @@
 const Reviews = require('../models/Review');
 
-const isExistTag = (tags, keyword) => tags.every(tag => tag.match(keyword));
+const isExistTag = (tags, keyword) => tags.some(tag => tag.match(keyword));
 
 exports.findSearchResult = (req, res) => {
   // https://www.codegrepper.com/code-examples/javascript/axios+query+parameters
