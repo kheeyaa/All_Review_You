@@ -9,7 +9,7 @@ const Review = (() => {
       photos: [],
       tags: ['곱창맛집'],
       ratings: 4.5,
-      likes: ['jkrang1702', 'jkrang105', 'jkrang104'],
+      likes: ['jkrang1702', 'jkrang105', 'jkrang104', 'kheeyaa'],
       comments: [
         {
           commentId: 1,
@@ -73,7 +73,7 @@ const Review = (() => {
       photos: [],
       tags: ['맥북'],
       ratings: 2.5,
-      likes: [],
+      likes: ['kheeyaa'],
       comments: [],
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -94,7 +94,7 @@ const Review = (() => {
     },
 
     change(curReviewId, newReview) {
-      state = state.map(({ reviewId }, _, existingReview) => (curReviewId === reviewId ? newReview : existingReview));
+      state = state.map(({ reviewId }, i) => (curReviewId === reviewId ? newReview : state[i]));
     },
   };
 })();

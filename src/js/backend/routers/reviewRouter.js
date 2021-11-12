@@ -11,6 +11,7 @@ reviewRouter.patch('/review/likes', (req, res) => {
   const { curUserId, curReviewId } = req.body;
 
   const review = Reviews.state.filter(({ reviewId }) => reviewId === +curReviewId)[0];
+
   const { likes } = review;
   const isLiked = review.likes.includes(curUserId);
 

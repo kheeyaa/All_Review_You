@@ -1,3 +1,5 @@
+import userData from './userData';
+
 const rater = require('rater-js');
 
 export default (() => {
@@ -46,6 +48,8 @@ export default (() => {
   const renderReviews = (reviews, $target) => {
     const page = window.location.pathname.replace(/\/|.html/g, '') === 'mypage' ? 'mypage' : '';
 
+    console.log(userData.id);
+
     $target.innerHTML = reviews
       .map(
         ({ title, userId, reviewId, content, photos, tags, ratings, likes, comments, createdAt, updatedAt }) => `
@@ -62,8 +66,12 @@ export default (() => {
             <div class="${page} likes__container">
               <span class="${page} likes__count">${likes.length}</span>
               <button class="${page} likes__button">
-                <img src="../images/like.png" class="${page} likes-img" aria-hidden="true" />
-                <img src="../images/unlike.png" class="${page} unlikes-img hidden" aria-hidden="true" />
+                <img src="../images/like.png" class="${page} likes-img ${
+          likes.includes(userData.id) ? '' : 'hidden'
+        }" aria-hidden="true" />
+                <img src="../images/unlike.png" class="${page} unlikes-img ${
+          likes.includes(userData.id) ? 'hidden' : ''
+        }" aria-hidden="true" />
               </button>
             </div>
             <div class="${page} rater__wrap"><div id="rater"></div></div>

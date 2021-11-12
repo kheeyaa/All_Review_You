@@ -16,6 +16,6 @@ document.querySelector('.review__list').onclick = async e => {
     curReviewId: e.target.closest('.review__card').dataset.reviewid,
   });
 
-  document.querySelector('.likes-img').classList.toggle('hidden', !isliked);
-  document.querySelector('.unlikes-img').classList.toggle('hidden', isliked);
+  e.target.closest('.review__card').querySelector('.likes-img').classList.toggle('hidden', !isliked);
+  e.target.closest('.review__card').querySelector('.unlikes-img').classList.toggle('hidden', isliked);
 };
