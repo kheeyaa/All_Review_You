@@ -5,7 +5,6 @@ const User = require('../models/User');
 
 exports.signin = async (req, res) => {
   const { id, password } = req.body;
-  console.log(id, password);
   const user = User.state.find(({ userId }) => userId === id);
   if (!user) return res.status(401).send('fail');
 
@@ -52,7 +51,6 @@ exports.signup = async (req, res) => {
 exports.logout = (req, res) => {
   try {
     res.clearCookie('access_token');
-
     res.send('ok');
   } catch (e) {
     res.status(500).send(e.message);
