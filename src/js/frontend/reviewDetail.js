@@ -6,6 +6,8 @@ import userData from './userData';
 const $reviewDetail = document.querySelector('.reviewDetail');
 
 window.addEventListener('DOMContentLoaded', async () => {
+  console.log('hi');
+
   try {
     const { data: reviews } = await axios.get('/reviews/review/1');
     const { data: curUserId } = await axios.get('/users/me');

@@ -38,8 +38,8 @@ reviewRouter.get('/mine/:id', (req, res) => {
   );
 });
 
-// reviews/review/id -> GET 특정 리뷰 for reviewDetail Page
-reviewRouter.get('/review/:id', (req, res) => {
+// reviews/id -> GET 특정 리뷰 for reviewDetail Page
+reviewRouter.get('/:id([0-9]+)', (req, res) => {
   res.send(Reviews.state.filter(({ reviewId }) => reviewId === +req.params.id));
 });
 
