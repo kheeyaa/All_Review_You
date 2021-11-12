@@ -1,4 +1,13 @@
+const rater = require('rater-js');
+
 export default (() => {
+  const renderHeader = curUserId => {
+    document.querySelector('.login').classList.toggle('hidden', curUserId);
+    document.querySelector('.logout').classList.toggle('hidden', !curUserId);
+    document.querySelector('.my-page').classList.toggle('hidden', !curUserId);
+    document.querySelector('.new-review').classList.toggle('hidden', !curUserId);
+  };
+
   const convertTimeFormat = date => {
     const [year, month, day] = date.toString().slice(0, 10).split('-');
 
@@ -32,13 +41,22 @@ export default (() => {
     document.querySelector('.search__message').textContent = `총 ${reviewsLen}개의 리뷰를 찾았습니다.`;
   };
 
-  const renderReviews = (reviews, $target) => {
+  const createReadOnlyRater = (el, rate) => {
+    rater({
+      element: el,
+      rating: rate,
+      readOnly: true,
+      starSize: 24,
+    });
+  };
+
+  const renderReviews = (reviews, $target, curUserId) => {
     const page = window.location.pathname.replace(/\/|.html/g, '') === 'mypage' ? 'mypage' : '';
 
     $target.innerHTML = reviews
       .map(
         ({ title, userId, reviewId, content, photos, tags, ratings, likes, comments, createdAt, updatedAt }) => `
-      <li class="${page} review__card">
+      <li class="${page} review__card" data-reviewid = "${reviewId}">
         <a href="./reviewDetail.html">
           <div class="${page} review__img"><img src="../images/test.jpg" alt="" /></div>
           <div class="${page} review__details">
@@ -51,22 +69,29 @@ export default (() => {
             <div class="${page} likes__container">
               <span class="${page} likes__count">${likes.length}</span>
               <button class="${page} likes__button">
-                <img src="../images/like.png" class="${page} likes-img" aria-hidden="true" />
-                <img src="../images/unlike.png" class="${page} unlikes-img hidden" aria-hidden="true" />
+                <img src="../images/like.png" class="${page} likes-img ${
+          likes.includes(curUserId) ? '' : 'hidden'
+        }" aria-hidden="true" />
+                <img src="../images/unlike.png" class="${page} unlikes-img ${
+          likes.includes(curUserId) ? 'hidden' : ''
+        }" aria-hidden="true" />
               </button>
             </div>
+            <div class="${page} rater__wrap"><div id="rater"></div></div>
           </div>
         </a>
       </li>`
       )
       .join('');
+
+    [...document.querySelectorAll('#rater')].forEach((el, i) => createReadOnlyRater(el, reviews[i].ratings));
   };
 
   const renderTags = (tags, $target) => {
     $target.innerHTML = tags.map(tag => `<li class="tag"><a href="" type="button">#${tag}</a></li>`).join('');
   };
 
-  const renderReviewDetailContent = (reviewData, $target) => {
+  const renderReviewDetailContent = (reviewData, $target, curUserId) => {
     if ($target.querySelector('.reviewDetail__contentWrap'))
       $target.querySelector('.reviewDetail__contentWrap').remove();
 
@@ -78,7 +103,7 @@ export default (() => {
 
     $newDiv.innerHTML = `
       <h2 class="a11y-hidden">리뷰</h2>
-      <header class="reviewDetail__header">
+      <header class="reviewDetail__header" data-reviewid = "${reviewId}">
         <h3 class="a11y-hidden">리뷰-제목</h3>
         <p class="reviewDetail__title">${title}</p>
         <div class="reviewDetail__informWrap">
@@ -94,16 +119,20 @@ export default (() => {
               <span class="reviewDetail__addInform--ratingText">Ratings</span>
               <div class="reviewDetail__addInform--starsWrap">
                 <span class="reviewDetail__addInform--starsCount">${ratings}</span>
-                <div class="reviewDetail__addInform--stars">🌟🌟🌟🌟🌟</div>
+                <div class="reviewDetail__addInform--stars"><div id="rater"></div></div>
               </div>
             </div>
             <div class="reviewDetail__addInform--likesWrap">
               <span class="reviewDetail__addInform--likesText">likes</span>
               <div class="reviewDetail__addInform--likesSubWrap">
-                <span class="reviewDetail__addInform--likesCount">${likes.length}</span>
+                <span class="reviewDetail__addInform--likesCount likes__count">${likes.length}</span>
                 <button class="likes__button">
-                  <img src="../images/like.png" class="likes-img" aria-hidden="true" />
-                  <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
+                  <img src="../images/like.png" class="likes-img ${
+                    likes.includes(curUserId) ? '' : 'hidden'
+                  }" aria-hidden="true" />
+                  <img src="../images/unlike.png" class="unlikes-img ${
+                    likes.includes(curUserId) ? 'hidden' : ''
+                  }" aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -112,6 +141,7 @@ export default (() => {
       </header>`;
 
     $target.appendChild($newDiv);
+    createReadOnlyRater(document.querySelector('#rater'), ratings);
   };
 
   const renderReviewDetailAdd = (reviewData, $target) => {
@@ -222,8 +252,10 @@ export default (() => {
   };
 
   return {
-    home(reviews, targets) {
-      renderReviews(reviews, targets.$reviewList);
+    home(reviews, targets, curUserId) {
+      renderHeader(curUserId);
+
+      renderReviews(reviews, targets.$reviewList, curUserId);
 
       renderTags(
         reviews.flatMap(review => review.tags),
@@ -231,8 +263,10 @@ export default (() => {
       );
     },
 
-    mypage(reviews, targets) {
-      renderReviews(reviews, targets.$reviewList);
+    mypage(reviews, targets, curUserId) {
+      renderHeader(curUserId);
+
+      renderReviews(reviews, targets.$reviewList, curUserId);
 
       renderTags(
         reviews.flatMap(review => review.tags),
@@ -240,13 +274,15 @@ export default (() => {
       );
     },
 
-    reviewDetail(review, targets) {
-      renderReviewDetailContent(review, targets.$reviewDetail);
+    reviewDetail(review, targets, curUserId) {
+      renderHeader(curUserId);
+      renderReviewDetailContent(review, targets.$reviewDetail, curUserId);
       renderReviewDetailAdd(review, targets.$reviewDetail);
     },
 
-    search(reviews, targets) {
-      renderReviews(reviews, targets.$reviewList);
+    search(reviews, targets, curUserId) {
+      renderHeader(curUserId);
+      renderReviews(reviews, targets.$reviewList, curUserId);
       renderMessage(reviews.length);
     },
   };
