@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const express = require('express');
 const middleware = require('webpack-dev-middleware');
+const { createReview, writeReview, getOneReview } = require('../controllers/reviewController');
 
 const reviewRouter = Router();
 
@@ -75,7 +76,7 @@ reviewRouter.get('/all', (req, res) => {
   res.send(Reviews.state);
 });
 
-reviewRouter.post('/', (req, res) => {});
+reviewRouter.post('/', writeReview);
 reviewRouter.patch('/:id', (req, res) => {});
 reviewRouter.put('/:id', (req, res) => {});
 reviewRouter.delete('/:id', (req, res) => {});

@@ -1,0 +1,6 @@
+@use './../base' as *;
+@use './../components' as *;
+
+.container {
+  @include boxSizeMax;
+}
