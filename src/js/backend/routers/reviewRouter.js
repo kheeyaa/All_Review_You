@@ -40,9 +40,7 @@ reviewRouter.get('/mine/:id', (req, res) => {
 });
 
 // reviews/id -> GET 특정 리뷰 for reviewDetail Page
-reviewRouter.get('/:id([0-9]+)', (req, res) => {
-  res.send(Reviews.state.filter(({ reviewId }) => reviewId === +req.params.id));
-});
+reviewRouter.get('/:id([0-9]+)', getOneReview);
 
 // reviews/all => 모든 리뷰 보내줌
 reviewRouter.get('/all', (req, res) => {
