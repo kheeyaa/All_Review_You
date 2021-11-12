@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const { createReview, writeReview, getOneReview } = require('../controllers/reviewController');
 
 const reviewRouter = Router();
 
@@ -20,11 +21,13 @@ reviewRouter.get('/mine/:id', (req, res) => {
 });
 
 // reviews/review/id -> GET 특정 리뷰 for reviewDetail Page
-reviewRouter.get('/review/:id', (req, res) => {
-  res.send(Reviews.state.filter(({ reviewId }) => reviewId === +req.params.id));
-});
+// reviewRouter.get('/review/:id', (req, res) => {
+//   res.send(Reviews.state.filter(({ reviewId }) => reviewId === +req.params.id));
+// });
 
-reviewRouter.post('/', (req, res) => {});
+reviewRouter.get('/:id', getOneReview);
+
+reviewRouter.post('/', writeReview);
 reviewRouter.patch('/:id', (req, res) => {});
 reviewRouter.put('/:id', (req, res) => {});
 reviewRouter.delete('/:id', (req, res) => {});
