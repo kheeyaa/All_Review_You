@@ -1,5 +1,6 @@
 import axios from 'axios';
 import render from './render';
+import userData from './userData';
 
 document.querySelector('.search__form').onsubmit = async e => {
   e.preventDefault();
@@ -12,7 +13,11 @@ document.querySelector('.search__form').onsubmit = async e => {
         keyword: $searchInput.value.trim(),
       },
     });
-    render.search(reviews, { $reviewList: document.querySelector('.review__list') });
+    const { data: curUserId } = await axios.get('/users/me');
+
+    userData.id = curUserId;
+
+    render.search(reviews, { $reviewList: document.querySelector('.review__list') }, curUserId);
   } catch (e) {
     console.error(e);
   }

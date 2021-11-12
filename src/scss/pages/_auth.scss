@@ -13,7 +13,7 @@
 
 .modal {
   position: relative;
-  top: rem(150px);
+  top: rem(120px);
   left: 50%;
   transform: translateX(-50%);
   border-radius: 10px;
@@ -41,13 +41,22 @@
     border: solid 1px $gray3;
     border-radius: rem(5px);
   }
-  .error-message {
-    margin-top: rem(10px);
-    color: $red;
-  }
 }
 
-.primary-button {
+.id-duplicate:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.error-message {
+  margin: rem(5px) 0;
+  height: rem(24px);
+  color: $red;
+}
+
+.submit-button {
+  padding: rem(15px) 0;
+  width: 100%;
   background-color: $olive;
   border-radius: rem(5px);
   color: $white;
@@ -55,9 +64,9 @@
   border: none;
 }
 
-.submit-button {
-  padding: rem(15px) 0;
-  width: 100%;
+.submit-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 .switch-auth-button {

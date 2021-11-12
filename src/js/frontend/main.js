@@ -9,7 +9,11 @@ const $tagsList = document.querySelector('.tags__list');
 window.addEventListener('DOMContentLoaded', async () => {
   try {
     const { data: reviews } = await axios.get('/reviews/all');
-    render.home(reviews, { $reviewList, $tagsList });
+    const { data: curUserId } = await axios.get('/users/me');
+
+    userData.id = curUserId;
+
+    render.home(reviews, { $reviewList, $tagsList }, curUserId);
   } catch (e) {
     console.error(e);
   }

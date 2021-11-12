@@ -1,8 +1,13 @@
-import userData from './userData';
-
 const rater = require('rater-js');
 
 export default (() => {
+  const renderHeader = curUserId => {
+    document.querySelector('.login').classList.toggle('hidden', curUserId);
+    document.querySelector('.logout').classList.toggle('hidden', !curUserId);
+    document.querySelector('.my-page').classList.toggle('hidden', !curUserId);
+    document.querySelector('.new-review').classList.toggle('hidden', !curUserId);
+  };
+
   const convertTimeFormat = date => {
     const [year, month, day] = date.toString().slice(0, 10).split('-');
 
@@ -45,10 +50,8 @@ export default (() => {
     });
   };
 
-  const renderReviews = (reviews, $target) => {
+  const renderReviews = (reviews, $target, curUserId) => {
     const page = window.location.pathname.replace(/\/|.html/g, '') === 'mypage' ? 'mypage' : '';
-
-    console.log(userData.id);
 
     $target.innerHTML = reviews
       .map(
@@ -67,10 +70,10 @@ export default (() => {
               <span class="${page} likes__count">${likes.length}</span>
               <button class="${page} likes__button">
                 <img src="../images/like.png" class="${page} likes-img ${
-          likes.includes(userData.id) ? '' : 'hidden'
+          likes.includes(curUserId) ? '' : 'hidden'
         }" aria-hidden="true" />
                 <img src="../images/unlike.png" class="${page} unlikes-img ${
-          likes.includes(userData.id) ? 'hidden' : ''
+          likes.includes(curUserId) ? 'hidden' : ''
         }" aria-hidden="true" />
               </button>
             </div>
@@ -88,7 +91,7 @@ export default (() => {
     $target.innerHTML = tags.map(tag => `<li class="tag"><a href="" type="button">#${tag}</a></li>`).join('');
   };
 
-  const renderReviewDetailContent = (reviewData, $target) => {
+  const renderReviewDetailContent = (reviewData, $target, curUserId) => {
     if ($target.querySelector('.reviewDetail__contentWrap'))
       $target.querySelector('.reviewDetail__contentWrap').remove();
 
@@ -100,7 +103,7 @@ export default (() => {
 
     $newDiv.innerHTML = `
       <h2 class="a11y-hidden">리뷰</h2>
-      <header class="reviewDetail__header">
+      <header class="reviewDetail__header" data-reviewid = "${reviewId}">
         <h3 class="a11y-hidden">리뷰-제목</h3>
         <p class="reviewDetail__title">${title}</p>
         <div class="reviewDetail__informWrap">
@@ -122,10 +125,14 @@ export default (() => {
             <div class="reviewDetail__addInform--likesWrap">
               <span class="reviewDetail__addInform--likesText">likes</span>
               <div class="reviewDetail__addInform--likesSubWrap">
-                <span class="reviewDetail__addInform--likesCount">${likes.length}</span>
+                <span class="reviewDetail__addInform--likesCount likes__count">${likes.length}</span>
                 <button class="likes__button">
-                  <img src="../images/like.png" class="likes-img" aria-hidden="true" />
-                  <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
+                  <img src="../images/like.png" class="likes-img ${
+                    likes.includes(curUserId) ? '' : 'hidden'
+                  }" aria-hidden="true" />
+                  <img src="../images/unlike.png" class="unlikes-img ${
+                    likes.includes(curUserId) ? 'hidden' : ''
+                  }" aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -245,8 +252,10 @@ export default (() => {
   };
 
   return {
-    home(reviews, targets) {
-      renderReviews(reviews, targets.$reviewList);
+    home(reviews, targets, curUserId) {
+      renderHeader(curUserId);
+
+      renderReviews(reviews, targets.$reviewList, curUserId);
 
       renderTags(
         reviews.flatMap(review => review.tags),
@@ -254,8 +263,10 @@ export default (() => {
       );
     },
 
-    mypage(reviews, targets) {
-      renderReviews(reviews, targets.$reviewList);
+    mypage(reviews, targets, curUserId) {
+      renderHeader(curUserId);
+
+      renderReviews(reviews, targets.$reviewList, curUserId);
 
       renderTags(
         reviews.flatMap(review => review.tags),
@@ -263,13 +274,15 @@ export default (() => {
       );
     },
 
-    reviewDetail(review, targets) {
-      renderReviewDetailContent(review, targets.$reviewDetail);
+    reviewDetail(review, targets, curUserId) {
+      renderHeader(curUserId);
+      renderReviewDetailContent(review, targets.$reviewDetail, curUserId);
       renderReviewDetailAdd(review, targets.$reviewDetail);
     },
 
-    search(reviews, targets) {
-      renderReviews(reviews, targets.$reviewList);
+    search(reviews, targets, curUserId) {
+      renderHeader(curUserId);
+      renderReviews(reviews, targets.$reviewList, curUserId);
       renderMessage(reviews.length);
     },
   };
