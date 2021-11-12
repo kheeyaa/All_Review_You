@@ -1,6 +1,6 @@
 import utils from './utils';
-import header from './header';
 import Header from './header';
+import Nav from './nav';
 
 export default (() => {
   const renderHeader = curUserId => {
@@ -278,7 +278,11 @@ export default (() => {
     home(reviews, curUserId, order) {
       clear();
       (() => new Header({ $app: document.querySelector('.container'), initState: curUserId }))();
-
+      (() =>
+        new Nav({
+          $app: document.querySelector('.container'),
+          initState: { menuList: ['좋아요순', '최신순'], navClassName: 'main' },
+        }))();
       // clear();
       // renderHeader(curUserId);
       // document.querySelector('.container').appendChild(createNav(['좋아요순', '최신순']));

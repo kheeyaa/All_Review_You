@@ -60,6 +60,6 @@ export default class Header {
         }"><img src="../images/newReview.svg" alt="새 리뷰 올리기" /></a>
     </div>`;
 
-    this.$target.innerHTML = `${logo}${userService}`;
+    this.$target.innerHTML = logo + userService;
   }
 }
