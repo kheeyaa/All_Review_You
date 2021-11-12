@@ -1,2 +1,3 @@
 import '../../scss/index.scss';
-import './auth.js';
+import './header.js';
+import './authModal.js';
