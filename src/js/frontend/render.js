@@ -1,4 +1,6 @@
 import utils from './utils';
+import header from './header';
+import Header from './header';
 
 export default (() => {
   const renderHeader = curUserId => {
@@ -9,9 +11,7 @@ export default (() => {
   };
 
   const clear = () => {
-    [...document.querySelector('.container').children].forEach($el => {
-      if (!$el.matches('header')) $el.remove();
-    });
+    document.querySelector('.container').innerHTML = '';
   };
 
   const createNav = menuList => {
@@ -277,18 +277,15 @@ export default (() => {
   return {
     home(reviews, curUserId, order) {
       clear();
+      (() => new Header({ $app: document.querySelector('.container'), initState: curUserId }))();
 
-      renderHeader(curUserId);
-
-      document.querySelector('.container').appendChild(createNav(['좋아요순', '최신순']));
-
-      document.querySelector('.container').appendChild(createMain());
-
-      renderReviews(reviews, curUserId, order);
-
-      document.querySelector('.container').appendChild(createAside());
-
-      renderTags([...new Set(reviews.flatMap(review => review.tags))]);
+      // clear();
+      // renderHeader(curUserId);
+      // document.querySelector('.container').appendChild(createNav(['좋아요순', '최신순']));
+      // document.querySelector('.container').appendChild(createMain());
+      // renderReviews(reviews, curUserId, order);
+      // document.querySelector('.container').appendChild(createAside());
+      // renderTags([...new Set(reviews.flatMap(review => review.tags))]);
     },
 
     mypage(reviews, curUserId) {
