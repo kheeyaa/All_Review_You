@@ -2,17 +2,52 @@ import axios from 'axios';
 import render from './render';
 import userData from './userData';
 
+// const path = {
+//   '/': 'home',
+//   '/mypage': 'mypage',
+//   '/reviews': 'reviewDetail',
+//   '/search': 'search',
+// };
+
 window.addEventListener('DOMContentLoaded', async () => {
-  // const { order } = document.querySelector('.nav__now').dataset;
-  try {
+  const { pathname: page } = document.location;
+
+  console.log(page);
+
+  const path = page.match(/(^\/)|([a-z])/gi).join('');
+
+  if (path === '/') {
     const order = 1;
     const { data: reviews } = await axios.get('/reviews/all');
     const { data: curUserId } = await axios.get('/users/me');
 
     render.home(reviews, curUserId, order);
-  } catch (e) {
-    console.error(e);
+    window.scroll({ top: 0 });
+  } else if (path === '/mypage') {
+    const order = 1;
+    const { data: reviews } = await axios.get('/reviews/all');
+    const { data: curUserId } = await axios.get('/users/me');
+
+    render.home(reviews, curUserId, order);
+    window.scroll({ top: 0 });
+  } else {
+    const { data: reviews } = await axios.get(page, {
+      headers: { accept: 'application/json' },
+    });
+    render.reviewDetail(reviews);
+    window.scroll({ top: 0 });
   }
+
+  // const { order } = document.querySelector('.nav__now').dataset;
+  // try {
+  //   const order = 1;
+  //   const { data: reviews } = await axios.get('/reviews/all');
+  //   const { data: curUserId } = await axios.get('/users/me');
+
+  //   render.home(reviews, curUserId, order);
+  // } catch (e) {
+  //   console.error(e);
+  // }
 });
 
 // document.querySelector('.nav__list').onclick = async e => {
@@ -24,8 +59,8 @@ window.addEventListener('DOMContentLoaded', async () => {
 //   const { order } = e.target.closest('li').dataset;
 
 //   try {
-//     const { data: reviews } = await axios.get('/reviews/all');
-//     const { data: curUserId } = await axios.get('/users/me');
+// const { data: reviews } = await axios.get('/reviews/all');
+// const { data: curUserId } = await axios.get('/users/me');
 
 //     userData.id = curUserId;
 
@@ -39,39 +74,68 @@ window.onclick = async e => {
   if (!e.target.closest('a')) return;
   e.preventDefault();
 
-  try {
-    const $link = e.target.closest('a');
-    const page = $link.getAttribute('href');
-    const { reviewid } = $link.parentNode.dataset;
+  const $link = e.target.closest('a');
+  const page = $link.getAttribute('href');
 
-    window.history.pushState(null, null, page + `/${reviewid}`);
+  window.history.pushState({ path: page }, null, page);
 
-    const { data: review } = await axios.get(page + `/${reviewid}`);
+  const path = page.match(/(^\/)|([a-z])/gi).join('');
 
-    render.reviewDetail(review[0]);
-    window.scroll({ top: 0 });
-  } catch (e) {
-    console.error(e);
-  }
-};
-
-window.onpopstate = async () => {
-  const { pathname } = document.location;
-
-  if (pathname.match(/[reviews]/)) {
-    const { data: review } = await axios.get(pathname);
-    const { data: curUserId } = await axios.get('/users/me');
-    render.reviewDetail(review[0], curUserId);
-    window.scroll({ top: 0 });
-  } else {
+  if (path === '/') {
     const order = 1;
     const { data: reviews } = await axios.get('/reviews/all');
     const { data: curUserId } = await axios.get('/users/me');
 
     render.home(reviews, curUserId, order);
+    window.scroll({ top: 0 });
+  } else if (path === '/mypage') {
+    const order = 1;
+    const { data: reviews } = await axios.get('/reviews/all');
+    const { data: curUserId } = await axios.get('/users/me');
+
+    render.home(reviews, curUserId, order);
+    window.scroll({ top: 0 });
+  } else {
+    const { data: reviews } = await axios.get(page, {
+      headers: { accept: 'application/json' },
+    });
+    render.reviewDetail(reviews);
+    window.scroll({ top: 0 });
   }
+
+  // try {
+  //   // const { data: reviews } = await axios.get(page);
+  //   // render[path[page.match(/(^\/)|([a-z])/gi).join('')]](reviews, curUserId, order);
+  //   // window.scroll({ top: 0 });
+  // } catch (e) {
+  //   console.error(e);
+  // }
 };
 
-// window.onpopstate = e => {
-//   alert(`location: ${document.location}, state: ${JSON.stringify(e.state)}`);
-// };
+window.onpopstate = async () => {
+  const { pathname: page } = document.location;
+
+  const path = page.match(/(^\/)|([a-z])/gi).join('');
+
+  if (path === '/') {
+    const order = 1;
+    const { data: reviews } = await axios.get('/reviews/all');
+    const { data: curUserId } = await axios.get('/users/me');
+
+    render.home(reviews, curUserId, order);
+    window.scroll({ top: 0 });
+  } else if (path === '/mypage') {
+    const order = 1;
+    const { data: reviews } = await axios.get('/reviews/all');
+    const { data: curUserId } = await axios.get('/users/me');
+
+    render.home(reviews, curUserId, order);
+    window.scroll({ top: 0 });
+  } else {
+    const { data: reviews } = await axios.get(page, {
+      headers: { accept: 'application/json' },
+    });
+    render.reviewDetail(reviews);
+    window.scroll({ top: 0 });
+  }
+};
