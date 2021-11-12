@@ -10,6 +10,7 @@ module.exports = {
     mypage: './src/js/frontend/mypage.js',
     reviewDetail: './src/js/frontend/reviewDetail.js',
     search: './src/js/frontend/search.js',
+    editor: './src/js/frontend/editor.js',
   },
   output: {
     path: path.resolve(__dirname, 'public'),
@@ -39,6 +40,11 @@ module.exports = {
       filename: 'modal.html',
       template: 'src/template/modal.html',
       chunks: ['style'],
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'editor.html',
+      template: 'src/template/editor.html',
+      chunks: ['style', 'editor'],
     }),
     new MiniCssExtractPlugin({ filename: 'css/style.css' }),
     new CopyPlugin({
