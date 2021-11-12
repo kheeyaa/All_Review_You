@@ -15,13 +15,17 @@ document.querySelector('.review__list').onclick = async e => {
     // return;
   }
 
-  const { data: isliked } = await axios.patch('/reviews/review/likes', {
-    curUserId: userData.id,
-    curReviewId: $reviewCard.dataset.reviewid,
-  });
+  try {
+    const { data: isliked } = await axios.patch('/reviews/review/likes', {
+      curUserId: userData.id,
+      curReviewId: $reviewCard.dataset.reviewid,
+    });
 
-  $reviewCard.querySelector('.likes__count').innerHTML =
-    +$reviewCard.querySelector('.likes__count').innerHTML + (isliked ? 1 : -1);
-  $reviewCard.querySelector('.likes-img').classList.toggle('hidden', !isliked);
-  $reviewCard.querySelector('.unlikes-img').classList.toggle('hidden', isliked);
+    $reviewCard.querySelector('.likes__count').innerHTML =
+      +$reviewCard.querySelector('.likes__count').innerHTML + (isliked ? 1 : -1);
+    $reviewCard.querySelector('.likes-img').classList.toggle('hidden', !isliked);
+    $reviewCard.querySelector('.unlikes-img').classList.toggle('hidden', isliked);
+  } catch (e) {
+    console.error(e);
+  }
 };

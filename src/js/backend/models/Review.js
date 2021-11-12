@@ -23,7 +23,7 @@ const Review = (() => {
         },
       ],
       createdAt: new Date(2008, 11, 3),
-      updatedAt: new Date(),
+      updatedAt: new Date(2008, 11, 3),
     },
     {
       title: '곱창',
@@ -47,8 +47,8 @@ const Review = (() => {
           content: '난 맛있는데',
         },
       ],
-      createdAt: new Date(2008, 11, 3),
-      updatedAt: new Date(),
+      createdAt: new Date(2009, 11, 3),
+      updatedAt: new Date(2009, 11, 3),
     },
     {
       title: '올리브',
@@ -61,8 +61,8 @@ const Review = (() => {
       ratings: 4,
       likes: ['jkrang104'],
       comments: [],
-      createdAt: new Date(2020, 4, 14),
-      updatedAt: new Date(),
+      createdAt: new Date(2010, 4, 14),
+      updatedAt: new Date(2010, 4, 14),
     },
     {
       title: '맥북',
@@ -75,8 +75,8 @@ const Review = (() => {
       ratings: 2.5,
       likes: ['kheeyaa'],
       comments: [],
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: new Date(2020, 3, 10),
+      updatedAt: new Date(2020, 3, 10),
     },
   ];
 
