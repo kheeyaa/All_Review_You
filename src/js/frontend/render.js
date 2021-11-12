@@ -1,33 +1,60 @@
-const rater = require('rater-js');
+import utils from './utils';
 
 export default (() => {
-  const convertTimeFormat = date => {
-    const [year, month, day] = date.toString().slice(0, 10).split('-');
-
-    return `${year}년 ${month}월 ${day}일`;
+  const renderHeader = curUserId => {
+    document.querySelector('.login').classList.toggle('hidden', curUserId);
+    document.querySelector('.logout').classList.toggle('hidden', !curUserId);
+    document.querySelector('.my-page').classList.toggle('hidden', !curUserId);
+    document.querySelector('.new-review').classList.toggle('hidden', !curUserId);
   };
 
-  const timeForToday = value => {
-    const today = new Date();
-    const timeValue = new Date(value);
+  const clear = () => {
+    [...document.querySelector('.container').children].forEach($el => {
+      if (!$el.matches('header')) $el.remove();
+    });
+  };
 
-    const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
-    if (betweenTime < 1) return '방금 전';
-    if (betweenTime < 60) {
-      return `${betweenTime}분 전`;
-    }
+  const createNav = menuList => {
+    const $nav = document.createElement('nav');
+    $nav.className = 'nav';
 
-    const betweenTimeHour = Math.floor(betweenTime / 60);
-    if (betweenTimeHour < 24) {
-      return `${betweenTimeHour}시간 전`;
-    }
+    $nav.innerHTML = `
+      <ul class="nav__list">
+        <h2 class="a11y-hidden">메뉴</h2>
+        ${menuList
+          .map(
+            (menu, i) => `
+        <li class="${i === 0 ? 'nav__now' : ''}">
+          <a href="">${menu}</a>
+        </li>`
+          )
+          .join('')}
+      </ul>`;
 
-    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
-    if (betweenTimeDay < 365) {
-      return `${betweenTimeDay}일 전`;
-    }
+    return $nav;
+  };
 
-    return `${Math.floor(betweenTimeDay / 365)}년 전`;
+  const createMain = () => {
+    const page = window.location.pathname.replace(/\/|.html/g, '') === 'mypage' ? 'mypage' : '';
+    const $main = document.createElement('main');
+    $main.className = `review-row`;
+
+    $main.innerHTML = `
+    <h2 class="a11y-hidden">리뷰 리스트</h2>
+    <ul class="${page} review__list"></ul>`;
+
+    return $main;
+  };
+
+  const createAside = () => {
+    const $aside = document.createElement('aside');
+    $aside.className = 'tags';
+
+    $aside.innerHTML = `
+    <h2 class="tags__title">Tag List</h2>
+    <ul class="tags__list"></ul>`;
+
+    return $aside;
   };
 
   const renderMessage = reviewsLen => {
@@ -43,27 +70,38 @@ export default (() => {
     });
   };
 
-  const renderReviews = (reviews, $target) => {
+  const renderReviews = (reviews, curUserId, order) => {
+    const $target = document.querySelector('.review__list');
+
     const page = window.location.pathname.replace(/\/|.html/g, '') === 'mypage' ? 'mypage' : '';
 
     $target.innerHTML = reviews
+      .sort((review1, review2) =>
+        order === 'likes'
+          ? review2.likes.length - review1.likes.length
+          : Date.parse(review2.createdAt) - Date.parse(review1.createdAt)
+      )
       .map(
         ({ title, userId, reviewId, content, photos, tags, ratings, likes, comments, createdAt, updatedAt }) => `
-      <li class="${page} review__card">
-        <a href="./reviewDetail.html">
+      <li class="${page} review__card" data-reviewid="${reviewId}">
+        <a href="/reviews">
           <div class="${page} review__img"><img src="../images/test.jpg" alt="" /></div>
           <div class="${page} review__details">
             <h2 class="${page} title">${title}</h2>
             <span class="${page} detail">${content}</span>
             <time class="${page} time" datetime="${createdAt.toString().slice(0, 10)}">
-              ${convertTimeFormat(createdAt)}
+              ${utils.convertTimeFormat(createdAt)}
             </time>
             <span class="${page} author">${userId}</span>
             <div class="${page} likes__container">
               <span class="${page} likes__count">${likes.length}</span>
               <button class="${page} likes__button">
-                <img src="../images/like.png" class="${page} likes-img" aria-hidden="true" />
-                <img src="../images/unlike.png" class="${page} unlikes-img hidden" aria-hidden="true" />
+                <img src="../images/like.png" class="${page} likes-img ${
+          likes.includes(curUserId) ? '' : 'hidden'
+        }" aria-hidden="true" />
+                <img src="../images/unlike.png" class="${page} unlikes-img ${
+          likes.includes(curUserId) ? 'hidden' : ''
+        }" aria-hidden="true" />
               </button>
             </div>
             <div class="${page} rater__wrap"><div id="rater"></div></div>
@@ -76,14 +114,13 @@ export default (() => {
     [...document.querySelectorAll('#rater')].forEach((el, i) => createReadOnlyRater(el, reviews[i].ratings));
   };
 
-  const renderTags = (tags, $target) => {
-    $target.innerHTML = tags.map(tag => `<li class="tag"><a href="" type="button">#${tag}</a></li>`).join('');
+  const renderTags = tags => {
+    document.querySelector('.tags__list').innerHTML = tags
+      .map(tag => `<li class="tag"><a href="" type="button">#${tag}</a></li>`)
+      .join('');
   };
 
-  const renderReviewDetailContent = (reviewData, $target) => {
-    if ($target.querySelector('.reviewDetail__contentWrap'))
-      $target.querySelector('.reviewDetail__contentWrap').remove();
-
+  const renderReviewDetailContent = (reviewData, curUserId) => {
     const $newDiv = document.createElement('div');
     $newDiv.className = 'reviewDetail__contentWrap';
 
@@ -92,13 +129,13 @@ export default (() => {
 
     $newDiv.innerHTML = `
       <h2 class="a11y-hidden">리뷰</h2>
-      <header class="reviewDetail__header">
+      <header class="reviewDetail__header" data-reviewid = "${reviewId}">
         <h3 class="a11y-hidden">리뷰-제목</h3>
         <p class="reviewDetail__title">${title}</p>
         <div class="reviewDetail__informWrap">
           <div class="reviewDetail__inform">
             <span class="reviewDetail__inform--userid">${userId}</span
-            ><span class="reviewDetail__inform--beforeDay">${timeForToday(createdAt)}</span>
+            ><span class="reviewDetail__inform--beforeDay">${utils.calculateElaspedTime(createdAt)}</span>
             <div class="reviewDetail__inform--tag">
               ${tags.map(tag => `<span class="reviewDetail__inform--tag--text"># ${tag}</span>`).join('')}
             </div>
@@ -114,10 +151,14 @@ export default (() => {
             <div class="reviewDetail__addInform--likesWrap">
               <span class="reviewDetail__addInform--likesText">likes</span>
               <div class="reviewDetail__addInform--likesSubWrap">
-                <span class="reviewDetail__addInform--likesCount">${likes.length}</span>
+                <span class="reviewDetail__addInform--likesCount likes__count">${likes.length}</span>
                 <button class="likes__button">
-                  <img src="../images/like.png" class="likes-img" aria-hidden="true" />
-                  <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
+                  <img src="../images/like.png" class="likes-img ${
+                    likes.includes(curUserId) ? '' : 'hidden'
+                  }" aria-hidden="true" />
+                  <img src="../images/unlike.png" class="unlikes-img ${
+                    likes.includes(curUserId) ? 'hidden' : ''
+                  }" aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -125,13 +166,10 @@ export default (() => {
         </div>
       </header>`;
 
-    $target.appendChild($newDiv);
-    createReadOnlyRater(document.querySelector('#rater'), ratings);
+    document.querySelector('.container').appendChild($newDiv);
   };
 
-  const renderReviewDetailAdd = (reviewData, $target) => {
-    if ($target.querySelector('.reviewDetail__addWrap')) $target.querySelector('.reviewDetail__addWrap').remove();
-
+  const renderReviewDetailAdd = reviewData => {
     const $newDiv = document.createElement('div');
     $newDiv.className = 'reviewDetail__addWrap';
 
@@ -147,7 +185,7 @@ export default (() => {
         <form action="" class="reviewDetail__addComments--form">
           <label for="comment" class="reviewDetail__addComments--count">${comments.length}개의 댓글</label>
           <input
-            type="text"   
+            type="text"
             id="comment"
             class="reviewDetail__addComments--input"
             name="comment"
@@ -233,36 +271,111 @@ export default (() => {
         </div>
       </section>`;
 
-    $target.appendChild($newDiv);
+    document.querySelector('.container').appendChild($newDiv);
   };
 
   return {
-    home(reviews, targets) {
-      renderReviews(reviews, targets.$reviewList);
+    home(reviews, curUserId, order) {
+      clear();
 
-      renderTags(
-        reviews.flatMap(review => review.tags),
-        targets.$tagsList
-      );
+      renderHeader(curUserId);
+
+      document.querySelector('.container').appendChild(createNav(['좋아요순', '최신순']));
+
+      document.querySelector('.container').appendChild(createMain());
+
+      renderReviews(reviews, curUserId, order);
+
+      document.querySelector('.container').appendChild(createAside());
+
+      renderTags([...new Set(reviews.flatMap(review => review.tags))]);
     },
 
-    mypage(reviews, targets) {
-      renderReviews(reviews, targets.$reviewList);
+    mypage(reviews, curUserId) {
+      clear();
 
-      renderTags(
-        reviews.flatMap(review => review.tags),
-        targets.$tagsList
-      );
+      renderHeader(curUserId);
+
+      document
+        .querySelector('.container')
+        .appendChild(createNav(['내가 작성한 리뷰', '좋아한 리뷰', '최근 읽은 리뷰']));
+
+      document.querySelector('.container').appendChild(createNav(['좋아요순', '최신순']));
+
+      document.querySelector('.container').appendChild(createMain());
+
+      renderReviews(reviews, curUserId);
+
+      document.querySelector('.container').appendChild(createAside());
+
+      renderTags([...new Set(reviews.flatMap(review => review.tags))]);
     },
 
-    reviewDetail(review, targets) {
-      renderReviewDetailContent(review, targets.$reviewDetail);
-      renderReviewDetailAdd(review, targets.$reviewDetail);
+    reviewDetail(review, curUserId) {
+      clear();
+
+      renderHeader(curUserId);
+
+      renderReviewDetailContent(review, curUserId);
+
+      renderReviewDetailAdd(review);
     },
 
-    search(reviews, targets) {
-      renderReviews(reviews, targets.$reviewList);
+    search(reviews, targets, curUserId) {
+      renderHeader(curUserId);
+      renderReviews(reviews, targets.$reviewList, curUserId);
       renderMessage(reviews.length);
     },
   };
 })();
+
+// export default (() => {
+
+//   return {
+//   home(reviews) {
+//     clear();
+
+//     document.querySelector('.container').appendChild(createNav(['좋아요순', '최신순']));
+
+//     document.querySelector('.container').appendChild(createMain());
+
+//     renderReviews(reviews);
+
+//     document.querySelector('.container').appendChild(createAside());
+
+//     renderTags([...new Set(reviews.flatMap(review => review.tags))]);
+//   },
+
+//   mypage(reviews) {
+//     clear();
+
+//     document
+//       .querySelector('.container')
+//       .appendChild(createNav(['내가 작성한 리뷰', '좋아한 리뷰', '최근 읽은 리뷰']));
+
+//     document.querySelector('.container').appendChild(createNav(['좋아요순', '최신순']));
+
+//     document.querySelector('.container').appendChild(createMain());
+
+//     renderReviews(reviews);
+
+//     document.querySelector('.container').appendChild(createAside());
+
+//     renderTags([...new Set(reviews.flatMap(review => review.tags))]);
+//   },
+
+//   reviewDetail(review) {
+//     clear();
+
+//     renderReviewDetailContent(review);
+
+//     renderReviewDetailAdd(review);
+//   },
+
+//   search(reviews, targets, curUserId) {
+//     renderHeader(curUserId);
+//     renderReviews(reviews, targets.$reviewList, curUserId);
+//     renderMessage(reviews.length);
+//   },
+// };
+// })();

@@ -14,6 +14,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'public'),
+    publicPath: '/',
     filename: 'js/[name].bundle.js',
   },
   plugins: [
@@ -91,6 +92,7 @@ module.exports = {
     },
     open: true,
     port: 'auto',
+    hot: true,
     proxy: {
       '/': {
         target: 'http://localhost:3000/',

@@ -2,7 +2,7 @@
 @use './../components' as *;
 
 .mypage {
-  &.review-column {
+  &.review-row {
     @include desktop {
       padding-right: rem(20px);
       width: 80%;
@@ -10,6 +10,9 @@
   }
 
   &.review {
+    &__list {
+      display: block;
+    }
     &__card {
       width: 100%;
       height: 100%;

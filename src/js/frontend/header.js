@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import userData from './userData';
+
 let isLoggedIn = false;
 
 const render = () => {
@@ -17,6 +19,7 @@ const setIsLoggedIn = nextIsLoggedIn => {
 window.addEventListener('DOMContentLoaded', async () => {
   try {
     const { data: nextIsLoggedIn } = await axios.get('/users/me');
+    userData.id = nextIsLoggedIn;
     setIsLoggedIn(nextIsLoggedIn);
   } catch (e) {
     console.error(e.message);
