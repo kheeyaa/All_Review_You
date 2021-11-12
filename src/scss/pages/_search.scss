@@ -4,6 +4,12 @@
 .header-search {
   margin: rem(40px) 0;
 }
+.search-wrap {
+  @include boxSizeMax(700px);
+  @include flexbox($flex-wrap: wrap);
+  overflow: hidden;
+  width: 100%;
+}
 .search {
   width: 100%;
   @include flexbox($justify-content: center, $align-items: center, $direction: column);
@@ -11,7 +17,7 @@
   &__form,
   &__message {
     position: relative;
-    width: 80%;
+    width: 100%;
   }
   &__input {
     width: 100%;
@@ -38,11 +44,6 @@
   }
 
   @include desktop {
-    &__form,
-    &__message {
-      min-width: rem(300px);
-      max-width: rem(700px);
-    }
     &__input {
       font-size: rem(25px);
       padding: rem(16px);
@@ -57,11 +58,6 @@
     }
   }
   @include mobile {
-    &__form,
-    &__message {
-      min-width: rem(300px);
-      max-width: rem(500px);
-    }
     &__input {
       font-size: rem(18px);
       padding: rem(10px);
