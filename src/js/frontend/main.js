@@ -1,21 +1,44 @@
 import axios from 'axios';
 import render from './render';
+import userData from './userData';
 
 // DOM NODES
 const $reviewList = document.querySelector('.review__list');
 const $tagsList = document.querySelector('.tags__list');
 
 window.addEventListener('DOMContentLoaded', async () => {
+  const { order } = document.querySelector('.nav__now').dataset;
   try {
-    const { data: reviews } = await axios.get('/reviews/mine/jkrang104');
+    const { data: reviews } = await axios.get('/reviews/all');
+    const { data: curUserId } = await axios.get('/users/me');
 
-    render.home(reviews, { $reviewList, $tagsList });
+    userData.id = curUserId;
+
+    render.home(reviews, { $reviewList, $tagsList }, curUserId, order);
   } catch (e) {
     console.error(e);
   }
 });
 
-// console.log('main');
+document.querySelector('.nav__list').onclick = async e => {
+  e.preventDefault();
+
+  document.querySelectorAll('.nav__list li').forEach($li => $li.classList.remove('nav__now'));
+  e.target.closest('li').classList.add('nav__now');
+
+  const { order } = e.target.closest('li').dataset;
+
+  try {
+    const { data: reviews } = await axios.get('/reviews/all');
+    const { data: curUserId } = await axios.get('/users/me');
+
+    userData.id = curUserId;
+
+    render.home(reviews, { $reviewList, $tagsList }, curUserId, order);
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 // document.querySelector('.router').onclick = async e => {
 //   e.preventDefault();

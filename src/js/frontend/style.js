@@ -1,3 +1,4 @@
 import '../../scss/index.scss';
-import './header.js';
+import './likes.js';
+// import './header.js';
 import './authModal.js';
