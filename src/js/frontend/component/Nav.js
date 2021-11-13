@@ -3,7 +3,7 @@ export default class Nav {
     this.state = initState;
 
     this.$target = document.createElement('nav');
-    this.$target.className = `nav-${this.state.navClassName}`;
+    this.$target.className = `nav nav-${this.state.navClassName}`;
     $app.appendChild(this.$target);
     this.render();
   }

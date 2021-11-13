@@ -92,7 +92,6 @@ module.exports = {
     },
     open: true,
     port: 'auto',
-    hot: true,
     proxy: {
       '/': {
         target: 'http://localhost:3000/',

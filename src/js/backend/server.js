@@ -9,6 +9,7 @@ const middleware = require('webpack-dev-middleware');
 const authRouter = require('./routers/authRouter');
 const userRouter = require('./routers/userRouter');
 const reviewRouter = require('./routers/reviewRouter');
+const mypageRouter = require('./routers/mypageRouter');
 
 const searchRouter = require('./routers/searchRouter');
 const { checkLoggedIn, jwtMiddleware } = require('./middleware.js');
@@ -23,12 +24,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(jwtMiddleware);
+app.use(middleware(compiler));
 
 app.use('/auth', authRouter);
 app.use('/users', userRouter);
 app.use('/reviews', reviewRouter);
+app.use('/mypage', mypageRouter);
 app.use('/search', searchRouter);
-app.use(middleware(compiler));
 
 // const PORT = process.env.PORT || 3000;
 const PORT = 3000;

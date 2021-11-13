@@ -1,60 +1,13 @@
 import utils from './utils';
-import Header from './header';
-import Nav from './nav';
+import Header from './component/Header';
+import Nav from './component/Nav';
+import Main from './component/Main';
+import Review from './component/Review';
+import Aside from './component/Aside';
 
 export default (() => {
-  const renderHeader = curUserId => {
-    document.querySelector('.login').classList.toggle('hidden', curUserId);
-    document.querySelector('.logout').classList.toggle('hidden', !curUserId);
-    document.querySelector('.my-page').classList.toggle('hidden', !curUserId);
-    document.querySelector('.new-review').classList.toggle('hidden', !curUserId);
-  };
-
   const clear = () => {
     document.querySelector('.container').innerHTML = '';
-  };
-
-  const createNav = menuList => {
-    const $nav = document.createElement('nav');
-    $nav.className = 'nav';
-
-    $nav.innerHTML = `
-      <ul class="nav__list">
-        <h2 class="a11y-hidden">메뉴</h2>
-        ${menuList
-          .map(
-            (menu, i) => `
-        <li class="${i === 0 ? 'nav__now' : ''}">
-          <a href="">${menu}</a>
-        </li>`
-          )
-          .join('')}
-      </ul>`;
-
-    return $nav;
-  };
-
-  const createMain = () => {
-    const page = window.location.pathname.replace(/\/|.html/g, '') === 'mypage' ? 'mypage' : '';
-    const $main = document.createElement('main');
-    $main.className = `review-row`;
-
-    $main.innerHTML = `
-    <h2 class="a11y-hidden">리뷰 리스트</h2>
-    <ul class="${page} review__list"></ul>`;
-
-    return $main;
-  };
-
-  const createAside = () => {
-    const $aside = document.createElement('aside');
-    $aside.className = 'tags';
-
-    $aside.innerHTML = `
-    <h2 class="tags__title">Tag List</h2>
-    <ul class="tags__list"></ul>`;
-
-    return $aside;
   };
 
   const renderMessage = reviewsLen => {
@@ -112,12 +65,6 @@ export default (() => {
       .join('');
 
     [...document.querySelectorAll('#rater')].forEach((el, i) => createReadOnlyRater(el, reviews[i].ratings));
-  };
-
-  const renderTags = tags => {
-    document.querySelector('.tags__list').innerHTML = tags
-      .map(tag => `<li class="tag"><a href="" type="button">#${tag}</a></li>`)
-      .join('');
   };
 
   const renderReviewDetailContent = (reviewData, curUserId) => {
@@ -277,49 +224,48 @@ export default (() => {
   return {
     home(reviews, curUserId, order) {
       clear();
-      (() => new Header({ $app: document.querySelector('.container'), initState: curUserId }))();
-      (() =>
-        new Nav({
-          $app: document.querySelector('.container'),
-          initState: { menuList: ['좋아요순', '최신순'], navClassName: 'main' },
-        }))();
-      // clear();
-      // renderHeader(curUserId);
-      // document.querySelector('.container').appendChild(createNav(['좋아요순', '최신순']));
-      // document.querySelector('.container').appendChild(createMain());
-      // renderReviews(reviews, curUserId, order);
-      // document.querySelector('.container').appendChild(createAside());
-      // renderTags([...new Set(reviews.flatMap(review => review.tags))]);
+
+      const $container = document.querySelector('.container');
+      (() => new Header({ $app: $container, initState: curUserId }))();
+      (() => new Nav({ $app: $container, initState: { menuList: ['좋아요순', '최신순'], navClassName: 'main' } }))();
+      (() => new Main({ $app: $container, initState: 'main' }))();
+
+      const $reviewList = document.querySelector('.review__list');
+      reviews.forEach(review => new Review({ $app: $reviewList, initState: { review, curUserId, page: 'main' } }));
+
+      (() => new Aside({ $app: $container, initState: [...new Set(reviews.flatMap(review => review.tags))] }))();
     },
 
     mypage(reviews, curUserId) {
       clear();
 
-      renderHeader(curUserId);
+      const $container = document.querySelector('.container');
+      (() => new Header({ $app: $container, initState: curUserId }))();
+      (() =>
+        new Nav({
+          $app: $container,
+          initState: { menuList: ['내가 작성한 리뷰', '좋아한 리뷰', '최근 읽은 리뷰'], navClassName: 'sub' },
+        }))();
+      (() => new Nav({ $app: $container, initState: { menuList: ['좋아요순', '최신순'], navClassName: 'main' } }))();
+      (() => new Main({ $app: $container, initState: 'mypage' }))();
 
-      document
-        .querySelector('.container')
-        .appendChild(createNav(['내가 작성한 리뷰', '좋아한 리뷰', '최근 읽은 리뷰']));
+      const $reviewList = document.querySelector('.review__list');
+      reviews.forEach(review => new Review({ $app: $reviewList, initState: { review, curUserId, page: 'mypage' } }));
 
-      document.querySelector('.container').appendChild(createNav(['좋아요순', '최신순']));
-
-      document.querySelector('.container').appendChild(createMain());
-
-      renderReviews(reviews, curUserId);
-
-      document.querySelector('.container').appendChild(createAside());
-
-      renderTags([...new Set(reviews.flatMap(review => review.tags))]);
+      (() => new Aside({ $app: $container, initState: [...new Set(reviews.flatMap(review => review.tags))] }))();
     },
 
-    reviewDetail(review, curUserId) {
+    reviewDetail(reviews, curUserId) {
       clear();
 
-      renderHeader(curUserId);
+      const $container = document.querySelector('.container');
+      (() => new Header({ $app: $container, initState: curUserId }))();
 
-      renderReviewDetailContent(review, curUserId);
+      // renderHeader(curUserId);
 
-      renderReviewDetailAdd(review);
+      renderReviewDetailContent(reviews[0], curUserId);
+
+      renderReviewDetailAdd(reviews[0]);
     },
 
     search(reviews, targets, curUserId) {
