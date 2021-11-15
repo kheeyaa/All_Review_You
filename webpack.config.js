@@ -5,12 +5,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    style: './src/js/style.js',
     main: './src/js/main.js',
-    mypage: './src/js/mypage.js',
-    reviewDetail: './src/js/reviewDetail.js',
-    search: './src/js/search.js',
-    editor: './src/js/editor.js',
   },
   output: {
     path: path.resolve(__dirname, 'public'),
@@ -20,32 +15,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'src/template/index.html',
-      chunks: ['style', 'main'],
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'mypage.html',
-      template: 'src/template/mypage.html',
-      chunks: ['style', 'mypage'],
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'reviewDetail.html',
-      template: 'src/template/reviewDetail.html',
-      chunks: ['style', 'reviewDetail'],
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'search.html',
-      template: 'src/template/search.html',
-      chunks: ['style', 'search'],
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'modal.html',
-      template: 'src/template/modal.html',
-      chunks: ['style'],
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'editor.html',
-      template: 'src/template/editor.html',
-      chunks: ['style', 'editor'],
+      chunks: ['main'],
     }),
     new MiniCssExtractPlugin({ filename: 'css/style.css' }),
     new CopyPlugin({
