@@ -9,34 +9,48 @@ import userData from './userData';
 //   '/search': 'search',
 // };
 
-window.addEventListener('DOMContentLoaded', async () => {
-  const { pathname: page } = document.location;
+const navigateToHome = async () => {
+  const order = 1;
+  const { data: reviews } = await axios.get('/reviews/all');
+  const { data: curUserId } = await axios.get('/users/me');
 
-  console.log(page);
+  render.home(reviews, curUserId, order);
+  window.scroll({ top: 0 });
+};
+
+const navigateToMyPage = async () => {
+  const order = 1;
+  const { data: reviews } = await axios.get('/reviews/all');
+  const { data: curUserId } = await axios.get('/users/me');
+
+  render.home(reviews, curUserId, order);
+  window.scroll({ top: 0 });
+};
+
+const navigateToSearch = () => {
+  console.log('search');
+};
+
+const navigateToReviewDetail = async page => {
+  const { data: reviews } = await axios.get(page, {
+    headers: { accept: 'application/json' },
+  });
+  render.reviewDetail(reviews);
+  window.scroll({ top: 0 });
+};
+
+window.addEventListener('DOMContentLoaded', () => {
+  const { pathname: page } = document.location;
 
   const path = page.match(/(^\/)|([a-z])/gi).join('');
 
-  if (path === '/') {
-    const order = 1;
-    const { data: reviews } = await axios.get('/reviews/all');
-    const { data: curUserId } = await axios.get('/users/me');
-
-    render.home(reviews, curUserId, order);
-    window.scroll({ top: 0 });
-  } else if (path === '/mypage') {
-    const order = 1;
-    const { data: reviews } = await axios.get('/reviews/all');
-    const { data: curUserId } = await axios.get('/users/me');
-
-    render.home(reviews, curUserId, order);
-    window.scroll({ top: 0 });
-  } else {
-    const { data: reviews } = await axios.get(page, {
-      headers: { accept: 'application/json' },
-    });
-    render.reviewDetail(reviews);
-    window.scroll({ top: 0 });
-  }
+  path === '/reviews'
+    ? navigateToReviewDetail(page)
+    : path === '/mypage'
+    ? navigateToMyPage()
+    : path === '/search'
+    ? navigateToSearch()
+    : navigateToHome();
 
   // const { order } = document.querySelector('.nav__now').dataset;
   // try {
@@ -70,38 +84,25 @@ window.addEventListener('DOMContentLoaded', async () => {
 //   }
 // };
 
-window.onclick = async e => {
+window.onclick = e => {
   if (!e.target.closest('a')) return;
   e.preventDefault();
 
   const $link = e.target.closest('a');
+
   const page = $link.getAttribute('href');
 
   window.history.pushState({ path: page }, null, page);
 
   const path = page.match(/(^\/)|([a-z])/gi).join('');
 
-  if (path === '/') {
-    const order = 1;
-    const { data: reviews } = await axios.get('/reviews/all');
-    const { data: curUserId } = await axios.get('/users/me');
-
-    render.home(reviews, curUserId, order);
-    window.scroll({ top: 0 });
-  } else if (path === '/mypage') {
-    const order = 1;
-    const { data: reviews } = await axios.get('/reviews/all');
-    const { data: curUserId } = await axios.get('/users/me');
-
-    render.home(reviews, curUserId, order);
-    window.scroll({ top: 0 });
-  } else {
-    const { data: reviews } = await axios.get(page, {
-      headers: { accept: 'application/json' },
-    });
-    render.reviewDetail(reviews);
-    window.scroll({ top: 0 });
-  }
+  path === '/reviews'
+    ? navigateToReviewDetail(page)
+    : path === '/mypage'
+    ? navigateToMyPage()
+    : path === '/search'
+    ? navigateToSearch()
+    : navigateToHome();
 
   // try {
   //   // const { data: reviews } = await axios.get(page);
@@ -112,30 +113,16 @@ window.onclick = async e => {
   // }
 };
 
-window.onpopstate = async () => {
+window.onpopstate = () => {
   const { pathname: page } = document.location;
 
   const path = page.match(/(^\/)|([a-z])/gi).join('');
 
-  if (path === '/') {
-    const order = 1;
-    const { data: reviews } = await axios.get('/reviews/all');
-    const { data: curUserId } = await axios.get('/users/me');
-
-    render.home(reviews, curUserId, order);
-    window.scroll({ top: 0 });
-  } else if (path === '/mypage') {
-    const order = 1;
-    const { data: reviews } = await axios.get('/reviews/all');
-    const { data: curUserId } = await axios.get('/users/me');
-
-    render.home(reviews, curUserId, order);
-    window.scroll({ top: 0 });
-  } else {
-    const { data: reviews } = await axios.get(page, {
-      headers: { accept: 'application/json' },
-    });
-    render.reviewDetail(reviews);
-    window.scroll({ top: 0 });
-  }
+  path === '/reviews'
+    ? navigateToReviewDetail(page)
+    : path === '/mypage'
+    ? navigateToMyPage()
+    : path === '/search'
+    ? navigateToSearch()
+    : navigateToHome();
 };

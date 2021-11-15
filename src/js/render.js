@@ -14,59 +14,6 @@ export default (() => {
     document.querySelector('.search__message').textContent = `총 ${reviewsLen}개의 리뷰를 찾았습니다.`;
   };
 
-  const createReadOnlyRater = (el, rate) => {
-    rater({
-      element: el,
-      rating: rate,
-      readOnly: true,
-      starSize: 24,
-    });
-  };
-
-  const renderReviews = (reviews, curUserId, order) => {
-    const $target = document.querySelector('.review__list');
-
-    const page = window.location.pathname.replace(/\/|.html/g, '') === 'mypage' ? 'mypage' : '';
-
-    $target.innerHTML = reviews
-      .sort((review1, review2) =>
-        order === 'likes'
-          ? review2.likes.length - review1.likes.length
-          : Date.parse(review2.createdAt) - Date.parse(review1.createdAt)
-      )
-      .map(
-        ({ title, userId, reviewId, content, photos, tags, ratings, likes, comments, createdAt, updatedAt }) => `
-      <li class="${page} review__card" data-reviewid="${reviewId}">
-        <a href="/reviews">
-          <div class="${page} review__img"><img src="../images/test.jpg" alt="" /></div>
-          <div class="${page} review__details">
-            <h2 class="${page} title">${title}</h2>
-            <span class="${page} detail">${content}</span>
-            <time class="${page} time" datetime="${createdAt.toString().slice(0, 10)}">
-              ${utils.convertTimeFormat(createdAt)}
-            </time>
-            <span class="${page} author">${userId}</span>
-            <div class="${page} likes__container">
-              <span class="${page} likes__count">${likes.length}</span>
-              <button class="${page} likes__button">
-                <img src="../images/like.png" class="${page} likes-img ${
-          likes.includes(curUserId) ? '' : 'hidden'
-        }" aria-hidden="true" />
-                <img src="../images/unlike.png" class="${page} unlikes-img ${
-          likes.includes(curUserId) ? 'hidden' : ''
-        }" aria-hidden="true" />
-              </button>
-            </div>
-            <div class="${page} rater__wrap"><div id="rater"></div></div>
-          </div>
-        </a>
-      </li>`
-      )
-      .join('');
-
-    [...document.querySelectorAll('#rater')].forEach((el, i) => createReadOnlyRater(el, reviews[i].ratings));
-  };
-
   const renderReviewDetailContent = (reviewData, curUserId) => {
     const $newDiv = document.createElement('div');
     $newDiv.className = 'reviewDetail__contentWrap';
@@ -269,9 +216,9 @@ export default (() => {
     },
 
     search(reviews, targets, curUserId) {
-      renderHeader(curUserId);
-      renderReviews(reviews, targets.$reviewList, curUserId);
-      renderMessage(reviews.length);
+      // renderHeader(curUserId);
+      // renderReviews(reviews, targets.$reviewList, curUserId);
+      // renderMessage(reviews.length);
     },
   };
 })();
