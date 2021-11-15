@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Aside from '../components/Aside';
-import AuthModal from '../components/AuthModal';
 import Header from '../components/Header';
 import Main from '../components/Main';
 import Nav from '../components/Nav';
@@ -30,9 +29,6 @@ export default class MainPage {
       initState: [...new Set(this.state.reviews.flatMap(review => review.tags))],
     });
 
-    this.authModal = new AuthModal({
-      $app,
-    });
     this.init();
   }
 
