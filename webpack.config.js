@@ -5,12 +5,12 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    style: './src/js/frontend/style.js',
-    main: './src/js/frontend/main.js',
-    mypage: './src/js/frontend/mypage.js',
-    reviewDetail: './src/js/frontend/reviewDetail.js',
-    search: './src/js/frontend/search.js',
-    editor: './src/js/frontend/editor.js',
+    style: './src/js/style.js',
+    main: './src/js/main.js',
+    mypage: './src/js/mypage.js',
+    reviewDetail: './src/js/reviewDetail.js',
+    search: './src/js/search.js',
+    editor: './src/js/editor.js',
   },
   output: {
     path: path.resolve(__dirname, 'public'),
