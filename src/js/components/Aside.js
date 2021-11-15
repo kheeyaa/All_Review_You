@@ -5,6 +5,7 @@ export default class Aside {
     this.$target = document.createElement('aside');
     this.$target.className = 'tags';
     $app.appendChild(this.$target);
+
     this.render();
   }
 

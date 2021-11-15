@@ -1,6 +1,7 @@
+import '../scss/index.scss';
 import axios from 'axios';
 import render from './render';
-import userData from './userData';
+// import userData from './userData';
 
 // const path = {
 //   '/': 'home',
