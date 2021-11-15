@@ -1,6 +1,7 @@
 import '../scss/index.scss';
 import axios from 'axios';
 import render from './render';
+import MainPage from './pages/MainPage';
 // import userData from './userData';
 
 // const path = {
@@ -48,18 +49,34 @@ const navigateToReviewDetail = async page => {
   window.scroll({ top: 0 });
 };
 
-window.addEventListener('DOMContentLoaded', () => {
+const state = {
+  curUserId: '',
+};
+
+window.addEventListener('DOMContentLoaded', async () => {
   const { pathname: page } = document.location;
 
   const path = page.match(/(^\/)|([a-z])/gi).join('');
 
+  const { data: curUserId } = await axios.get('/users/me');
+  state.curUserId = curUserId;
+
+  const $container = document.querySelector('.container');
   path === '/reviews'
     ? navigateToReviewDetail(page)
     : path === '/mypage'
     ? navigateToMyPage()
     : path === '/search'
     ? navigateToSearch()
-    : navigateToHome();
+    : new MainPage({ $app: $container, initState: { curUserId: state.curUserId } });
+
+  // path === '/reviews'
+  //   ? navigateToReviewDetail(page)
+  //   : path === '/mypage'
+  //   ? navigateToMyPage()
+  //   : path === '/search'
+  //   ? navigateToSearch()
+  //   : navigateToHome();
 
   // const { order } = document.querySelector('.nav__now').dataset;
   // try {
@@ -105,6 +122,7 @@ window.onclick = e => {
 
   const path = page.match(/(^\/)|([a-z])/gi).join('');
 
+  const $container = document.querySelector('.container');
   path === '/reviews'
     ? navigateToReviewDetail(page)
     : path === '/mypage'
@@ -112,6 +130,15 @@ window.onclick = e => {
     : path === '/search'
     ? navigateToSearch()
     : navigateToHome();
+  // : new MainPage({ $app: $container, initState: { curUserId: state.curUserId } });
+
+  // path === '/reviews'
+  //   ? navigateToReviewDetail(page)
+  //   : path === '/mypage'
+  //   ? navigateToMyPage()
+  //   : path === '/search'
+  //   ? navigateToSearch()
+  //   : navigateToHome();
 
   // try {
   //   // const { data: reviews } = await axios.get(page);
@@ -127,6 +154,7 @@ window.onpopstate = () => {
 
   const path = page.match(/(^\/)|([a-z])/gi).join('');
 
+  const $container = document.querySelector('.container');
   path === '/reviews'
     ? navigateToReviewDetail(page)
     : path === '/mypage'
@@ -134,6 +162,15 @@ window.onpopstate = () => {
     : path === '/search'
     ? navigateToSearch()
     : navigateToHome();
+  // : new MainPage({ $app: $container, initState: { curUserId: state.curUserId } });
+
+  // path === '/reviews'
+  //   ? navigateToReviewDetail(page)
+  //   : path === '/mypage'
+  //   ? navigateToMyPage()
+  //   : path === '/search'
+  //   ? navigateToSearch()
+  //   : navigateToHome();
 };
 
 window.onsubmit = async e => {
