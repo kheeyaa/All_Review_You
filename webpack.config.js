@@ -10,6 +10,7 @@ module.exports = {
     mypage: './src/js/mypage.js',
     search: './src/js/search.js',
     editor: './src/js/editor.js',
+    authModal: './src/js/authModal.js',
   },
   output: {
     path: path.resolve(__dirname, 'public'),
@@ -19,7 +20,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'src/template/index.html',
-      chunks: ['main'],
+      chunks: ['main', 'authModal'],
     }),
     new HtmlWebpackPlugin({
       filename: 'reviewDetail.html',
