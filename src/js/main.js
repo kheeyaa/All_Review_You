@@ -11,6 +11,10 @@ import MainPage from './pages/MainPage';
 //   '/search': 'search',
 // };
 
+const renderMessage = reviewsLen => {
+  document.querySelector('.search__message').textContent = `총 ${reviewsLen}개의 리뷰를 찾았습니다.`;
+};
+
 const navigateToHome = async () => {
   const order = 1;
   const { data: reviews } = await axios.get('/reviews/all');
@@ -29,15 +33,19 @@ const navigateToMyPage = async () => {
   window.scroll({ top: 0 });
 };
 
-const navigateToSearch = () => {
-  console.log('search');
+const navigateToSearch = async () => {
+  const order = 1;
+  const { data: curUserId } = await axios.get('/users/me');
+
+  render.search([], curUserId, order);
+  window.scroll({ top: 0 });
 };
 
 const navigateToReviewDetail = async page => {
   const { data: reviews } = await axios.get(page, {
     headers: { accept: 'application/json' },
   });
-  render.reviewDetail(reviews);
+  render.reviewDetail([reviews[0], reviews[1]]);
   window.scroll({ top: 0 });
 };
 
@@ -163,4 +171,28 @@ window.onpopstate = () => {
   //   : path === '/search'
   //   ? navigateToSearch()
   //   : navigateToHome();
+};
+
+window.onsubmit = async e => {
+  e.preventDefault();
+
+  if (!e.target.closest('.search__form')) return;
+
+  const $searchInput = e.target.querySelector('input');
+
+  try {
+    const { data: reviews } = await axios.get(`/search`, {
+      params: {
+        keyword: $searchInput.value.trim(),
+      },
+    });
+    const { data: curUserId } = await axios.get('/users/me');
+
+    render.search(reviews, { $reviewList: document.querySelector('.review__list') }, curUserId);
+    renderMessage(reviews.length);
+  } catch (e) {
+    console.error(e);
+  }
+
+  $searchInput.value = '';
 };

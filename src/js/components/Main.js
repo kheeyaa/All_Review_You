@@ -2,10 +2,17 @@ import Review from './Review';
 
 export default class Main {
   constructor({ $app, initState }) {
+    // new Main({
+    //   $app: $searchWrap,
+    //   initState: {
+    //     page: 'main',
+    //     flexDirection: 'column',
+    //   },
+    // })
     this.state = initState;
 
     this.$target = document.createElement('main');
-    this.$target.className = 'review-row';
+    this.$target.className = `review-${this.state.flexDirection}`;
     this.$target.innerHTML = ` <h2 class="a11y-hidden">리뷰 리스트</h2>`;
 
     const $reviewList = document.createElement('ul');

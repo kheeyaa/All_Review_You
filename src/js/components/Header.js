@@ -1,9 +1,18 @@
 export default class Header {
   constructor({ $app, initState }) {
     this.state = initState;
+    // new Header({
+    //   $app: $container,
+    //   initState: {
+    //     curUserId,
+    //     curPage: 'search',
+    //   },
+    // })
+
+    if (this.state.curPage === 'search') this.state.curPage = 'header-' + this.state.curPage;
 
     this.$target = document.createElement('header');
-    this.$target.className = 'header';
+    this.$target.className = `header ${this.state.curPage}`;
     $app.appendChild(this.$target);
     this.render();
   }
@@ -14,7 +23,7 @@ export default class Header {
   }
 
   render() {
-    const isLoggedIn = this.state;
+    const isLoggedIn = this.state.curUserId;
     const logo = `
     <div class="header__logo">
       <h1 class="a11y-hidden">All Review You</h1>

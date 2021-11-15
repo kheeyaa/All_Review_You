@@ -61,8 +61,18 @@ reviewRouter.get('/:id([0-9]+)', (req, res) => {
     },
     // ajax 요청에 대해 json을 응답
     'application/json': () => {
-      res.send(Reviews.state.filter(({ reviewId }) => reviewId === +req.params.id));
+      const curReview = Reviews.state.filter(({ reviewId }) => reviewId === +req.params.id);
+      const reviewTags = curReview[0].tags;
+      const tagRelatedReviews = Reviews.state.filter(({ reviewId, tags }) => {
+        for (let i = 0; i < tags.length; i++) {
+          if (reviewTags.includes(tags[i]) && reviewId !== +req.params.id) return true;
+        }
+        return false;
+      });
+      res.send([curReview[0], tagRelatedReviews]);
+      // res.send(Reviews.state.filter(({ reviewId }) => reviewId === +req.params.id));
     },
+
     default: () => {
       // log the request and respond with 406
       res.status(406).send('Not Acceptable');

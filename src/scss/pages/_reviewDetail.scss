@@ -1,7 +1,15 @@
 @use '../base/' as *;
 
 .reviewDetail {
-  @include boxSizeMax(1000px);
+  &.container {
+    display: block;
+  }
+
+  &.header {
+    margin-bottom: rem(20px);
+  }
+
+  // @include boxSizeMax(1000px);
   padding: rem(10px);
   @include mobile {
     padding: rem(14px);

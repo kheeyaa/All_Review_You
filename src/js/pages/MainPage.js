@@ -22,7 +22,7 @@ export default class MainPage {
 
     this.main = new Main({
       $app,
-      initState: { page: 'main', reviews: this.state.reviews },
+      initState: { page: 'main', reviews: this.state.reviews, flexDirection: 'row' },
     });
 
     this.aside = new Aside({

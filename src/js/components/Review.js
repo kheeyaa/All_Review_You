@@ -1,3 +1,4 @@
+import axios from 'axios';
 import utils from '../utils';
 
 export default class Review {
@@ -8,11 +9,13 @@ export default class Review {
     this.$target.className = `${this.state.page} review__card`;
     this.$target.dataset.reviewid = this.state.review.reviewId;
     $app.appendChild(this.$target);
+    this.setEvent();
     this.render();
   }
 
   setState(nextState) {
     this.state = nextState;
+    this.setEvent();
     this.render();
   }
 
@@ -44,5 +47,14 @@ export default class Review {
         <div class="${page} rater__wrap"><div id="rater"></div></div>
       </div>
     </a>`;
+  }
+
+  setEvent() {
+    this.$target.onclick = async e => {
+      const { data: isliked } = await axios.patch('/reviews/review/likes', {
+        // curUserId: userData.id,
+        curReviewId: e.target.dataset.reviewid,
+      });
+    };
   }
 }
