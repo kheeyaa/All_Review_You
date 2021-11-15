@@ -1,9 +1,16 @@
 export default class Header {
   constructor({ $app, initState }) {
     this.state = initState;
+    // new Header({
+    //   $app: $container,
+    //   initState: {
+    //     curUserId,
+    //     curPage: 'search',
+    //   },
+    // })
 
     this.$target = document.createElement('header');
-    this.$target.className = 'header';
+    this.$target.className = `header header-${this.state.curPage}`;
     $app.appendChild(this.$target);
     this.render();
   }
