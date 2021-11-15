@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { signupSchema, errorMessage } from './utils/validSchema.js';
+import { signupSchema, errorMessage } from './validSchema.js';
 
 console.log('hi');
 let schema = signupSchema;

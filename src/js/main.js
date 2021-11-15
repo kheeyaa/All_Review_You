@@ -1,4 +1,4 @@
-import '../scss/index.scss';
+// import '../scss/index.scss';
 import axios from 'axios';
 import render from './render';
 import userData from './utils/userData';
@@ -12,8 +12,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   try {
     const { data: reviews } = await axios.get(`/reviews/order-${order}`);
     const { data: curUserId } = await axios.get('/users/me');
-
-    userData.id = curUserId;
 
     render.home(reviews, { $reviewList, $tagsList }, curUserId);
   } catch (e) {
@@ -31,9 +29,7 @@ document.querySelector('.nav__list').onclick = async e => {
 
   try {
     const { data: reviews } = await axios.get(`/reviews/order-${order}`);
-    const { data: curUserId } = await axios.get('/users/me');
-    userData.id = curUserId;
-    render.home(reviews, { $reviewList, $tagsList }, curUserId);
+    render.home(reviews, { $reviewList, $tagsList }, userData.id);
   } catch (e) {
     console.error(e);
   }
