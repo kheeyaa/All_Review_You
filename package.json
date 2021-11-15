@@ -5,7 +5,7 @@
     "start": "run-p start:backend start:frontend",
     "build": "webpack -w",
     "start:frontend": "webpack serve",
-    "start:backend": "nodemon src/js/backend/server"
+    "start:backend": "nodemon backend/server"
   },
   "license": "ISC",
   "devDependencies": {

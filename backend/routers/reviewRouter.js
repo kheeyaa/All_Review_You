@@ -1,17 +1,16 @@
-const { Router } = require('express');
 const express = require('express');
-const middleware = require('webpack-dev-middleware');
-const { createReview, writeReview, getOneReview } = require('../controllers/reviewController');
-
-const reviewRouter = Router();
-
-const path = require('path');
 const webpack = require('webpack');
-const Reviews = require('../models/Review');
-const compiler = webpack(require('../../../../webpack.config'));
+const middleware = require('webpack-dev-middleware');
+const path = require('path');
+const compiler = webpack(require('../../webpack.config'));
+const { createReview, writeReview, getOneReview } = require('../controllers/reviewController');
 
 const app = express();
 app.use(middleware(compiler));
+
+const reviewRouter = express.Router();
+
+const Reviews = require('../models/Review');
 
 reviewRouter.get('/', (req, res) => {});
 
