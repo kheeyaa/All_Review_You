@@ -4,44 +4,44 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>All Review You</title>
+    <title>Search</title>
   </head>
   <body>
     <div class="container">
-      <header class="header">
+      <header class="header header-search">
         <div class="header__logo">
           <h1 class="a11y-hidden">All Review You</h1>
-          <a href="/"><img src="../images/logo.png" class="logo" aria-hidden="true" /></a>
+          <a href="./index.html"><img src="../images/logo.png" class="logo" aria-hidden="true" /></a>
         </div>
 
         <div class="header__user-service">
           <h2 class="a11y-hidden">사용자 서비스</h2>
-          <a href="/search"><img src="../images/search.svg" alt="검색" /></a>
+          <a href="./search.html"><img src="../images/search.svg" alt="검색" /></a>
           <button class="login hidden"><img src="../images/login.svg" alt="로그인" /></button>
-          <button class="logout hidden"><img src="../images/logout.svg" alt="로그아웃" /></button>
-          <a href="/mypage" class="my-page hidden"><img src="../images/mypage.svg" alt="마이 페이지" /></a>
-          <a href="/write" class="new-review hidden"><img src="../images/newReview.svg" alt="새 리뷰 올리기" /></a>
+          <button class="logout"><img src="../images/logout.svg" alt="로그아웃" /></button>
+          <a class="my-page"><img src="../images/mypage.svg" alt="마이 페이지" /></a>
+          <a class="new-review"><img src="../images/newReview.svg" alt="새 리뷰 올리기" /></a>
         </div>
       </header>
 
-      <nav class="nav">
-        <h2 class="a11y-hidden">메뉴</h2>
-        <ul class="nav__list">
-          <li class="nav__now" data-order="likes"><a href="">좋아요순</a></li>
-          <li data-order="latest"><a href="">최신순</a></li>
-        </ul>
-      </nav>
+      <div class="search-wrap">
+        <div class="search">
+          <form action="submit" class="search__form">
+            <input type="text" class="search__input" placeholder="검색어를 입력하세요." />
+            <div class="search__img">
+              <img src="../images/search.svg" alt="검색" />
+            </div>
+          </form>
+          <span class="search__message"></span>
+        </div>
 
-      <main class="review-row">
-        <h2 class="a11y-hidden">리뷰 리스트</h2>
-        <ul class="review__list"></ul>
-      </main>
-
-      <aside class="tags">
-        <h2 class="tags__title">Tag List</h2>
-        <ul class="tags__list"></ul>
-      </aside>
+        <main class="review-column">
+          <h2 class="a11y-hidden">리뷰 리스트</h2>
+          <ul class="review__list"></ul>
+        </main>
+      </div>
     </div>
+
     <div class="modal-container hidden">
       <div class="modal">
         <div class="signup-wrapper hidden">

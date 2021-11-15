@@ -1,20 +1,100 @@
-import utils from './utils';
-import Header from './components/Header';
-import Nav from './components/Nav';
-import Main from './components/Main';
-import Review from './components/Review';
-import Aside from './components/Aside';
+const rater = require('rater-js');
 
 export default (() => {
-  const clear = () => {
-    document.querySelector('.container').innerHTML = '';
+  const renderHeader = curUserId => {
+    document.querySelector('.login').classList.toggle('hidden', curUserId);
+    document.querySelector('.logout').classList.toggle('hidden', !curUserId);
+    document.querySelector('.my-page').classList.toggle('hidden', !curUserId);
+    document.querySelector('.new-review').classList.toggle('hidden', !curUserId);
   };
 
-  // const renderMessage = reviewsLen => {
-  //   document.querySelector('.search__message').textContent = `총 ${reviewsLen}개의 리뷰를 찾았습니다.`;
-  // };
+  const convertTimeFormat = date => {
+    const [year, month, day] = date.toString().slice(0, 10).split('-');
 
-  const renderReviewDetailContent = (reviewData, curUserId) => {
+    return `${year}년 ${month}월 ${day}일`;
+  };
+
+  const timeForToday = value => {
+    const today = new Date();
+    const timeValue = new Date(value);
+
+    const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+    if (betweenTime < 1) return '방금 전';
+    if (betweenTime < 60) {
+      return `${betweenTime}분 전`;
+    }
+
+    const betweenTimeHour = Math.floor(betweenTime / 60);
+    if (betweenTimeHour < 24) {
+      return `${betweenTimeHour}시간 전`;
+    }
+
+    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+    if (betweenTimeDay < 365) {
+      return `${betweenTimeDay}일 전`;
+    }
+
+    return `${Math.floor(betweenTimeDay / 365)}년 전`;
+  };
+
+  const renderMessage = reviewsLen => {
+    document.querySelector('.search__message').textContent = `총 ${reviewsLen}개의 리뷰를 찾았습니다.`;
+  };
+
+  const createReadOnlyRater = (el, rate) => {
+    rater({
+      element: el,
+      rating: rate,
+      readOnly: true,
+      starSize: 24,
+    });
+  };
+
+  const renderReviews = (reviews, $target, curUserId) => {
+    const page = window.location.pathname.replace(/\/|.html/g, '') === 'mypage' ? 'mypage' : '';
+
+    $target.innerHTML = reviews
+      .map(
+        ({ title, userId, reviewId, content, photos, tags, ratings, likes, comments, createdAt, updatedAt }) => `
+      <li class="${page} review__card" data-reviewid = "${reviewId}">
+        <a href="./reviewDetail.html">
+          <div class="${page} review__img"><img src="../images/test.jpg" alt="" /></div>
+          <div class="${page} review__details">
+            <h2 class="${page} title">${title}</h2>
+            <span class="${page} detail">${content}</span>
+            <time class="${page} time" datetime="${createdAt.toString().slice(0, 10)}">
+              ${convertTimeFormat(createdAt)}
+            </time>
+            <span class="${page} author">${userId}</span>
+            <div class="${page} likes__container">
+              <span class="${page} likes__count">${likes.length}</span>
+              <button class="${page} likes__button">
+                <img src="../images/like.png" class="${page} likes-img ${
+          likes.includes(curUserId) ? '' : 'hidden'
+        }" aria-hidden="true" />
+                <img src="../images/unlike.png" class="${page} unlikes-img ${
+          likes.includes(curUserId) ? 'hidden' : ''
+        }" aria-hidden="true" />
+              </button>
+            </div>
+            <div class="${page} rater__wrap"><div id="rater"></div></div>
+          </div>
+        </a>
+      </li>`
+      )
+      .join('');
+
+    [...document.querySelectorAll('#rater')].forEach((el, i) => createReadOnlyRater(el, reviews[i].ratings));
+  };
+
+  const renderTags = (tags, $target) => {
+    $target.innerHTML = tags.map(tag => `<li class="tag"><a href="" type="button">#${tag}</a></li>`).join('');
+  };
+
+  const renderReviewDetailContent = (reviewData, $target, curUserId) => {
+    if ($target.querySelector('.reviewDetail__contentWrap'))
+      $target.querySelector('.reviewDetail__contentWrap').remove();
+
     const $newDiv = document.createElement('div');
     $newDiv.className = 'reviewDetail__contentWrap';
 
@@ -29,7 +109,7 @@ export default (() => {
         <div class="reviewDetail__informWrap">
           <div class="reviewDetail__inform">
             <span class="reviewDetail__inform--userid">${userId}</span
-            ><span class="reviewDetail__inform--beforeDay">${utils.calculateElaspedTime(createdAt)}</span>
+            ><span class="reviewDetail__inform--beforeDay">${timeForToday(createdAt)}</span>
             <div class="reviewDetail__inform--tag">
               ${tags.map(tag => `<span class="reviewDetail__inform--tag--text"># ${tag}</span>`).join('')}
             </div>
@@ -60,10 +140,13 @@ export default (() => {
         </div>
       </header>`;
 
-    document.querySelector('.container').appendChild($newDiv);
+    $target.appendChild($newDiv);
+    createReadOnlyRater(document.querySelector('#rater'), ratings);
   };
 
-  const renderReviewDetailAdd = reviewData => {
+  const renderReviewDetailAdd = (reviewData, $target) => {
+    if ($target.querySelector('.reviewDetail__addWrap')) $target.querySelector('.reviewDetail__addWrap').remove();
+
     const $newDiv = document.createElement('div');
     $newDiv.className = 'reviewDetail__addWrap';
 
@@ -79,7 +162,7 @@ export default (() => {
         <form action="" class="reviewDetail__addComments--form">
           <label for="comment" class="reviewDetail__addComments--count">${comments.length}개의 댓글</label>
           <input
-            type="text"
+            type="text"   
             id="comment"
             class="reviewDetail__addComments--input"
             name="comment"
@@ -165,162 +248,42 @@ export default (() => {
         </div>
       </section>`;
 
-    document.querySelector('.container').appendChild($newDiv);
+    $target.appendChild($newDiv);
   };
 
   return {
-    home(reviews, curUserId, order) {
-      clear();
+    home(reviews, targets, curUserId) {
+      renderHeader(curUserId);
 
-      const $container = document.querySelector('.container');
-      (() => new Header({ $app: $container, initState: curUserId }))();
-      (() => new Nav({ $app: $container, initState: { menuList: ['좋아요순', '최신순'], navClassName: 'main' } }))();
-      (() =>
-        new Main({
-          $app: $container,
-          initState: {
-            component: 'main',
-            flexDirection: 'row',
-          },
-        }))();
+      renderReviews(reviews, targets.$reviewList, curUserId);
 
-      const $reviewList = document.querySelector('.review__list');
-      reviews.forEach(review => new Review({ $app: $reviewList, initState: { review, curUserId, page: 'main' } }));
-
-      (() => new Aside({ $app: $container, initState: [...new Set(reviews.flatMap(review => review.tags))] }))();
+      renderTags(
+        reviews.flatMap(review => review.tags),
+        targets.$tagsList
+      );
     },
 
-    mypage(reviews, curUserId) {
-      clear();
+    mypage(reviews, targets, curUserId) {
+      renderHeader(curUserId);
 
-      const $container = document.querySelector('.container');
-      (() => new Header({ $app: $container, initState: curUserId }))();
-      (() =>
-        new Nav({
-          $app: $container,
-          initState: { menuList: ['내가 작성한 리뷰', '좋아한 리뷰', '최근 읽은 리뷰'], navClassName: 'sub' },
-        }))();
-      (() => new Nav({ $app: $container, initState: { menuList: ['좋아요순', '최신순'], navClassName: 'main' } }))();
-      (() =>
-        new Main({
-          $app: $container,
-          initState: {
-            component: 'mypage',
-            flexDirection: 'column',
-          },
-        }))();
+      renderReviews(reviews, targets.$reviewList, curUserId);
 
-      const $reviewList = document.querySelector('.review__list');
-      reviews.forEach(review => new Review({ $app: $reviewList, initState: { review, curUserId, page: 'mypage' } }));
-
-      (() => new Aside({ $app: $container, initState: [...new Set(reviews.flatMap(review => review.tags))] }))();
+      renderTags(
+        reviews.flatMap(review => review.tags),
+        targets.$tagsList
+      );
     },
 
-    reviewDetail(reviews, curUserId) {
-      clear();
-
-      const $container = document.querySelector('.container');
-      (() => new Header({ $app: $container, initState: curUserId }))();
-
-      // renderHeader(curUserId);
-
-      renderReviewDetailContent(reviews[0], curUserId);
-
-      renderReviewDetailAdd(reviews[0]);
+    reviewDetail(review, targets, curUserId) {
+      renderHeader(curUserId);
+      renderReviewDetailContent(review, targets.$reviewDetail, curUserId);
+      renderReviewDetailAdd(review, targets.$reviewDetail);
     },
 
     search(reviews, targets, curUserId) {
-      clear();
-
-      const $container = document.querySelector('.container');
-      (() =>
-        new Header({
-          $app: $container,
-          initState: {
-            curUserId,
-            curPage: 'search',
-          },
-        }))();
-
-      const $searchWrap = document.createElement('div');
-      $searchWrap.className = 'search-wrap';
-
-      $searchWrap.innerHTML = `
-        <div class="search">
-          <form action="submit" class="search__form">
-            <input type="text" class="search__input" placeholder="검색어를 입력하세요." />
-            <div class="search__img">
-              <img src="../images/search.svg" alt="검색" />
-            </div>
-          </form>
-          <span class="search__message"></span>
-        </div>
-        `;
-
-      $container.appendChild($searchWrap);
-
-      (() =>
-        new Main({
-          $app: $searchWrap,
-          initState: {
-            page: 'search',
-            flexDirection: 'column',
-          },
-        }))();
-
-      const $reviewList = document.querySelector('.review__list');
-      reviews.forEach(review => new Review({ $app: $reviewList, initState: { review, curUserId, page: 'main' } }));
+      renderHeader(curUserId);
+      renderReviews(reviews, targets.$reviewList, curUserId);
+      renderMessage(reviews.length);
     },
   };
 })();
-
-// export default (() => {
-
-//   return {
-//   home(reviews) {
-//     clear();
-
-//     document.querySelector('.container').appendChild(createNav(['좋아요순', '최신순']));
-
-//     document.querySelector('.container').appendChild(createMain());
-
-//     renderReviews(reviews);
-
-//     document.querySelector('.container').appendChild(createAside());
-
-//     renderTags([...new Set(reviews.flatMap(review => review.tags))]);
-//   },
-
-//   mypage(reviews) {
-//     clear();
-
-//     document
-//       .querySelector('.container')
-//       .appendChild(createNav(['내가 작성한 리뷰', '좋아한 리뷰', '최근 읽은 리뷰']));
-
-//     document.querySelector('.container').appendChild(createNav(['좋아요순', '최신순']));
-
-//     document.querySelector('.container').appendChild(createMain());
-
-//     renderReviews(reviews);
-
-//     document.querySelector('.container').appendChild(createAside());
-
-//     renderTags([...new Set(reviews.flatMap(review => review.tags))]);
-//   },
-
-//   reviewDetail(review) {
-//     clear();
-
-//     renderReviewDetailContent(review);
-
-//     renderReviewDetailAdd(review);
-//   },
-
-//   search(reviews, targets, curUserId) {
-//     renderHeader(curUserId);
-//     renderReviews(reviews, targets.$reviewList, curUserId);
-//     renderMessage(reviews.length);
-//   },
-// };
-// })();

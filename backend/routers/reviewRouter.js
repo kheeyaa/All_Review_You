@@ -47,32 +47,61 @@ reviewRouter.get('/mine/:id', (req, res) => {
 });
 
 // reviews/id -> GET 특정 리뷰 for reviewDetail Page
+
 reviewRouter.get('/:id([0-9]+)', (req, res) => {
-  res.format({
-    // 새로고침에 의한 브라우저 요청에 대해 html을 응답
-    'text/html': () => {
-      // 웹팩이 처리한 html 경로를 찾는다.
-      const filename = path.join(compiler.outputPath, 'index.html');
-      // 그 경로에에서 html 파일을 읽는다.
-      compiler.outputFileSystem.readFile(filename, (err, result) => {
-        if (err) return;
-        res.set('content-type', 'text/html').end(result);
-      });
-    },
-    // ajax 요청에 대해 json을 응답
-    'application/json': () => {
-      res.send(Reviews.state.filter(({ reviewId }) => reviewId === +req.params.id));
-    },
-    default: () => {
-      // log the request and respond with 406
-      res.status(406).send('Not Acceptable');
-    },
+  const filename = path.join(compiler.outputPath, 'reviewDetail.html');
+  console.log(filename);
+  compiler.outputFileSystem.readFile(filename, (err, result) => {
+    if (err) return;
+    res.set('content-type', 'text/html').end(result);
   });
 });
+// reviewRouter.get('/:id([0-9]+)', (req, res) => {
+//   res.format({
+//     // 새로고침에 의한 브라우저 요청에 대해 html을 응답
+//     'text/html': () => {
+//       // 웹팩이 처리한 html 경로를 찾는다.
+//       const filename = path.join(compiler.outputPath, 'index.html');
+//       // 그 경로에에서 html 파일을 읽는다.
+//   compiler.outputFileSystem.readFile(filename, (err, result) => {
+//     if (err) return;
+//     res.set('content-type', 'text/html').end(result);
+//   });
+// },
+//     // ajax 요청에 대해 json을 응답
+//     'application/json': () => {
+//       const curReview = Reviews.state.filter(({ reviewId }) => reviewId === +req.params.id);
+//       const reviewTags = curReview[0].tags;
+//       const tagRelatedReviews = Reviews.state.filter(({ reviewId, tags }) => {
+//         for (let i = 0; i < tags.length; i++) {
+//           if (reviewTags.includes(tags[i]) && reviewId !== +req.params.id) return true;
+//         }
+//         return false;
+//       });
+//       res.send([curReview[0], tagRelatedReviews]);
+//       // res.send(Reviews.state.filter(({ reviewId }) => reviewId === +req.params.id));
+//     },
+
+//     default: () => {
+//       // log the request and respond with 406
+//       res.status(406).send('Not Acceptable');
+//     },
+//   });
+// });
 
 // reviews/all => 모든 리뷰 보내줌
 reviewRouter.get('/all', (req, res) => {
   res.send(Reviews.state);
+});
+
+// reviews/order-likes => 모든 리뷰 좋아요순으로 보내줌
+reviewRouter.get('/order-likes', (req, res) => {
+  res.send(Reviews.state.sort((review1, review2) => review2.likes.length - review1.likes.length));
+});
+
+// reviews/order-latest => 모든 리뷰 최신순으로 보내줌
+reviewRouter.get('/order-latest', (req, res) => {
+  res.send(Reviews.state.sort((review1, review2) => Date.parse(review2.createdAt) - Date.parse(review1.createdAt)));
 });
 
 reviewRouter.post('/', writeReview);
