@@ -29,7 +29,9 @@ document.querySelector('.nav__list').onclick = async e => {
 
   try {
     const { data: reviews } = await axios.get(`/reviews/order-${order}`);
-    render.home(reviews, { $reviewList, $tagsList }, userData.id);
+    const { data: curUserId } = await axios.get('/users/me');
+
+    render.home(reviews, { $reviewList, $tagsList }, curUserId);
   } catch (e) {
     console.error(e);
   }
