@@ -1,10 +1,20 @@
+import Review from './Review';
+
 export default class Main {
   constructor({ $app, initState }) {
     this.state = initState;
 
     this.$target = document.createElement('main');
     this.$target.className = 'review-row';
+    this.$target.innerHTML = ` <h2 class="a11y-hidden">리뷰 리스트</h2>`;
+
+    const $reviewList = document.createElement('ul');
+    $reviewList.className = `${this.state.page} review__list`;
+
+    this.$target.appendChild($reviewList);
     $app.appendChild(this.$target);
+
+    this.$reviewList = document.querySelector('.review__list');
     this.render();
   }
 
@@ -14,10 +24,17 @@ export default class Main {
   }
 
   render() {
-    const page = this.state;
-
-    this.$target.innerHTML = `
-    <h2 class="a11y-hidden">리뷰 리스트</h2>
-    <ul class="${page} review__list"></ul>`;
+    // map 을 써서 한 번에 하는 것으로 바꿔야 할 듯
+    this.state.reviews.forEach(
+      review =>
+        new Review({
+          $app: this.$reviewList,
+          initState: {
+            review,
+            curUserId: this.state.curUserId,
+            page: 'main',
+          },
+        })
+    );
   }
 }
