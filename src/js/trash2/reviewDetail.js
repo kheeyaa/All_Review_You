@@ -1,6 +1,7 @@
 import axios from 'axios';
 import render from './render';
 import userData from './userData';
+import '../scss/index.scss';
 
 // DOM NODES
 const $reviewDetail = document.querySelector('.reviewDetail');

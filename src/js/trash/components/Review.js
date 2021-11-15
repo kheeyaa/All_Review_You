@@ -50,11 +50,11 @@ export default class Review {
   }
 
   setEvent() {
-    this.$target.onclick = async e => {
-      const { data: isliked } = await axios.patch('/reviews/review/likes', {
-        // curUserId: userData.id,
-        curReviewId: e.target.dataset.reviewid,
-      });
-    };
+    // this.$target.onclick = async e => {
+    //   const { data: isliked } = await axios.patch('/reviews/review/likes', {
+    //     // curUserId: userData.id,
+    //     curReviewId: e.target.dataset.reviewid,
+    //   });
+    // };
   }
 }
