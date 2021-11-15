@@ -6,6 +6,10 @@ const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
   entry: {
     main: './src/js/main.js',
+    reviewDetail: './src/js/reviewDetail.js',
+    mypage: './src/js/mypage.js',
+    search: './src/js/search.js',
+    editor: './src/js/editor.js',
   },
   output: {
     path: path.resolve(__dirname, 'public'),
@@ -16,6 +20,26 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'src/template/index.html',
       chunks: ['main'],
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'reviewDetail.html',
+      template: 'src/template/reviewDetail.html',
+      chunks: ['reviewDetail'],
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'mypage.html',
+      template: 'src/template/mypage.html',
+      chunks: ['mypage'],
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'search.html',
+      template: 'src/template/search.html',
+      chunks: ['search'],
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'editor.html',
+      template: 'src/template/editor.html',
+      chunks: ['editor'],
     }),
     new MiniCssExtractPlugin({ filename: 'css/style.css' }),
     new CopyPlugin({
