@@ -44,7 +44,7 @@ const navigateToReviewDetail = async page => {
   const { data: reviews } = await axios.get(page, {
     headers: { accept: 'application/json' },
   });
-  render.reviewDetail(reviews);
+  render.reviewDetail([reviews[0], reviews[1]]);
   window.scroll({ top: 0 });
 };
 
