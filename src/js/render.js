@@ -1,9 +1,9 @@
 import utils from './utils';
-import Header from './component/Header';
-import Nav from './component/Nav';
-import Main from './component/Main';
-import Review from './component/Review';
-import Aside from './component/Aside';
+import Header from './components/Header';
+import Nav from './components/Nav';
+import Main from './components/Main';
+import Review from './components/Review';
+import Aside from './components/Aside';
 
 export default (() => {
   const clear = () => {

@@ -1,23 +1,19 @@
 require('dotenv').config();
 const express = require('express');
-const cookieParser = require('cookie-parser');
-const path = require('path');
-
 const webpack = require('webpack');
 const middleware = require('webpack-dev-middleware');
+const compiler = webpack(require('../webpack.config'));
+const cookieParser = require('cookie-parser');
+
+const app = express();
 
 const authRouter = require('./routers/authRouter');
 const userRouter = require('./routers/userRouter');
 const reviewRouter = require('./routers/reviewRouter');
 const mypageRouter = require('./routers/mypageRouter');
-
 const searchRouter = require('./routers/searchRouter');
+
 const { checkLoggedIn, jwtMiddleware } = require('./middleware.js');
-
-// 웹팩 옵션을 webpack() 함수 인자로 넘겨 compiler를 얻는다
-const compiler = webpack(require('../../../webpack.config'));
-
-const app = express();
 
 app.use(express.static('public'));
 app.use(express.json());

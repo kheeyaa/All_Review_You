@@ -1,14 +1,13 @@
-const { Router } = require('express');
-const path = require('path');
-const webpack = require('webpack');
-const compiler = webpack(require('../../../../webpack.config'));
-const middleware = require('webpack-dev-middleware');
 const express = require('express');
+const webpack = require('webpack');
+const middleware = require('webpack-dev-middleware');
+const path = require('path');
+const compiler = webpack(require('../../webpack.config'));
 
 const app = express();
 app.use(middleware(compiler));
 
-const mypageRouter = Router();
+const mypageRouter = express.Router();
 
 mypageRouter.get('/', (req, res) => {
   // 웹팩이 처리한 html 경로를 찾는다.
