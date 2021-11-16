@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <!-- <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" /> -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet" />
   </head>
   <body>
     <div class="editor-container">
@@ -15,12 +15,16 @@
               <label for="title" class="a11y-hidden">제목 입력</label>
               <input name="title" id="title" class="editor-title" placeholder="제목을 입력하세요"></input>
               <div class="info">
-                <div class="info__tag-wrapper">
+                <div class="info__tag">
                   <ul class="tag-list"></ul>
-                  <label for="tag" class="a11y-hidden"></label>
+                  <label for="tag" class="a11y-hidden">태그 입력</label>
                   <input type="text" id="tag" class="editor-tag" placeholder="태그를 입력하세요"/>
                 </div>
                 <div class="info__rater"></div>
+                <div class="info__thumbnail">
+                  <label for="thumbnail" class="a11y-hidden">썸네일 입력</label>
+                  <input type="file" id="thumbnail" class="editor-thumbnail" accept="image/png, image/jpeg">
+                </div>
               </div>
               <div id="quill" class="quill"></div>
             </div>
