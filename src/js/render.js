@@ -30,7 +30,7 @@ export default (() => {
     $li.innerHTML = `
     <a href="/reviews/${reviewData.reviewId}">
       <div class="${page} review__img">
-        <img src="../images/test.jpg" alt="" />
+        <img src="../images/default.svg" alt="" />
       </div>
       <div class="${page} review__details">
         <h2 class="${page} title">${reviewData.title}</h2>

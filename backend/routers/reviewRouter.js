@@ -104,7 +104,7 @@ const reviewOffset = (() => {
   };
 })();
 
-// reviews/resetOffset
+// reviews/offset
 reviewRouter.patch('/offset', (req, res) => {
   reviewOffset.reset();
   res.send();
