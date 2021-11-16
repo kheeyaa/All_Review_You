@@ -1,3 +1,4 @@
+import Quill from 'quill';
 import util from './utils/util';
 
 const rater = require('rater-js');
@@ -92,7 +93,7 @@ export default (() => {
     const $newDiv = document.createElement('div');
     $newDiv.className = 'reviewDetail__contentWrap';
 
-    const { title, userId, reviewId, tags, ratings, likes, createdAt } = reviewData;
+    const { title, content, userId, reviewId, tags, ratings, likes, createdAt } = reviewData;
 
     $newDiv.innerHTML = `
       <h2 class="a11y-hidden">리뷰</h2>
@@ -129,10 +130,17 @@ export default (() => {
             </div>
           </div>
         </div>
-      </header>`;
+      </header>
+      <div class="reviewDetail__thumbnail"></div>
+      <main class="reviewDetail__content"></main>`;
+
+    const $reviewDetailContent = $newDiv.querySelector('.reviewDetail__content');
+
+    const tmp = document.createElement('div');
+    new Quill(tmp).setContents(content);
+    $reviewDetailContent.innerHTML = tmp.getElementsByClassName('ql-editor')[0].innerHTML;
 
     createReadOnlyRater($newDiv.querySelector('#rater'), ratings);
-
     return $newDiv;
   };
 

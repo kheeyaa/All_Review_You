@@ -27,3 +27,5 @@ exports.writeReview = (req, res) => {
   console.log(newReview);
   res.send(newReview);
 };
+
+exports.uploadPicture = (req, res) => {};
