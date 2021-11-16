@@ -74,38 +74,16 @@ reviewRouter.post('/:id', (req, res) => {
   const { inUserId, inContent, inReviewId } = params;
   const [...state] = Reviews.state;
 
-  res.format({
-    // 새로고침에 의한 브라우저 요청에 대해 html을 응답
-    'text/html': () => {
-      // 웹팩이 처리한 html 경로를 찾는다.
-      const filename = path.join(compiler.outputPath, 'index.html');
-      // 그 경로에에서 html 파일을 읽는다.
-      compiler.outputFileSystem.readFile(filename, (err, result) => {
-        if (err) return;
-        res.set('content-type', 'text/html').end(result);
-      });
-    },
-    // ajax 요청에 대해 json을 응답
-    'application/json': () => {
-      state.forEach(({ reviewId, comments }, i) => {
-        const generateId = () => Math.max(...comments.map(cur => cur.commentId)) + 1;
-        if (+inReviewId === reviewId) {
-          state[i].comments = [...state[i].comments, { commentId: generateId(), userId: inUserId, content: inContent }];
-        }
-      });
-      res.send(Reviews.state.filter(({ reviewId }) => reviewId === +req.params.id));
-    },
-    default: () => {
-      // log the request and respond with 406
-      res.status(406).send('Not Acceptable');
-    },
-  });
+  if (inContent.trim().length > 0) {
+    state.forEach(({ reviewId, comments }, i) => {
+      const generateId = () => Math.max(...comments.map(cur => cur.commentId)) + 1;
+      if (+inReviewId === reviewId) {
+        state[i].comments = [...state[i].comments, { commentId: generateId(), userId: inUserId, content: inContent }];
+      }
+    });
+    res.send(Reviews.state.filter(({ reviewId }) => reviewId === +req.params.id));
+  }
 });
-
-// // reviews/all => 모든 리뷰 보내줌
-// reviewRouter.get('/all', (req, res) => {
-//   res.send(Reviews.state);
-// });
 
 // ----- For Intersection Observer
 
