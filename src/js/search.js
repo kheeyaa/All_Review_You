@@ -1,6 +1,10 @@
 import axios from 'axios';
 import render from './render';
 
+window.addEventListener('DOMContentLoaded', () => {
+  console.log('hi');
+});
+
 document.querySelector('.search__form').onsubmit = async e => {
   e.preventDefault();
 
