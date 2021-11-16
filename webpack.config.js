@@ -3,14 +3,18 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
+const htmlPageNames = ['index', 'editor', 'mypage', 'reviewDetail', 'search'];
+
 module.exports = {
   entry: {
-    main: './src/js/main.js',
-    reviewDetail: './src/js/reviewDetail.js',
-    mypage: './src/js/mypage.js',
-    search: './src/js/search.js',
-    editor: './src/js/editor.js',
-    authModal: './src/js/authModal.js',
+    app: './src/js/app.js',
+    ...htmlPageNames.reduce(
+      (entry, name) => ({
+        ...entry,
+        [`${name === 'index' ? 'main' : name}`]: `./src/js/${name === 'index' ? 'main' : name}.js`,
+      }),
+      {}
+    ),
   },
   output: {
     path: path.resolve(__dirname, 'public'),
@@ -18,36 +22,20 @@ module.exports = {
     filename: 'js/[name].bundle.js',
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: 'src/template/index.html',
-      chunks: ['main', 'authModal'],
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'reviewDetail.html',
-      template: 'src/template/reviewDetail.html',
-      chunks: ['reviewDetail'],
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'mypage.html',
-      template: 'src/template/mypage.html',
-      chunks: ['mypage'],
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'search.html',
-      template: 'src/template/search.html',
-      chunks: ['search'],
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'editor.html',
-      template: 'src/template/editor.html',
-      chunks: ['editor'],
-    }),
+    ...htmlPageNames.map(
+      name =>
+        new HtmlWebpackPlugin({
+          filename: `${name}.html`,
+          template: `src/template/${name}.html`,
+          chunks: [name === 'index' ? 'main' : name, 'app'],
+        })
+    ),
     new MiniCssExtractPlugin({ filename: 'css/style.css' }),
     new CopyPlugin({
       patterns: [
         {
           from: path.join(__dirname, 'src/images'),
-          to: path.join(__dirname, `public/images`),
+          to: path.join(__dirname, 'public/images'),
         },
       ],
     }),

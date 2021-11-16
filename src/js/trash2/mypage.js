@@ -1,7 +1,7 @@
 import axios from 'axios';
 import render from './render';
 import userData from './userData';
-import '../scss/index.scss';
+import '../../scss/index.scss';
 
 window.addEventListener('DOMContentLoaded', async () => {
   try {

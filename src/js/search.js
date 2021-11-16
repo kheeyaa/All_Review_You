@@ -1,6 +1,9 @@
-import '../scss/index.scss';
 import axios from 'axios';
 import render from './render';
+
+window.addEventListener('DOMContentLoaded', () => {
+  console.log('hi');
+});
 
 document.querySelector('.search__form').onsubmit = async e => {
   e.preventDefault();
@@ -13,7 +16,9 @@ document.querySelector('.search__form').onsubmit = async e => {
         keyword: $searchInput.value.trim(),
       },
     });
-    render.search(reviews, { $reviewList: document.querySelector('.review__list') });
+    const { data: curUserId } = await axios.get('/users/me');
+
+    render.search(reviews, { $reviewList: document.querySelector('.review__list') }, curUserId);
   } catch (e) {
     console.error(e);
   }
