@@ -1,6 +1,114 @@
 @use './../base' as *;
 @use './../components' as *;
 
-.container {
-  @include boxSizeMax;
+.editor-container {
+  margin: 0 auto;
+  max-width: 1000px;
+}
+.form-wrapper {
+  @include desktop {
+    margin-top: rem(40px);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  }
+
+  .editor-inner {
+    @include mobile {
+      padding: rem(30px);
+    }
+    @include desktop {
+      padding: rem(60px);
+    }
+  }
+
+  .editor-title {
+    padding: rem(15px) 0;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid $gray2;
+    background-color: inherit;
+    font-size: rem(30px);
+    &::placeholder {
+      color: $gray2;
+      font-size: rem(30px);
+    }
+  }
+
+  .info {
+    margin: rem(30px) 0;
+    padding-bottom: rem(30px);
+    border-bottom: 1px solid $gray2;
+
+    &__tag-wrapper {
+      margin-bottom: rem(30px);
+      .tag-list {
+        display: inline-block;
+        .tag {
+          margin-bottom: rem(5px);
+          margin-right: rem(5px);
+          padding: rem(10px);
+          background-color: rgba($olive, 0.3);
+          border-radius: rem(5px);
+          display: inline-block;
+          cursor: pointer;
+        }
+      }
+      input {
+        padding: rem(10px) rem(0);
+        border: none;
+        background-color: inherit;
+        &input {
+          color: $gray2;
+        }
+      }
+    }
+  }
+
+  .ql-toolbar {
+    border: none;
+  }
+  .quill {
+    height: 500px;
+    border: none;
+    @include mobile {
+      font-size: 16px;
+    }
+    @include desktop {
+      font-size: 18px;
+    }
+  }
+
+  .buttons-wrapper {
+    z-index: 9999;
+    background-color: $white;
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+
+    @include mobile {
+      padding: rem(15px) rem(30px);
+    }
+    @include desktop {
+      padding: rem(15px) rem(60px);
+    }
+
+    button {
+      padding: rem(12px) 0;
+      background-color: inherit;
+      border: none;
+    }
+    .exit {
+      img {
+        margin-right: 5px;
+      }
+    }
+    .submit {
+      padding: rem(12px) rem(25px);
+      border-radius: 5px;
+      background-color: $olive;
+      color: $white;
+    }
+  }
 }
