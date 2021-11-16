@@ -3,12 +3,12 @@ const { Router } = require('express');
 const { findSearchResult } = require('../controllers/searchController');
 const { sendHtml } = require('../controllers/sendHtml');
 
-const searchRouter = Router();
+const editorRouter = Router();
 
-searchRouter.get('/', (req, res) => {
+editorRouter.get('/', (req, res) => {
   res.format({
     'text/html': () => {
-      sendHtml('search', res);
+      sendHtml('editor', res);
     },
     'application/json': () => {
       findSearchResult(req, res);
@@ -19,8 +19,4 @@ searchRouter.get('/', (req, res) => {
   });
 });
 
-// searchRouter.post('/:id', (req, res) => {});
-// searchRouter.put('/:id', (req, res) => {});
-// searchRouter.delete('/:id', (req, res) => {});
-
-module.exports = searchRouter;
+module.exports = editorRouter;
