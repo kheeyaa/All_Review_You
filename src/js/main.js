@@ -43,9 +43,12 @@ const observeReviewMore = () => {
 
 window.addEventListener('DOMContentLoaded', async () => {
   const { order } = document.querySelector('.nav__now').dataset;
-  await axios.patch(`/reviews/offset`);
   try {
-    const reviewData = await Promise.all([axios.get(`/reviews/order-${order}`), axios.get('/users/me')]);
+    const reviewData = await Promise.all([
+      axios.get(`/reviews/order-${order}`),
+      axios.get('/users/me'),
+      axios.patch(`/reviews/offset`),
+    ]);
     const [{ data: reviews }, { data: curUserId }] = reviewData;
 
     render.home(reviews, { $reviewList, $tagsList }, curUserId);
