@@ -12,6 +12,7 @@ const userRouter = require('./routers/userRouter');
 const reviewRouter = require('./routers/reviewRouter');
 const mypageRouter = require('./routers/mypageRouter');
 const searchRouter = require('./routers/searchRouter');
+const editorRouter = require('./routers/editorRouter');
 
 const { checkLoggedIn, jwtMiddleware } = require('./middleware.js');
 
@@ -27,6 +28,7 @@ app.use('/users', userRouter);
 app.use('/reviews', reviewRouter);
 app.use('/mypage', mypageRouter);
 app.use('/search', searchRouter);
+app.use('/write', editorRouter);
 
 // const PORT = process.env.PORT || 3000;
 const PORT = 3000;
