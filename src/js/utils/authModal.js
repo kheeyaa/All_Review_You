@@ -2,7 +2,6 @@ import axios from 'axios';
 
 import { signupSchema, errorMessage } from './validSchema.js';
 
-console.log('hi');
 let schema = signupSchema;
 
 const $login = document.querySelector('.login');

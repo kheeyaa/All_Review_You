@@ -1,4 +1,4 @@
-import '../scss/index.scss';
+import '../../scss/index.scss';
 import axios from 'axios';
 import render from './render';
 // import MainPage from './pages/MainPage';
