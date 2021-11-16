@@ -14,7 +14,7 @@
   &__img {
     cursor: pointer;
     width: 100%;
-    height: 55%;
+    height: 52%;
     img {
       width: 100%;
       height: 100%;
@@ -25,7 +25,7 @@
     position: relative;
     background-color: $white;
     width: 100%;
-    // height: 45%;
+    height: 48%;
     padding: rem(14px);
     @include flexbox($direction: column, $justify-content: space-between);
 
@@ -45,7 +45,7 @@
     time,
     .author,
     .detail {
-      margin-bottom: rem(15px);
+      // margin-bottom: rem(15px);
     }
     .detail {
       width: 100%;
