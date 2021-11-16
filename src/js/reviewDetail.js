@@ -38,3 +38,9 @@ window.addEventListener('submit', async e => {
     $reviewCommentInput.value = '';
   }
 });
+
+// TODO: 입력창 눌렀을 때 로그인 안되있으면 모달창 나오게
+// window.addEventListener('click', async e => {
+//   if (e.target !== document.querySelector('.reviewDetail__addComments--input')) return;
+//   const { data: curUserId } = await axios.get('/users/me');
+// });

@@ -49,7 +49,7 @@ document.querySelector('.submit').addEventListener('click', async () => {
     // const tmp = document.createElement('div');
     // new Quill(tmp).setContents(data.content);
     // $test.innerHTML = tmp.getElementsByClassName('ql-editor')[0].innerHTML;
-    // window.location.href = `/reviews/${data.reviewId}`;
+    window.location.href = `/reviews/${data.reviewId}`;
   } catch (e) {
     console.error(e.message);
   }
