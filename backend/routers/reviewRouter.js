@@ -120,12 +120,21 @@ const reviewOffset = (() => {
       offset += unit;
       return offset;
     },
+    reset() {
+      offset = 0;
+    },
   };
 })();
 
+// reviews/resetOffset
+reviewRouter.patch('/offset', (req, res) => {
+  reviewOffset.reset();
+  res.send();
+});
+
 // reviews/order-likes => 모든 리뷰 좋아요순으로 보내줌
 reviewRouter.get('/order-likes', (req, res) => {
-  // if (reviewOffset.get() >= Reviews.length) return;
+  // if (reviewOffset.current() >= Reviews.length) return;
   res.send(
     Reviews.state
       .sort((review1, review2) => review2.likes.length - review1.likes.length)

@@ -57,3 +57,18 @@
     }
   }
 }
+
+.review-more {
+  &__wrap {
+    width: 100%;
+    padding: rem(10px);
+    @include flexbox($justify-content: center, $align-items: center);
+  }
+  &__text {
+    padding: rem(10px) rem(20px);
+    background-color: $white;
+    border: 1px solid $gray2;
+    color: $gray2;
+    border-radius: rem(10px);
+  }
+}
