@@ -10,7 +10,7 @@ module.exports = {
     mypage: './src/js/mypage.js',
     search: './src/js/search.js',
     editor: './src/js/editor.js',
-    authModal: './src/js/authModal.js',
+    app: './src/js/app.js',
   },
   output: {
     path: path.resolve(__dirname, 'public'),
@@ -20,22 +20,22 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'src/template/index.html',
-      chunks: ['main', 'authModal'],
+      chunks: ['main', 'app'],
     }),
     new HtmlWebpackPlugin({
       filename: 'reviewDetail.html',
       template: 'src/template/reviewDetail.html',
-      chunks: ['reviewDetail'],
+      chunks: ['reviewDetail', 'app'],
     }),
     new HtmlWebpackPlugin({
       filename: 'mypage.html',
       template: 'src/template/mypage.html',
-      chunks: ['mypage'],
+      chunks: ['mypage', 'app'],
     }),
     new HtmlWebpackPlugin({
       filename: 'search.html',
       template: 'src/template/search.html',
-      chunks: ['search'],
+      chunks: ['search', 'app'],
     }),
     new HtmlWebpackPlugin({
       filename: 'editor.html',

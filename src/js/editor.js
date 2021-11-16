@@ -1,5 +1,3 @@
-import '../scss/index.scss';
-
 import axios from 'axios';
 import Quill from 'quill';
 import rater from 'rater-js';

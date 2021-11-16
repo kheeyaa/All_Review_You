@@ -94,6 +94,16 @@ reviewRouter.get('/all', (req, res) => {
   res.send(Reviews.state);
 });
 
+// reviews/order-likes => 모든 리뷰 좋아요순으로 보내줌
+reviewRouter.get('/order-likes', (req, res) => {
+  res.send(Reviews.state.sort((review1, review2) => review2.likes.length - review1.likes.length));
+});
+
+// reviews/order-latest => 모든 리뷰 최신순으로 보내줌
+reviewRouter.get('/order-latest', (req, res) => {
+  res.send(Reviews.state.sort((review1, review2) => Date.parse(review2.createdAt) - Date.parse(review1.createdAt)));
+});
+
 reviewRouter.post('/', writeReview);
 reviewRouter.patch('/:id', (req, res) => {});
 reviewRouter.put('/:id', (req, res) => {});

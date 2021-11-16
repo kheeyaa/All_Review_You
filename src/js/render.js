@@ -50,15 +50,10 @@ export default (() => {
     });
   };
 
-  const renderReviews = (reviews, $target, curUserId, order) => {
+  const renderReviews = (reviews, $target, curUserId) => {
     const page = window.location.pathname.replace(/\/|.html/g, '') === 'mypage' ? 'mypage' : '';
 
     $target.innerHTML = reviews
-      .sort((review1, review2) =>
-        order === 'likes'
-          ? review2.likes.length - review1.likes.length
-          : Date.parse(review2.createdAt) - Date.parse(review1.createdAt)
-      )
       .map(
         ({ title, userId, reviewId, content, photos, tags, ratings, likes, comments, createdAt, updatedAt }) => `
       <li class="${page} review__card" data-reviewid = "${reviewId}">
@@ -257,10 +252,10 @@ export default (() => {
   };
 
   return {
-    home(reviews, targets, curUserId, order) {
+    home(reviews, targets, curUserId) {
       renderHeader(curUserId);
 
-      renderReviews(reviews, targets.$reviewList, curUserId, order);
+      renderReviews(reviews, targets.$reviewList, curUserId);
 
       renderTags(
         reviews.flatMap(review => review.tags),

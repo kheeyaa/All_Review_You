@@ -1,22 +1,16 @@
-import '../scss/index.scss';
 import axios from 'axios';
 import render from './render';
-import userData from './utils/userData';
 
 // DOM NODES
 const $reviewDetail = document.querySelector('.reviewDetail');
 
 window.addEventListener('DOMContentLoaded', async () => {
-  console.log('hi');
-
   try {
     const {
       data: [curReview, tagRelatedReviews],
     } = await axios.get('/reviews/review/2');
     console.log(curReview, tagRelatedReviews);
     const { data: curUserId } = await axios.get('/users/me');
-
-    userData.id = curUserId;
 
     render.reviewDetail(curReview, tagRelatedReviews, { $reviewDetail }, curUserId);
   } catch (e) {
