@@ -10,10 +10,19 @@ exports.getOneReview = (req, res) => {
 
 exports.writeReview = (req, res) => {
   const { title, content, photos, tags, ratings } = req.body;
+
+  const summary =
+    content.ops
+      .filter(op => typeof op.insert === 'string')
+      .map(op => op.insert)
+      .join('')
+      .trim() || '내용이 없습니다.';
+
   const newReview = {
     title,
     userId: req.userId,
     reviewId: Review.generateId(),
+    summary,
     content,
     photos,
     tags,
@@ -23,6 +32,7 @@ exports.writeReview = (req, res) => {
     createdAt: new Date(),
     updatedAt: new Date(),
   };
+
   Review.state = newReview;
   console.log(newReview);
   res.send(newReview);
