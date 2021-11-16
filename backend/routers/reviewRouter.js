@@ -1,5 +1,11 @@
 const express = require('express');
 
+const middleware = require('webpack-dev-middleware');
+
+const webpack = require('webpack');
+const path = require('path');
+const compiler = webpack(require('../../webpack.config'));
+
 const { createReview, writeReview, getOneReview } = require('../controllers/reviewController');
 const { sendHtml } = require('../controllers/sendHtml');
 
@@ -79,14 +85,48 @@ reviewRouter.post('/:id', (req, res) => {
   }
 });
 
+// ----- For Intersection Observer
+
+const reviewOffset = (() => {
+  const unit = 12;
+  let offset = 0;
+  return {
+    current() {
+      return offset;
+    },
+    next() {
+      offset += unit;
+      return offset;
+    },
+    reset() {
+      offset = 0;
+    },
+  };
+})();
+
+// reviews/resetOffset
+reviewRouter.patch('/offset', (req, res) => {
+  reviewOffset.reset();
+  res.send();
+});
+
 // reviews/order-likes => 모든 리뷰 좋아요순으로 보내줌
 reviewRouter.get('/order-likes', (req, res) => {
-  res.send(Reviews.state.sort((review1, review2) => review2.likes.length - review1.likes.length));
+  // if (reviewOffset.current() >= Reviews.length) return;
+  res.send(
+    Reviews.state
+      .sort((review1, review2) => review2.likes.length - review1.likes.length)
+      .slice(reviewOffset.current(), reviewOffset.next())
+  );
 });
 
 // reviews/order-latest => 모든 리뷰 최신순으로 보내줌
 reviewRouter.get('/order-latest', (req, res) => {
-  res.send(Reviews.state.sort((review1, review2) => Date.parse(review2.createdAt) - Date.parse(review1.createdAt)));
+  res.send(
+    Reviews.state
+      .sort((review1, review2) => Date.parse(review2.createdAt) - Date.parse(review1.createdAt))
+      .slice(reviewOffset.current(), reviewOffset.next())
+  );
 });
 
 reviewRouter.post('/', writeReview);

@@ -19,7 +19,7 @@ export default (() => {
   };
 
   const createReview = (reviewData, curUserId) => {
-    const page = window.location.pathname.replace(/\/|.html/g, '');
+    const page = window.location.pathname.replace(/\/|search/g, '');
 
     const $li = document.createElement('li');
     $li.className = `${page} review__card`;
@@ -57,6 +57,18 @@ export default (() => {
 
   const renderMessage = reviewsLen => {
     document.querySelector('.search__message').textContent = `총 ${reviewsLen}개의 리뷰를 찾았습니다.`;
+  };
+
+  const renderAddReviews = (reviews, $target, curUserId) => {
+    const $domFragment = document.createDocumentFragment();
+
+    reviews.forEach(review => {
+      $domFragment.appendChild(createReview(review, curUserId));
+    });
+
+    [...$domFragment.querySelectorAll('#rater')].forEach((el, i) => createReadOnlyRater(el, reviews[i].ratings));
+
+    $target.appendChild($domFragment);
   };
 
   const renderReviews = (reviews, $target, curUserId) => {
@@ -198,6 +210,10 @@ export default (() => {
       renderReviews(reviews, targets.$reviewList, curUserId);
 
       renderTags([...new Set(reviews.flatMap(review => review.tags))], targets.$tagsList);
+    },
+
+    addReviews(reviews, targets, curUserId) {
+      renderAddReviews(reviews, targets.$reviewList, curUserId);
     },
 
     mypage(reviews, targets, curUserId) {
