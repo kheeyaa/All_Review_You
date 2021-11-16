@@ -8,10 +8,15 @@ const $tagsList = document.querySelector('.tags__list');
 const requestReviewsList = async () => {
   const { order } = document.querySelector('.nav__now').dataset;
   try {
-    const { data: reviews } = await axios.get(`/reviews/order-${order}`);
-    const { data: curUserId } = await axios.get('/users/me');
+    const reviewData = await Promise.all([axios.get(`/reviews/order-${order}`), axios.get('/users/me')]);
+    const [{ data: reviews }, { data: curUserId }] = reviewData;
 
-    render.addReviews(reviews, { $reviewList, $tagsList }, curUserId);
+    if (reviews.length === 0) {
+      document.querySelector('.review-more__text').innerHTML = '마지막 리뷰 입니다.';
+    } else {
+      document.querySelector('.review-more__text').innerHTML = '리뷰 더보기';
+      render.addReviews(reviews, { $reviewList, $tagsList }, curUserId);
+    }
   } catch (e) {
     console.error(e);
   }
@@ -38,10 +43,10 @@ const observeReviewMore = () => {
 
 window.addEventListener('DOMContentLoaded', async () => {
   const { order } = document.querySelector('.nav__now').dataset;
+  await axios.patch(`/reviews/offset`);
   try {
-    await axios.patch(`/reviews/offset`);
-    const { data: reviews } = await axios.get(`/reviews/order-${order}`);
-    const { data: curUserId } = await axios.get('/users/me');
+    const reviewData = await Promise.all([axios.get(`/reviews/order-${order}`), axios.get('/users/me')]);
+    const [{ data: reviews }, { data: curUserId }] = reviewData;
 
     render.home(reviews, { $reviewList, $tagsList }, curUserId);
     observeReviewMore();
@@ -59,9 +64,12 @@ document.querySelector('.nav__list').onclick = async e => {
   const { order } = e.target.closest('li').dataset;
 
   try {
-    await axios.patch(`/reviews/offset`);
-    const { data: reviews } = await axios.get(`/reviews/order-${order}`);
-    const { data: curUserId } = await axios.get('/users/me');
+    const reviewData = await Promise.all([
+      axios.get(`/reviews/order-${order}`),
+      axios.get('/users/me'),
+      axios.patch(`/reviews/offset`),
+    ]);
+    const [{ data: reviews }, { data: curUserId }] = reviewData;
 
     render.home(reviews, { $reviewList, $tagsList }, curUserId);
   } catch (e) {
@@ -71,7 +79,3 @@ document.querySelector('.nav__list').onclick = async e => {
 window.onpopstate = e => {
   alert(`location: ${document.location}, state: ${JSON.stringify(e.state)}`);
 };
-
-// window.onpopstate = e => {
-//   alert(`location: ${document.location}, state: ${JSON.stringify(e.state)}`);
-// };
