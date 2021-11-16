@@ -52,7 +52,6 @@ export default (() => {
 
   const renderReviews = (reviews, $target, curUserId) => {
     const page = window.location.pathname.replace(/\/|.html/g, '') === 'mypage' ? 'mypage' : '';
-
     $target.innerHTML = reviews
       .map(
         ({ title, userId, reviewId, content, photos, tags, ratings, likes, comments, createdAt, updatedAt }) => `
@@ -84,7 +83,7 @@ export default (() => {
       )
       .join('');
 
-    [...document.querySelectorAll('#rater')].forEach((el, i) => createReadOnlyRater(el, reviews[i].ratings));
+    [...$target.querySelectorAll('#rater')].forEach((el, i) => createReadOnlyRater(el, reviews[i].ratings));
   };
 
   const renderTags = (tags, $target) => {
@@ -99,7 +98,7 @@ export default (() => {
     $newDiv.className = 'reviewDetail__contentWrap';
 
     const { title, userId, reviewId, content, photos, tags, ratings, likes, comments, createdAt, updatedAt } =
-      reviewData;
+      reviewData[0];
 
     $newDiv.innerHTML = `
       <h2 class="a11y-hidden">리뷰</h2>
@@ -144,14 +143,118 @@ export default (() => {
     createReadOnlyRater(document.querySelector('#rater'), ratings);
   };
 
-  const renderReviewDetailAdd = (reviewData, $target) => {
-    if ($target.querySelector('.reviewDetail__addWrap')) $target.querySelector('.reviewDetail__addWrap').remove();
+  // const renderReviewDetailAdd = (reviewData, $target) => {
+  //   if ($target.querySelector('.reviewDetail__addWrap')) $target.querySelector('.reviewDetail__addWrap').remove();
 
+  //   const $newDiv = document.createElement('div');
+  //   $newDiv.className = 'reviewDetail__addWrap';
+
+  //   const { title, userId, reviewId, content, photos, tags, ratings, likes, comments, createdAt, updatedAt } =
+  //     reviewData;
+
+  //   $newDiv.innerHTML = `
+  //   <!-- 리뷰 본문 외 -->
+  //     <h2 class="a11y-hidden">댓글</h2>
+  //     <!-- 댓글 작성하기-->
+  //     <section class="reviewDetail__addComments">
+  //       <h3 class="a11y-hidden">댓글 작성</h3>
+  //       <form action="" class="reviewDetail__addComments--form">
+  //         <label for="comment" class="reviewDetail__addComments--count">${comments.length}개의 댓글</label>
+  //         <input
+  //           type="text"
+  //           id="comment"
+  //           class="reviewDetail__addComments--input"
+  //           name="comment"
+  //           placeholder="댓글을 작성하세요"
+  //         />
+  //         <div class="reviewDetail__addComments--btnWrap">
+  //           <button type="submit" class="reviewDetail__addComments--cancel">취소</button>
+  //           <button type="submit" class="reviewDetail__addComments--confirm">댓글 작성</button>
+  //         </div>
+  //       </form>
+  //     </section>
+
+  //     <!-- 댓글 리스트 -->
+  //     <section class="reviewDetail__comments">
+  //       <h3 class="a11y-hidden">댓글 리스트</h3>
+  //       <ul>
+  //         ${comments
+  //           .map(
+  //             ({ userId, content }) => `
+  //         <li class="reviewDetail__comments--items">
+  //           <span class="reviewDetail__comments--user">${userId}</span>
+  //           <span class="reviewDetail__comments--content">${content}</span>
+  //         </li>`
+  //           )
+  //           .join('')}
+  //       </ul>
+  //     </section>
+
+  //     <!-- 관련 있는 리뷰 -->
+  //     <section class="reviewDetail__relatedReview review-column-changewidth">
+  //       <h2 class="reviewDetail__relatedReview--title">관련 있는 리뷰</h2>
+  //       <div class="review-row review-column-changewidth">
+  //         <ul class="review__list">
+  //           <li class="review__card">
+  //             <div class="review__img"><img src="../images/test.jpg" alt="" /></div>
+  //             <div class="review__details">
+  //               <h3 class="title">제목</h3>
+  //               <span class="detail">설명글</span>
+  //               <time datetime="2021-11-07">2021년 11월 07일</time>
+  //               <span class="author">작성자 아이디</span>
+  //               <div class="likes__container">
+  //                 <span class="likes__count">20</span>
+  //                 <button class="likes__button">
+  //                   <img src="../images/like.png" class="likes-img" aria-hidden="true" />
+  //                   <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
+  //                 </button>
+  //               </div>
+  //             </div>
+  //           </li>
+  //           <li class="review__card">
+  //             <div class="review__img"><img src="../images/test.jpg" alt="" /></div>
+  //             <div class="review__details">
+  //               <h3 class="title">제목</h3>
+  //               <span class="detail">설명글</span>
+  //               <time datetime="2021-11-07">2021년 11월 07일</time>
+  //               <span class="author">작성자 아이디</span>
+  //               <div class="likes__container">
+  //                 <span class="likes__count">20</span>
+  //                 <button class="likes__button">
+  //                   <img src="../images/like.png" class="likes-img" aria-hidden="true" />
+  //                   <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
+  //                 </button>
+  //               </div>
+  //             </div>
+  //           </li>
+  //           <li class="review__card">
+  //             <div class="review__img"><img src="../images/test.jpg" alt="" /></div>
+  //             <div class="review__details">
+  //               <h3 class="title">제목</h3>
+  //               <span class="detail">설명글</span>
+  //               <time datetime="2021-11-07">2021년 11월 07일</time>
+  //               <span class="author">작성자 아이디</span>
+  //               <div class="likes__container">
+  //                 <span class="likes__count">20</span>
+  //                 <button class="likes__button">
+  //                   <img src="../images/like.png" class="likes-img" aria-hidden="true" />
+  //                   <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
+  //                 </button>
+  //               </div>
+  //             </div>
+  //           </li>
+  //         </ul>
+  //       </div>
+  //     </section>`;
+
+  //   $target.appendChild($newDiv);
+  // };
+  const renderReviewDetailComment = reviewData => {
     const $newDiv = document.createElement('div');
     $newDiv.className = 'reviewDetail__addWrap';
 
     const { title, userId, reviewId, content, photos, tags, ratings, likes, comments, createdAt, updatedAt } =
-      reviewData;
+      reviewData[0];
 
     $newDiv.innerHTML = `
     <!-- 리뷰 본문 외 -->
@@ -162,7 +265,7 @@ export default (() => {
         <form action="" class="reviewDetail__addComments--form">
           <label for="comment" class="reviewDetail__addComments--count">${comments.length}개의 댓글</label>
           <input
-            type="text"   
+            type="text"
             id="comment"
             class="reviewDetail__addComments--input"
             name="comment"
@@ -189,66 +292,24 @@ export default (() => {
             )
             .join('')}
         </ul>
-      </section>
-
-      <!-- 관련 있는 리뷰 -->
-      <section class="reviewDetail__relatedReview review-column-changewidth">
-        <h2 class="reviewDetail__relatedReview--title">관련 있는 리뷰</h2>
-        <div class="review-row review-column-changewidth">
-          <ul class="review__list">
-            <li class="review__card">
-              <div class="review__img"><img src="../images/test.jpg" alt="" /></div>
-              <div class="review__details">
-                <h3 class="title">제목</h3>
-                <span class="detail">설명글</span>
-                <time datetime="2021-11-07">2021년 11월 07일</time>
-                <span class="author">작성자 아이디</span>
-                <div class="likes__container">
-                  <span class="likes__count">20</span>
-                  <button class="likes__button">
-                    <img src="../images/like.png" class="likes-img" aria-hidden="true" />
-                    <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
-                  </button>
-                </div>
-              </div>
-            </li>
-            <li class="review__card">
-              <div class="review__img"><img src="../images/test.jpg" alt="" /></div>
-              <div class="review__details">
-                <h3 class="title">제목</h3>
-                <span class="detail">설명글</span>
-                <time datetime="2021-11-07">2021년 11월 07일</time>
-                <span class="author">작성자 아이디</span>
-                <div class="likes__container">
-                  <span class="likes__count">20</span>
-                  <button class="likes__button">
-                    <img src="../images/like.png" class="likes-img" aria-hidden="true" />
-                    <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
-                  </button>
-                </div>
-              </div>
-            </li>
-            <li class="review__card">
-              <div class="review__img"><img src="../images/test.jpg" alt="" /></div>
-              <div class="review__details">
-                <h3 class="title">제목</h3>
-                <span class="detail">설명글</span>
-                <time datetime="2021-11-07">2021년 11월 07일</time>
-                <span class="author">작성자 아이디</span>
-                <div class="likes__container">
-                  <span class="likes__count">20</span>
-                  <button class="likes__button">
-                    <img src="../images/like.png" class="likes-img" aria-hidden="true" />
-                    <img src="../images/unlike.png" class="unlikes-img hidden" aria-hidden="true" />
-                  </button>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
       </section>`;
 
-    $target.appendChild($newDiv);
+    document.querySelector('.container').appendChild($newDiv);
+  };
+
+  const renderReviewDetailRelatedReview = tagRelatedReviews => {
+    const $newDiv = document.createElement('div');
+
+    $newDiv.innerHTML = `
+    <section class="reviewDetail__relatedReview review-column-changewidth">
+    <h2 class="reviewDetail__relatedReview--title">관련 있는 리뷰</h2>
+    <div class="review-row review-column-changewidth">
+      <ul class="review__list">
+      </ul>
+    </div>
+    </section>`;
+
+    document.querySelector('.container').appendChild($newDiv);
   };
 
   return {
@@ -274,10 +335,21 @@ export default (() => {
       );
     },
 
-    reviewDetail(review, targets, curUserId) {
+    reviewDetail(review, relatedReviews, targets, curUserId) {
+      // renderHeader(curUserId);
+      // renderReviewDetailContent(review, targets.$reviewDetail, curUserId);
+      // renderReviewDetailAdd(review, targets.$reviewDetail);
+
       renderHeader(curUserId);
       renderReviewDetailContent(review, targets.$reviewDetail, curUserId);
-      renderReviewDetailAdd(review, targets.$reviewDetail);
+      renderReviewDetailComment(review, targets.$reviewDetail, curUserId);
+      renderReviewDetailRelatedReview(relatedReviews, targets.$reviewDetail);
+
+      renderReviews(relatedReviews, document.querySelector('.review__list'), curUserId);
+    },
+
+    addComments(review, targets) {
+      renderReviewDetailComment(review, targets.$reviewCommentInput);
     },
 
     search(reviews, targets, curUserId) {
