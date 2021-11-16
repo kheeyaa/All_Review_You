@@ -35,6 +35,7 @@ document.querySelector('.submit').addEventListener('click', async () => {
     alert('제목을 반드시 입력해주세요!');
     return;
   }
+  console.log(document.querySelector('.editor-thumbnail').file);
   const tags = [...$tagList.querySelectorAll('.tag')].map($tag => $tag.textContent.substring(1));
   const postBody = {
     title: $title.value.trim(),
@@ -42,9 +43,13 @@ document.querySelector('.submit').addEventListener('click', async () => {
     tags,
     ratings,
   };
+  // console.log(quill.root.innerHTML);
   try {
     const { data } = await axios.post('/reviews', postBody);
-    console.log(data);
+    // const tmp = document.createElement('div');
+    // new Quill(tmp).setContents(data.content);
+    // $test.innerHTML = tmp.getElementsByClassName('ql-editor')[0].innerHTML;
+    window.location.href = `/reviews/${data.reviewId}`;
   } catch (e) {
     console.error(e.message);
   }

@@ -1,4 +1,7 @@
 const express = require('express');
+const multer = require('multer');
+
+const upload = multer({ dest: 'uploads/' });
 
 const middleware = require('webpack-dev-middleware');
 
@@ -6,7 +9,7 @@ const webpack = require('webpack');
 const path = require('path');
 const compiler = webpack(require('../../webpack.config'));
 
-const { createReview, writeReview, getOneReview } = require('../controllers/reviewController');
+const { createReview, writeReview, getOneReview, uploadPicture } = require('../controllers/reviewController');
 const { sendHtml } = require('../controllers/sendHtml');
 
 const reviewRouter = express.Router();
@@ -104,7 +107,7 @@ const reviewOffset = (() => {
   };
 })();
 
-// reviews/resetOffset
+// reviews/offset
 reviewRouter.patch('/offset', (req, res) => {
   reviewOffset.reset();
   res.send();
@@ -130,6 +133,9 @@ reviewRouter.get('/order-latest', (req, res) => {
 });
 
 reviewRouter.post('/', writeReview);
+
+reviewRouter.post('/picture', upload.single('thumbnail'), uploadPicture);
+
 reviewRouter.patch('/:id', (req, res) => {});
 reviewRouter.put('/:id', (req, res) => {});
 reviewRouter.delete('/:id', (req, res) => {});
