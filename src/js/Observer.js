@@ -2,7 +2,7 @@ import axios from 'axios';
 import render from './render';
 
 export default class Observer {
-  constructor() {
+  constructor(keyword = null) {
     this.options = {
       root: null,
       rootMargin: '0px',
@@ -12,7 +12,7 @@ export default class Observer {
     this.observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          this.requestReviewsList();
+          this.requestReviewsList(keyword);
         }
       });
     }, this.options);
@@ -20,8 +20,8 @@ export default class Observer {
     this.$reviewMoreText = document.querySelector('.review-more__text');
   }
 
-  async requestReviewsList() {
-    this.order = document.querySelector('.nav__now').dataset.order;
+  async requestReviewsList(keyword) {
+    this.order = document.querySelector('.nav__now') ? document.querySelector('.nav__now').dataset.order : 'likes';
 
     this.$reviewMoreText.textContent = '잠시만 기다려주세요';
     try {
@@ -29,10 +29,11 @@ export default class Observer {
         data: { reviews },
       } = await axios.get('/reviews/sort', {
         params: {
-          order: this.order,
+          likesOrLatest: this.order,
           selectedTag: document.querySelector('.selectedTag')
             ? document.querySelector('.selectedTag').dataset.tag
             : null,
+          keyword,
         },
       });
 

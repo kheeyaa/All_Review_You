@@ -276,10 +276,10 @@ export default (() => {
         .join('');
     },
 
-    search(reviews, targets) {
+    search(reviews, totalNum) {
       renderHeader();
-      renderReviews(reviews, targets.$reviewList);
-      renderMessage(reviews.length);
+      renderReviews(reviews);
+      renderMessage(totalNum);
     },
   };
 })();
