@@ -9,8 +9,8 @@ module.exports = {
   entry: {
     app: './src/js/app.js',
     ...htmlPageNames.reduce(
-      (entry, name) => ({
-        ...entry,
+      (acc, name) => ({
+        ...acc,
         [`${name === 'index' ? 'main' : name}`]: `./src/js/${name === 'index' ? 'main' : name}.js`,
       }),
       {}

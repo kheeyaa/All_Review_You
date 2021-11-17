@@ -1,5 +1,6 @@
 import Quill from 'quill';
 import util from './utils/util';
+import user from './user';
 
 const rater = require('rater-js');
 
@@ -13,20 +14,20 @@ export default (() => {
     });
   };
 
-  const renderHeader = curUserId => {
+  const renderHeader = () => {
     ['login', 'logout', 'my-page', 'new-review'].forEach((className, i) => {
-      document.querySelector(`.${className}`).classList.toggle('hidden', i ? !curUserId : curUserId);
+      document.querySelector(`.${className}`).classList.toggle('hidden', i ? !user.isLoggedIn : user.isLoggedIn);
     });
   };
 
-  const createReview = (reviewData, curUserId) => {
+  const createReview = reviewData => {
     const page = window.location.pathname.replace(/\/|search/g, '');
 
     const $li = document.createElement('li');
     $li.className = `${page} review__card`;
     $li.dataset.reviewid = reviewData.reviewId;
 
-    const isOneself = reviewData.likes.includes(curUserId);
+    const isOneself = reviewData.likes.includes(user.id);
 
     $li.innerHTML = `
     <a href="/reviews/${reviewData.reviewId}">
@@ -60,11 +61,13 @@ export default (() => {
     document.querySelector('.search__message').textContent = `총 ${reviewsLen}개의 리뷰를 찾았습니다.`;
   };
 
-  const renderAddReviews = (reviews, $target, curUserId) => {
+  const renderAddReviews = reviews => {
+    const $target = document.querySelector('.review__list');
+
     const $domFragment = document.createDocumentFragment();
 
     reviews.forEach(review => {
-      $domFragment.appendChild(createReview(review, curUserId));
+      $domFragment.appendChild(createReview(review));
     });
 
     [...$domFragment.querySelectorAll('#rater')].forEach((el, i) => createReadOnlyRater(el, reviews[i].ratings));
@@ -72,12 +75,14 @@ export default (() => {
     $target.appendChild($domFragment);
   };
 
-  const renderReviews = (reviews, $target, curUserId) => {
+  const renderReviews = reviews => {
+    const $target = document.querySelector('.review__list');
+
     $target.innerHTML = '';
     const $domFragment = document.createDocumentFragment();
 
     reviews.forEach(review => {
-      $domFragment.appendChild(createReview(review, curUserId));
+      $domFragment.appendChild(createReview(review));
     });
 
     [...$domFragment.querySelectorAll('#rater')].forEach((el, i) => createReadOnlyRater(el, reviews[i].ratings));
@@ -85,15 +90,17 @@ export default (() => {
     $target.appendChild($domFragment);
   };
 
-  const renderTags = (tags, $target) => {
+  const renderTags = tags => {
+    const $target = document.querySelector('.tags__list');
+
     $target.innerHTML = tags.map(tag => `<li class="tag"><a href="" type="button">#${tag}</a></li>`).join('');
   };
 
-  const renderReviewDetailContent = (reviewData, curUserId) => {
+  const renderReviewDetailContent = reviewData => {
     const $newDiv = document.createElement('div');
     $newDiv.className = 'reviewDetail__contentWrap';
 
-    const { title, content, userId, reviewId, tags, ratings, likes, createdAt } = reviewData;
+    const { title, summary, content, userId, reviewId, tags, ratings, likes, createdAt } = reviewData;
 
     $newDiv.innerHTML = `
       <h2 class="a11y-hidden">리뷰</h2>
@@ -122,9 +129,9 @@ export default (() => {
                 <span class="reviewDetail__addInform--likesCount likes__count">${likes.length}</span>
                 <button class="likes__button">
                   <img src="../images/like.png" 
-                    class="likes-img ${likes.includes(curUserId) ? '' : 'hidden'}" aria-hidden="true" />
+                    class="likes-img ${likes.includes(user.id) ? '' : 'hidden'}" aria-hidden="true" />
                   <img src="../images/unlike.png" 
-                    class="unlikes-img ${likes.includes(curUserId) ? 'hidden' : ''}" aria-hidden="true" />
+                    class="unlikes-img ${likes.includes(user.id) ? 'hidden' : ''}" aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -132,13 +139,20 @@ export default (() => {
         </div>
       </header>
       <div class="reviewDetail__thumbnail"></div>
-      <main class="reviewDetail__content">${content}</main>`;
+      <main class="reviewDetail__content"></main>`;
 
     const $reviewDetailContent = $newDiv.querySelector('.reviewDetail__content');
 
-    // const $div = document.createElement('div');
-    // new Quill($div).setContents(content);
-    // $reviewDetailContent.innerHTML = $div.getElementsByClassName('ql-editor')[0].innerHTML;
+    const $div = document.createElement('div');
+    new Quill($div).setContents(content);
+    if (typeof content === 'string') {
+      $reviewDetailContent.innerHTML = content;
+    } else {
+      $reviewDetailContent.innerHTML = $div.getElementsByClassName('ql-editor')[0].innerHTML;
+    }
+
+    // ? $div.getElementsByClassName('ql-editor')[0].innerHTML
+    // : content;
 
     createReadOnlyRater($newDiv.querySelector('#rater'), ratings);
     return $newDiv;
@@ -212,32 +226,26 @@ export default (() => {
   };
 
   return {
-    home(reviews, targets, curUserId) {
-      renderHeader(curUserId);
+    home(reviews) {
+      renderHeader();
 
-      renderReviews(reviews, targets.$reviewList, curUserId);
+      renderReviews(reviews);
 
-      renderTags([...new Set(reviews.flatMap(review => review.tags))], targets.$tagsList);
+      renderTags([...new Set(reviews.flatMap(review => review.tags))]);
     },
 
-    addReviews(reviews, targets, curUserId) {
-      renderAddReviews(reviews, targets.$reviewList, curUserId);
+    addReviews(reviews) {
+      renderAddReviews(reviews);
     },
 
-    mypage(reviews, targets, curUserId) {
-      renderHeader(curUserId);
+    mypage(reviews, targets) {},
 
-      renderReviews(reviews, targets.$reviewList, curUserId);
-
-      renderTags([...new Set(reviews.flatMap(review => review.tags))], targets.$tagsList);
-    },
-
-    reviewDetail(review, relatedReviews, targets, curUserId) {
-      renderHeader(curUserId);
+    reviewDetail(review, relatedReviews, targets) {
+      renderHeader();
 
       const $domFragment = document.createDocumentFragment();
       [
-        renderReviewDetailContent(review, curUserId),
+        renderReviewDetailContent(review),
         renderReviewDetailComment(review),
         renderReviewDetailRelatedReview(relatedReviews),
       ].forEach($dom => $domFragment.appendChild($dom));
@@ -260,9 +268,9 @@ export default (() => {
         .join('');
     },
 
-    search(reviews, targets, curUserId) {
-      renderHeader(curUserId);
-      renderReviews(reviews, targets.$reviewList, curUserId);
+    search(reviews, targets) {
+      renderHeader();
+      renderReviews(reviews, targets.$reviewList);
       renderMessage(reviews.length);
     },
   };

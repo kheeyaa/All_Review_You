@@ -1,4 +1,5 @@
 import axios from 'axios';
+import user from './user';
 import render from './render';
 
 // DOM NODES
@@ -6,12 +7,14 @@ const $reviewDetail = document.querySelector('.reviewDetail');
 
 window.addEventListener('DOMContentLoaded', async () => {
   try {
+    // 리뷰 디테일 확인필요
     const { data } = await axios.get(window.location.pathname, {
       headers: { accept: 'application/json' },
     });
-
     const [curReview, tagRelatedReviews] = data;
     const { data: curUserId } = await axios.get('/users/me');
+
+    if (curUserId) user.login(curUserId);
 
     render.reviewDetail(curReview, tagRelatedReviews, { $reviewDetail }, curUserId);
   } catch (e) {
@@ -26,6 +29,7 @@ window.addEventListener('submit', async e => {
   const $reviewCommentInput = document.querySelector('.reviewDetail__addComments--input');
 
   const { data: curUserId } = await axios.get('/users/me');
+
   if (curUserId.length > 0) {
     const { data: reviews } = await axios.post(window.location.pathname, {
       params: {

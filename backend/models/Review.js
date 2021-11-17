@@ -808,13 +808,15 @@ const Review = (() => {
     },
   ];
 
+  const unit = 6;
+
+  let offset = 0;
+
   return {
     get state() {
       return state;
     },
-    set state(newReview) {
-      state = [...state, newReview];
-    },
+
     generateId() {
       return Math.max(...this.state.map(({ reviewId }) => reviewId), 0) + 1;
     },
@@ -826,8 +828,20 @@ const Review = (() => {
     change(curReviewId, newReview) {
       state = state.map(({ reviewId }, i) => (curReviewId === reviewId ? newReview : state[i]));
     },
+
+    get current() {
+      return offset;
+    },
+
+    get next() {
+      offset += unit;
+      return offset;
+    },
+
+    reset() {
+      offset = 0;
+    },
   };
 })();
 
-Review.state.forEach(el => (el.content = 2));
 module.exports = Review;
