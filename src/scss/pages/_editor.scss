@@ -61,6 +61,12 @@
         }
       }
     }
+    &__thumbnail {
+      .img-thumbnail {
+        background-size: cover;
+        background-position: no-repeat;
+      }
+    }
   }
 
   .ql-toolbar {

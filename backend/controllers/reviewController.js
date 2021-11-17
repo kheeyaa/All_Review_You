@@ -9,7 +9,7 @@ exports.getOneReview = (req, res) => {
 };
 
 exports.writeReview = (req, res) => {
-  const { title, content, photos, tags, ratings } = req.body;
+  const { title, content, thumbnail, tags, ratings } = req.body;
 
   const summary =
     content.ops
@@ -24,7 +24,7 @@ exports.writeReview = (req, res) => {
     reviewId: Review.generateId(),
     summary,
     content,
-    photos,
+    thumbnail,
     tags,
     ratings,
     likes: [],
@@ -38,4 +38,7 @@ exports.writeReview = (req, res) => {
   res.send(newReview);
 };
 
-exports.uploadPicture = (req, res) => {};
+exports.uploadPicture = (req, res) => {
+  console.log(req.file);
+  res.send(`../images/${req.file.filename}`);
+};

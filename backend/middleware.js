@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const multer = require('multer');
+const path = require('path');
 
 exports.checkLoggedIn = (req, res, next) => {
   const token = req.cookies.access_token;
@@ -26,3 +28,16 @@ exports.jwtMiddleware = (req, res, next) => {
     next();
   }
 };
+
+exports.upload = multer({
+  storage: multer.diskStorage({
+    destination(req, file, cb) {
+      cb(null, 'src/images');
+    },
+    filename(req, file, cb) {
+      const ext = path.extname(file.originalname);
+      cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
+    },
+  }),
+  limits: { fileSize: 50 * 1024 * 1024 },
+});
