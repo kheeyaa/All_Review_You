@@ -52,6 +52,16 @@ document.querySelector('.submit').addEventListener('click', async () => {
   // } catch (e) {
   //   console.error(e.message);
   // }
+  // console.log(quill.root.innerHTML);
+  try {
+    const { data } = await axios.post('/reviews', postBody);
+    // const tmp = document.createElement('div');
+    // new Quill(tmp).setContents(data.content);
+    // $test.innerHTML = tmp.getElementsByClassName('ql-editor')[0].innerHTML;
+    window.location.href = `/reviews/${data.reviewId}`;
+  } catch (e) {
+    console.error(e.message);
+  }
 });
 
 $tagList.addEventListener('click', e => {

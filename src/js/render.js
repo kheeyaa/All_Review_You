@@ -35,7 +35,7 @@ export default (() => {
       </div>
       <div class="${page} review__details">
         <h2 class="${page} title">${reviewData.title}</h2>
-        <span class="${page} detail">${reviewData.content}</span>
+        <span class="${page} detail">${reviewData.summary}</span>
         <time class="${page} time" datetime="${reviewData.createdAt.toString().slice(0, 10)}">
           ${util.convertTimeFormat(reviewData.createdAt)}
         </time>
@@ -93,7 +93,7 @@ export default (() => {
     const $newDiv = document.createElement('div');
     $newDiv.className = 'reviewDetail__contentWrap';
 
-    const { title, content, userId, reviewId, tags, ratings, likes, createdAt } = reviewData;
+    const { title, summary, content, userId, reviewId, tags, ratings, likes, createdAt } = reviewData;
 
     $newDiv.innerHTML = `
       <h2 class="a11y-hidden">리뷰</h2>
@@ -136,9 +136,16 @@ export default (() => {
 
     const $reviewDetailContent = $newDiv.querySelector('.reviewDetail__content');
 
-    const tmp = document.createElement('div');
-    new Quill(tmp).setContents(content);
-    $reviewDetailContent.innerHTML = tmp.getElementsByClassName('ql-editor')[0].innerHTML;
+    const $div = document.createElement('div');
+    new Quill($div).setContents(content);
+    if (typeof summary === 'string') {
+      $reviewDetailContent.innerHTML = summary;
+    } else {
+      $reviewDetailContent.innerHTML = $div.getElementsByClassName('ql-editor')[0].innerHTML;
+    }
+
+    // ? $div.getElementsByClassName('ql-editor')[0].innerHTML
+    // : content;
 
     createReadOnlyRater($newDiv.querySelector('#rater'), ratings);
     return $newDiv;
@@ -245,7 +252,7 @@ export default (() => {
       targets.$reviewDetail.appendChild($domFragment);
     },
 
-    addComments(review, targets) {
+    addComments(review) {
       const $addCommentCount = document.querySelector('.reviewDetail__addComments--count');
       const $commentsWrap = document.querySelector('.reviewDetail__comments > ul');
       $addCommentCount.textContent = review[0].comments.length + '개의 댓글';

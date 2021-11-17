@@ -191,6 +191,13 @@
     }
   }
 
+  &__thumbnail {
+    img {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+
   // 본문
   &__content {
     padding: rem(20px);
