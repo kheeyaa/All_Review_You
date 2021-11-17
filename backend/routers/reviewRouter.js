@@ -1,7 +1,4 @@
 const express = require('express');
-const multer = require('multer');
-
-const upload = multer({ dest: 'uploads/' });
 
 const middleware = require('webpack-dev-middleware');
 
@@ -15,6 +12,7 @@ const { sendHtml } = require('../controllers/sendHtml');
 const reviewRouter = express.Router();
 
 const Reviews = require('../models/Review');
+const { upload } = require('../middleware');
 
 reviewRouter.get('/', (req, res) => {});
 
@@ -72,7 +70,7 @@ reviewRouter.get('/:id([0-9]+)', (req, res) => {
 });
 
 // reviews/review/id -> 댓글 생성
-reviewRouter.post('/:id', (req, res) => {
+reviewRouter.post('/:id([0-9]+)', (req, res) => {
   const { params } = req.body;
   const { inUserId, inContent, inReviewId } = params;
   const [...state] = Reviews.state;
