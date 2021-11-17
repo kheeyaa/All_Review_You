@@ -48,6 +48,7 @@ document.querySelector('.submit').addEventListener('click', async () => {
   };
   try {
     const { data } = await axios.post('/reviews', postBody);
+
     window.location.href = `/reviews/${data.reviewId}`;
   } catch (e) {
     console.error(e.message);

@@ -76,9 +76,9 @@ $signupForm.addEventListener('input', () => {
     const postBody = [...inputs].reduce((acc, cur) => ({ ...acc, [cur.name]: cur.value }), {});
     try {
       await axios.post(`/auth/${$form.className}`, postBody);
+
       window.location.href = window.location.pathname;
     } catch (e) {
-      console.log('hi');
       $form.querySelector('.error-result').textContent = errorMessage[$form.className];
     }
   });

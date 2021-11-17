@@ -1,23 +1,22 @@
 import axios from 'axios';
+import user from '../user';
 
 document.querySelector('.review__list').onclick = async e => {
-  if (!e.target.closest('.likes__button')) {
-    return;
-  }
-  e.preventDefault();
+  if (!e.target.closest('.likes__button')) return;
 
-  const { data: curUserId } = await axios.get('/users/me');
+  e.preventDefault();
 
   const $reviewCard = e.target.closest('.review__card');
 
-  if (!curUserId) {
+  console.log(user.isLoggedIn, 'likes');
+
+  if (!user.isLoggedIn) {
     alert('로그인이 필요합니다.');
     return;
   }
 
   try {
     const { data: isliked } = await axios.patch('/reviews/review/likes', {
-      curUserId,
       curReviewId: $reviewCard.dataset.reviewid,
     });
 
