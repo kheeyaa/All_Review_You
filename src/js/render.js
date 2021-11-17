@@ -93,7 +93,7 @@ export default (() => {
     const $newDiv = document.createElement('div');
     $newDiv.className = 'reviewDetail__contentWrap';
 
-    const { title, content, userId, reviewId, tags, ratings, likes, createdAt } = reviewData;
+    const { title, summary, content, userId, reviewId, tags, ratings, likes, createdAt } = reviewData;
 
     $newDiv.innerHTML = `
       <h2 class="a11y-hidden">리뷰</h2>
@@ -132,13 +132,20 @@ export default (() => {
         </div>
       </header>
       <div class="reviewDetail__thumbnail"></div>
-      <main class="reviewDetail__content">${content}</main>`;
+      <main class="reviewDetail__content"></main>`;
 
     const $reviewDetailContent = $newDiv.querySelector('.reviewDetail__content');
 
-    // const $div = document.createElement('div');
-    // new Quill($div).setContents(content);
-    // $reviewDetailContent.innerHTML = $div.getElementsByClassName('ql-editor')[0].innerHTML;
+    const $div = document.createElement('div');
+    new Quill($div).setContents(content);
+    if (typeof summary === 'string') {
+      $reviewDetailContent.innerHTML = summary;
+    } else {
+      $reviewDetailContent.innerHTML = $div.getElementsByClassName('ql-editor')[0].innerHTML;
+    }
+
+    // ? $div.getElementsByClassName('ql-editor')[0].innerHTML
+    // : content;
 
     createReadOnlyRater($newDiv.querySelector('#rater'), ratings);
     return $newDiv;
