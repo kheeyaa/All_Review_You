@@ -23,9 +23,17 @@ export default class Observer {
   async requestReviewsList() {
     this.order = document.querySelector('.nav__now').dataset.order;
 
+    this.$reviewMoreText.textContent = '잠시만 기다려주세요';
     try {
-      const { data: reviews } = await axios.get('/reviews/sort', {
-        params: { order: this.order },
+      const {
+        data: { reviews },
+      } = await axios.get('/reviews/sort', {
+        params: {
+          order: this.order,
+          selectedTag: document.querySelector('.selectedTag')
+            ? document.querySelector('.selectedTag').dataset.tag
+            : null,
+        },
       });
 
       reviews.length
