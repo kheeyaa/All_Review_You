@@ -3,9 +3,12 @@ import Quill from 'quill';
 import rater from 'rater-js';
 
 let ratings = 0;
+let thumbnail = '';
 
 const $title = document.querySelector('.editor-title');
 const $tagList = document.querySelector('.tag-list');
+const $thumbnail = document.querySelector('.editor-thumbnail');
+const $imgThumbnail = document.querySelector('.img-thumbnail');
 
 const quill = new Quill('#quill', {
   modules: {
@@ -35,24 +38,20 @@ document.querySelector('.submit').addEventListener('click', async () => {
     alert('제목을 반드시 입력해주세요!');
     return;
   }
-  console.log(document.querySelector('.editor-thumbnail').file);
   const tags = [...$tagList.querySelectorAll('.tag')].map($tag => $tag.textContent.substring(1));
   const postBody = {
     title: $title.value.trim(),
     content: quill.getContents(),
+    thumbnail,
     tags,
     ratings,
   };
-  // console.log(quill.root.innerHTML);
-  try {
-    const { data } = await axios.post('/reviews', postBody);
-    // const tmp = document.createElement('div');
-    // new Quill(tmp).setContents(data.content);
-    // $test.innerHTML = tmp.getElementsByClassName('ql-editor')[0].innerHTML;
-    // window.location.href = `/reviews/${data.reviewId}`;
-  } catch (e) {
-    console.error(e.message);
-  }
+  console.log($thumbnail.value);
+  // try {
+  //   const { data } = await axios.post('/reviews', postBody);
+  // } catch (e) {
+  //   console.error(e.message);
+  // }
 });
 
 $tagList.addEventListener('click', e => {
@@ -71,6 +70,20 @@ document.querySelector('.editor-tag').addEventListener('keyup', e => {
   $tagList.appendChild($li);
 
   e.target.value = '';
+});
+
+$thumbnail.addEventListener('change', async () => {
+  const formData = new FormData();
+  formData.append('thumbnail', $thumbnail.files[0]);
+  try {
+    const { data: url } = await axios.post('/reviews/picture', formData);
+    thumbnail = url;
+    $imgThumbnail.style.setProperty('background-image', `url(${url})`);
+    $imgThumbnail.style.width = '200px';
+    $imgThumbnail.style.height = '200px';
+  } catch (e) {
+    console.error(e.message);
+  }
 });
 
 // document.querySelector('.load').addEventListener('click', async () => {
