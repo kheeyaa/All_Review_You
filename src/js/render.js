@@ -100,7 +100,7 @@ export default (() => {
     const $newDiv = document.createElement('div');
     $newDiv.className = 'reviewDetail__contentWrap';
 
-    const { title, summary, content, userId, reviewId, tags, ratings, likes, createdAt } = reviewData;
+    const { title, thumbnail, content, userId, reviewId, tags, ratings, likes, createdAt } = reviewData;
 
     $newDiv.innerHTML = `
       <h2 class="a11y-hidden">리뷰</h2>
@@ -138,7 +138,7 @@ export default (() => {
           </div>
         </div>
       </header>
-      <div class="reviewDetail__thumbnail"></div>
+      <img class="reviewDetail__thumbnail" src="${thumbnail}"></img>
       <main class="reviewDetail__content"></main>`;
 
     const $reviewDetailContent = $newDiv.querySelector('.reviewDetail__content');
