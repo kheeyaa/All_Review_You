@@ -43,12 +43,17 @@ const observeReviewMore = () => {
 
 window.addEventListener('DOMContentLoaded', async () => {
   const { order } = document.querySelector('.nav__now').dataset;
+  document.querySelector('.loading').classList.remove('hidden');
+  document.querySelector('.review-more__text').classList.add('hidden');
   try {
     const reviewData = await Promise.all([
       axios.get(`/reviews/order-${order}`),
       axios.get('/users/me'),
       axios.patch(`/reviews/offset`),
     ]);
+    document.querySelector('.loading').classList.add('hidden');
+    document.querySelector('.review-more__text').classList.remove('hidden');
+
     const [{ data: reviews }, { data: curUserId }] = reviewData;
 
     render.home(reviews, { $reviewList, $tagsList }, curUserId);
@@ -61,6 +66,9 @@ window.addEventListener('DOMContentLoaded', async () => {
 document.querySelector('.nav__list').onclick = async e => {
   e.preventDefault();
 
+  document.querySelector('.loading').classList.remove('hidden');
+  document.querySelector('.review-more__text').classList.add('hidden');
+
   document.querySelectorAll('.nav__list li').forEach($li => $li.classList.remove('nav__now'));
   e.target.closest('li').classList.add('nav__now');
 
@@ -72,6 +80,8 @@ document.querySelector('.nav__list').onclick = async e => {
       axios.get('/users/me'),
       axios.patch(`/reviews/offset`),
     ]);
+    document.querySelector('.loading').classList.add('hidden');
+    document.querySelector('.review-more__text').classList.remove('hidden');
     const [{ data: reviews }, { data: curUserId }] = reviewData;
 
     render.home(reviews, { $reviewList, $tagsList }, curUserId);
