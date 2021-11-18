@@ -2,7 +2,6 @@ const middleware = require('webpack-dev-middleware');
 const express = require('express');
 
 const webpack = require('webpack');
-const path = require('path');
 const compiler = webpack(require('../../webpack.config'));
 const Reviews = require('../models/Review');
 
@@ -12,7 +11,6 @@ app.use(middleware(compiler));
 const isExistTag = (tags, keyword) => tags.some(tag => tag.match(keyword));
 
 exports.findSearchResult = (req, res) => {
-  // https://www.codegrepper.com/code-examples/javascript/axios+query+parameters
   const { keyword } = req.query;
   res.send(
     Reviews.state
