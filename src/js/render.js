@@ -90,10 +90,17 @@ export default (() => {
     $target.appendChild($domFragment);
   };
 
-  const renderTags = tags => {
+  const renderTags = (tags, selectedTag) => {
     const $target = document.querySelector('.tags__list');
 
-    $target.innerHTML = tags.map(tag => `<li class="tag"><a href="" type="button">#${tag}</a></li>`).join('');
+    $target.innerHTML = tags
+      .map(
+        tag =>
+          `<li class="tag ${
+            tag === selectedTag ? 'selectedTag' : ''
+          }" data-tag="${tag}"><a href="" type="button">#${tag}</a></li>`
+      )
+      .join('');
   };
 
   const renderReviewDetailContent = reviewData => {
@@ -226,12 +233,13 @@ export default (() => {
   };
 
   return {
-    home(reviews) {
+    home(reviews, { tags, selectedTag }) {
       renderHeader();
 
       renderReviews(reviews);
 
-      renderTags([...new Set(reviews.flatMap(review => review.tags))]);
+      renderTags(tags, selectedTag);
+      // renderTags([...new Set(reviews.flatMap(review => review.tags))]);
     },
 
     addReviews(reviews) {
@@ -268,10 +276,10 @@ export default (() => {
         .join('');
     },
 
-    search(reviews, targets) {
+    search(reviews, totalNum) {
       renderHeader();
-      renderReviews(reviews, targets.$reviewList);
-      renderMessage(reviews.length);
+      renderReviews(reviews);
+      renderMessage(totalNum);
     },
   };
 })();
