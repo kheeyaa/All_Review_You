@@ -856,6 +856,10 @@ const Review = (() => {
       state = state.map(({ reviewId }, i) => (curReviewId === reviewId ? newReview : state[i]));
     },
 
+    delete(curReviewId) {
+      state = state.filter(({ reviewId }) => curReviewId !== reviewId);
+    },
+
     get current() {
       return offset;
     },

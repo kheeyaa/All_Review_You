@@ -6,6 +6,14 @@ import './utils/likes';
 // DOM NODES
 const $reviewDetail = document.querySelector('.reviewDetail');
 
+const handleReveiwDetailManage = () => {
+  document.querySelector('.reviewDatail__manage--remove').onclick = async () => {
+    await axios.delete(window.location.pathname);
+    alert('게시글이 삭제되었습니다.');
+    window.location.href = `/index.html/`;
+  };
+};
+
 window.addEventListener('DOMContentLoaded', async () => {
   try {
     // 리뷰 디테일 확인필요
@@ -17,7 +25,9 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     if (curUserId) user.login(curUserId);
 
-    render.reviewDetail(curReview, tagRelatedReviews, { $reviewDetail }, curUserId);
+    render.reviewDetail(curReview, tagRelatedReviews, { $reviewDetail });
+
+    if (curReview.userId === curUserId) handleReveiwDetailManage();
   } catch (e) {
     console.error(e);
   }
