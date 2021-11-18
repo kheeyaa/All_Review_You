@@ -1,3 +1,4 @@
+@use './mixin' as *;
 // 시맨틱 태그 iE 맞춤 ---------------------------------------------------------------/
 header,
 footer,
@@ -120,4 +121,13 @@ textarea {
 
 .hidden {
   display: none !important;
+}
+
+body {
+  @include desktop {
+    font-size: 15px;
+  }
+  @include mobile {
+    font-size: 13px;
+  }
 }

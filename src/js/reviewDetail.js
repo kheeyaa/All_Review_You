@@ -27,7 +27,7 @@ const handleReveiwDetailManage = () => {
 window.addEventListener('DOMContentLoaded', async () => {
   try {
     const { data } = await axios.get(window.location.pathname);
-    const { targetReview, relatedReview } = data;
+    const [curReview, tagRelatedReviews] = data;
 
     const { data: curUserId } = await axios.get('/users/me');
 

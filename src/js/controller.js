@@ -76,7 +76,7 @@ export default (() => {
 
       document.querySelector('.selectedTag')?.classList.remove('selectedTag');
 
-      pushHistory();
+      // pushHistory();
 
       manipulatePage(false, { reset: 'reset' });
     },
@@ -91,7 +91,7 @@ export default (() => {
         $tag.classList.toggle('selectedTag', $tag === $seletedTag)
       );
 
-      pushHistory();
+      // pushHistory();
 
       manipulatePage(false, { selectedTag: $seletedTag.dataset.tag, reset: 'reset' });
     },
