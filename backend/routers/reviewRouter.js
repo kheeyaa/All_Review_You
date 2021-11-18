@@ -4,7 +4,6 @@ const {
   writeReview,
   sendReviewAndRelatedReviews,
   sendFilterdReviews,
-  sendMyReviews,
   changeLikes,
   createComment,
   uploadPicture,
@@ -19,12 +18,19 @@ const reviewRouter = Router();
 
 // GET---------------------------------------------------------------------------------------
 
-// reviews/mine/ -> GET 내가 쓴 리뷰
-reviewRouter.get('/mine/:id', sendMyReviews);
-
 // reviews/id -> GET 특정 리뷰 for reviewDetail Page
 reviewRouter.get('/:id([0-9]+)', (req, res) => {
-  req.headers.accept.match(/text\/html/) ? sendHtml('reviewDetail', res) : sendReviewAndRelatedReviews(req, res);
+  res.format({
+    'text/html': () => {
+      sendHtml('reviewDetail', res);
+    },
+    // ajax 요청에 대해 json을 응답
+    'application/json': sendReviewAndRelatedReviews,
+    default: () => {
+      // log the request and respond with 406
+      res.status(406).send('Not Acceptable');
+    },
+  });
 });
 
 reviewRouter.get('/sort', sendFilterdReviews);

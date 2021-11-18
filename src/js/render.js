@@ -248,7 +248,6 @@ export default (() => {
       renderReviews(reviews);
 
       renderTags(tags, selectedTag);
-      // renderTags([...new Set(reviews.flatMap(review => review.tags))]);
     },
 
     addReviews(reviews) {
