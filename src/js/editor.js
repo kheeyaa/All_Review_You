@@ -93,8 +93,14 @@ $thumbnail.addEventListener('change', async () => {
   try {
     const { data: url } = await axios.post('/reviews/picture', formData);
     thumbnail = url;
-    $imgThumbnail.src = url;
-    console.log(url);
+    const img = document.createElement('img');
+    img.src = url;
+    img.onload = () => {
+      $imgThumbnail.src = url;
+    };
+    img.onerror = () => {
+      img.src = url;
+    };
   } catch (e) {
     alert('일시적인 오류로 사진 업로드를 실패했습니다.');
     console.error(e.message);
