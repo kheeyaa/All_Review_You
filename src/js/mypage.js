@@ -9,3 +9,5 @@ window.addEventListener('DOMContentLoaded', controller.init);
 });
 
 document.querySelector('.tags').onclick = controller.sortByTag;
+
+window.onpopstate = controller.reload;

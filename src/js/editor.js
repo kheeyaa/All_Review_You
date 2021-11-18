@@ -46,6 +46,7 @@ document.querySelector('.submit').addEventListener('click', async () => {
     tags,
     ratings,
   };
+
   try {
     const { data } = await axios.post('/reviews', postBody);
 

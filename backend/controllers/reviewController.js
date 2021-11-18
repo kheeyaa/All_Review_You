@@ -52,7 +52,7 @@ exports.sendReviewAndRelatedReviews = (req, res) => {
     ({ reviewId, tags }) => reviewId !== targetReview.reviewId && targetReview.tags.some(tag => tags.includes(tag))
   );
 
-  res.send([targetReview, relatedReview]);
+  res.send({ targetReview, relatedReview });
 };
 
 exports.sendFilterdReviews = (req, res) => {
@@ -107,18 +107,6 @@ exports.sendFilterdReviews = (req, res) => {
   });
 };
 
-exports.sendMyReviews = (req, res) => {
-  res.send(
-    Review.state
-      .filter(({ userId }) => userId === req.params.id)
-      .map(({ content, photos }, i, reviews) => ({
-        ...reviews[i],
-        content: content.slice(300),
-        photos: photos.slice(1),
-      }))
-  );
-};
-
 exports.changeLikes = (req, res) => {
   const { curReviewId } = req.body;
 
@@ -149,4 +137,9 @@ exports.createComment = (req, res) => {
     });
     res.send(Review.state.filter(({ reviewId }) => reviewId === +req.params.id));
   }
+};
+
+exports.deleteReview = (req, res) => {
+  Review.delete(+req.params.id);
+  res.send();
 };
