@@ -90,17 +90,24 @@ export default (() => {
     $target.appendChild($domFragment);
   };
 
-  const renderTags = tags => {
+  const renderTags = (tags, selectedTag) => {
     const $target = document.querySelector('.tags__list');
 
-    $target.innerHTML = tags.map(tag => `<li class="tag"><a href="" type="button">#${tag}</a></li>`).join('');
+    $target.innerHTML = tags
+      .map(
+        tag =>
+          `<li class="tag ${
+            tag === selectedTag ? 'selectedTag' : ''
+          }" data-tag="${tag}"><a href="" type="button">#${tag}</a></li>`
+      )
+      .join('');
   };
 
   const renderReviewDetailContent = reviewData => {
     const $newDiv = document.createElement('div');
     $newDiv.className = 'reviewDetail__contentWrap';
 
-    const { title, summary, content, userId, reviewId, tags, ratings, likes, createdAt } = reviewData;
+    const { title, thumbnail, content, userId, reviewId, tags, ratings, likes, createdAt } = reviewData;
 
     $newDiv.innerHTML = `
       <h2 class="a11y-hidden">리뷰</h2>
@@ -138,7 +145,7 @@ export default (() => {
           </div>
         </div>
       </header>
-      <div class="reviewDetail__thumbnail"></div>
+      <img class="reviewDetail__thumbnail" src="${thumbnail}"></img>
       <main class="reviewDetail__content"></main>`;
 
     const $reviewDetailContent = $newDiv.querySelector('.reviewDetail__content');
@@ -229,19 +236,26 @@ export default (() => {
   };
 
   return {
-    home(reviews) {
+    home(reviews, { tags, selectedTag }) {
       renderHeader();
 
       renderReviews(reviews);
 
-      renderTags([...new Set(reviews.flatMap(review => review.tags))]);
+      renderTags(tags, selectedTag);
+      // renderTags([...new Set(reviews.flatMap(review => review.tags))]);
     },
 
     addReviews(reviews) {
       renderAddReviews(reviews);
     },
 
-    mypage(reviews, targets) {},
+    mypage(reviews, { tags, selectedTag }) {
+      renderHeader();
+
+      renderReviews(reviews);
+
+      renderTags(tags, selectedTag);
+    },
 
     reviewDetail(review, relatedReviews, targets) {
       renderHeader();
@@ -287,10 +301,10 @@ export default (() => {
         .join('');
     },
 
-    search(reviews, targets) {
+    search(reviews, totalNum) {
       renderHeader();
-      renderReviews(reviews, targets.$reviewList);
-      renderMessage(reviews.length);
+      renderReviews(reviews);
+      renderMessage(totalNum);
     },
   };
 })();

@@ -62,8 +62,16 @@ $tagList.addEventListener('click', e => {
   $tag.remove();
 });
 
-document.querySelector('.editor-tag').addEventListener('keyup', e => {
-  if (e.key !== 'Enter') return;
+document.querySelector('.editor-tag').addEventListener('keydown', e => {
+  if (e.isComposing || e.keyCode === 229) {
+    return;
+  }
+  if (e.key !== 'Enter' || e.target.value.trim() === '') return;
+
+  if ([...$tagList.querySelectorAll('.tag')].some($tag => $tag.textContent === `#${e.target.value.trim()}`)) {
+    e.target.value = '';
+    return;
+  }
 
   const $li = document.createElement('li');
   $li.className = 'tag';
@@ -85,6 +93,10 @@ $thumbnail.addEventListener('change', async () => {
   } catch (e) {
     console.error(e.message);
   }
+});
+
+document.querySelector('.exit').addEventListener('click', () => {
+  window.history.back();
 });
 
 // document.querySelector('.load').addEventListener('click', async () => {

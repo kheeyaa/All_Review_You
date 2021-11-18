@@ -39,8 +39,11 @@ exports.writeReview = (req, res) => {
 };
 
 exports.uploadPicture = (req, res) => {
-  console.log(req.file);
-  res.send(`../images/${req.file.filename}`);
+  try {
+    res.send(`../images/${req.file.filename}`);
+  } catch (e) {
+    console.log(e.message);
+  }
 };
 
 exports.sendReviewAndRelatedReviews = (req, res) => {
@@ -53,7 +56,9 @@ exports.sendReviewAndRelatedReviews = (req, res) => {
 };
 
 exports.sendFilterdReviews = (req, res) => {
-  const { likesOrLatest, mineOrFavorite, reset } = req.query;
+  const { filter, selectedTag, keyword, reset } = req.query;
+
+  const { likesOrLatest, mineOrFavorite } = JSON.parse(filter);
 
   if (reset) Review.reset();
 
@@ -68,7 +73,38 @@ exports.sendFilterdReviews = (req, res) => {
       mineOrFavorite === 'mine' ? userId === req.userId : likes.includes(req.userId)
     );
 
-  res.send(filteredReviews.slice(Review.current, Review.next));
+  if (selectedTag) filteredReviews = filteredReviews.filter(({ tags }) => tags.includes(selectedTag));
+
+  const isExistTag = (tags, keyword) => tags.some(tag => tag.match(keyword));
+
+  if (keyword)
+    filteredReviews = Review.state
+      .filter(({ title, content, tags }) => title.match(keyword) || content.match(keyword) || isExistTag(tags, keyword))
+      .map(({ content, photos }, i, reviews) => ({
+        ...reviews[i],
+        content: content.slice(0, 300),
+        photos: photos.slice(0, 1),
+      }));
+
+  let tags = new Map();
+
+  if (!keyword)
+    Review.state
+      .flatMap(review => review.tags)
+      .forEach(tag => {
+        tags.set(tag, tags.get(tag) ? tags.get(tag) + 1 : 1);
+      });
+
+  tags = [...tags]
+    .sort((tag1, tag2) => tag2[1] - tag1[1])
+    .slice(0, 10)
+    .map(tag => tag[0]);
+
+  res.send({
+    reviews: filteredReviews.slice(Review.current, Review.next),
+    tags: keyword ? null : tags,
+    totalNum: keyword ? filteredReviews.length : null,
+  });
 };
 
 exports.sendMyReviews = (req, res) => {
