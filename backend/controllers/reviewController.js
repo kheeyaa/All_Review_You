@@ -35,6 +35,8 @@ exports.writeReview = (req, res) => {
 
   Review.add(newReview);
 
+  console.log(JSON.stringify(newReview));
+
   res.send(newReview);
 };
 
