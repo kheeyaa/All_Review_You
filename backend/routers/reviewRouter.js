@@ -38,12 +38,12 @@ reviewRouter.post('/', writeReview);
 
 reviewRouter.post('/picture', upload.single('thumbnail'), uploadPicture);
 
-// PATCH---------------------------------------------------------------------------------------
+// PATCH ---------------------------------------------------------------------------------------
 
 // reviews/likes
 reviewRouter.patch('/review/likes', changeLikes);
 
-// delete---------------------------------------------------------------------------------------
+// DELETE ---------------------------------------------------------------------------------------
 
 reviewRouter.delete('/:id([0-9]+)', deleteReview);
 

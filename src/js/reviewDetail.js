@@ -8,9 +8,17 @@ const $reviewDetail = document.querySelector('.reviewDetail');
 
 const handleReveiwDetailManage = () => {
   document.querySelector('.reviewDatail__manage--remove').onclick = async () => {
-    await axios.delete(window.location.pathname);
-    alert('게시글이 삭제되었습니다.');
-    window.location.href = `/index.html/`;
+    try {
+      await axios.delete(window.location.pathname);
+      alert('게시글이 삭제되었습니다.');
+      window.location.href = `/`;
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  document.querySelector('.reviewDatail__manage--edit').onclick = () => {
+    window.location.href = `/edit/${window.location.pathname.split('/')[2]}`;
   };
 };
 
@@ -27,7 +35,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     render.reviewDetail(curReview, tagRelatedReviews, { $reviewDetail });
 
-    if (curReview.userId === curUserId) handleReveiwDetailManage();
+    if (curReview.userId === curUserId) handleReveiwDetailManage(curReview);
   } catch (e) {
     console.error(e);
   }
