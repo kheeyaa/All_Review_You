@@ -246,7 +246,13 @@ export default (() => {
       renderAddReviews(reviews);
     },
 
-    mypage(reviews, targets) {},
+    mypage(reviews, { tags, selectedTag }) {
+      renderHeader();
+
+      renderReviews(reviews);
+
+      renderTags(tags, selectedTag);
+    },
 
     reviewDetail(review, relatedReviews, targets) {
       renderHeader();

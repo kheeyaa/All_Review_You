@@ -21,7 +21,7 @@ export default class Observer {
   }
 
   async requestReviewsList(keyword) {
-    this.order = document.querySelector('.nav__now') ? document.querySelector('.nav__now').dataset.order : 'likes';
+    const [likesOrLatest, mineOrFavorite] = [...document.querySelectorAll('.nav__now')].map($li => $li.dataset.order);
 
     this.$reviewMoreText.textContent = '잠시만 기다려주세요';
     try {
@@ -29,10 +29,8 @@ export default class Observer {
         data: { reviews },
       } = await axios.get('/reviews/sort', {
         params: {
-          likesOrLatest: this.order,
-          selectedTag: document.querySelector('.selectedTag')
-            ? document.querySelector('.selectedTag').dataset.tag
-            : null,
+          filter: { likesOrLatest, mineOrFavorite },
+          selectedTag: document.querySelector('.selectedTag')?.dataset.tag,
           keyword,
         },
       });

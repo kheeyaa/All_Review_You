@@ -53,7 +53,9 @@ exports.sendReviewAndRelatedReviews = (req, res) => {
 };
 
 exports.sendFilterdReviews = (req, res) => {
-  const { likesOrLatest, mineOrFavorite, selectedTag, keyword, reset } = req.query;
+  const { filter, selectedTag, keyword, reset } = req.query;
+
+  const { likesOrLatest, mineOrFavorite } = JSON.parse(filter);
 
   if (reset) Review.reset();
 
