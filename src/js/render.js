@@ -149,7 +149,7 @@ export default (() => {
           <li class="reviewDatail__manage--edit"><a>수정</a></li>
        </ul>
       </header>
-      <img class="reviewDetail__thumbnail" src="${thumbnail}"></img>
+      ${thumbnail ? `<img class="reviewDetail__thumbnail" src="${thumbnail}"></img>` : ''}
       <main class="reviewDetail__content"></main>`;
 
     const $reviewDetailContent = $newDiv.querySelector('.reviewDetail__content');
