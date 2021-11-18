@@ -90,17 +90,24 @@ export default (() => {
     $target.appendChild($domFragment);
   };
 
-  const renderTags = tags => {
+  const renderTags = (tags, selectedTag) => {
     const $target = document.querySelector('.tags__list');
 
-    $target.innerHTML = tags.map(tag => `<li class="tag"><a href="" type="button">#${tag}</a></li>`).join('');
+    $target.innerHTML = tags
+      .map(
+        tag =>
+          `<li class="tag ${
+            tag === selectedTag ? 'selectedTag' : ''
+          }" data-tag="${tag}"><a href="" type="button">#${tag}</a></li>`
+      )
+      .join('');
   };
 
   const renderReviewDetailContent = reviewData => {
     const $newDiv = document.createElement('div');
     $newDiv.className = 'reviewDetail__contentWrap';
 
-    const { title, summary, content, userId, reviewId, tags, ratings, likes, createdAt } = reviewData;
+    const { title, thumbnail, content, userId, reviewId, tags, ratings, likes, createdAt } = reviewData;
 
     $newDiv.innerHTML = `
       <h2 class="a11y-hidden">리뷰</h2>
@@ -137,8 +144,17 @@ export default (() => {
             </div>
           </div>
         </div>
+        ${
+          user.id === userId
+            ? `<ul class="reviewDetail__manage">
+                  <li class="reviewDatail__manage--remove"><a>삭제</a></li>
+                  <li class="reviewDatail__manage--edit"><a>수정</a></li>
+              </ul>`
+            : ''
+        }
+
       </header>
-      <div class="reviewDetail__thumbnail"></div>
+      ${thumbnail ? `<img class="reviewDetail__thumbnail" src="${thumbnail}"></img>` : ''}
       <main class="reviewDetail__content"></main>`;
 
     const $reviewDetailContent = $newDiv.querySelector('.reviewDetail__content');
@@ -192,16 +208,18 @@ export default (() => {
         <ul>
           ${comments
             .map(
-              ({ userId, content }) => `
-          <li class="reviewDetail__comments--items">
+              ({ commentId, userId, content }) => `
+          <li class="reviewDetail__comments--items" data-commentId="${commentId}">
             <span class="reviewDetail__comments--user">${userId}</span>
             <span class="reviewDetail__comments--content">${content}</span>
+            <button class="reviewDetail__comments--delete">⌫</button>
+            <button class="reviewDetail__comments--update">🖊</button>
+            <input type="text" value="" class="reviewDetail__comments--updateInput hidden"></input>
           </li>`
             )
             .join('')}
         </ul>
       </section>`;
-
     return $newDiv;
   };
 
@@ -212,6 +230,7 @@ export default (() => {
     <section class="reviewDetail__relatedReview review-column-changewidth">
     <h2 class="reviewDetail__relatedReview--title">관련 있는 리뷰</h2>
     <div class="review-row review-column-changewidth">
+      <p class="reviewDetail__toggleHeader hidden">관련있는 리뷰가 없습니다.</p>
       <ul class="review__list">
       </ul>
     </div>
@@ -222,23 +241,35 @@ export default (() => {
       $reviewList.appendChild(createReview(tagRelatedReview));
     });
 
+    $newDiv.querySelector('.reviewDetail__toggleHeader').classList.toggle('hidden', $reviewList.querySelector('li'));
+    [...$reviewList.querySelectorAll('#rater')].forEach((el, i) =>
+      createReadOnlyRater(el, tagRelatedReviews[i].ratings)
+    );
+
     return $newDiv;
   };
 
   return {
-    home(reviews) {
+    home(reviews, { tags, selectedTag }) {
       renderHeader();
 
       renderReviews(reviews);
 
-      renderTags([...new Set(reviews.flatMap(review => review.tags))]);
+      renderTags(tags, selectedTag);
+      // renderTags([...new Set(reviews.flatMap(review => review.tags))]);
     },
 
     addReviews(reviews) {
       renderAddReviews(reviews);
     },
 
-    mypage(reviews, targets) {},
+    mypage(reviews, { tags, selectedTag }) {
+      renderHeader();
+
+      renderReviews(reviews);
+
+      renderTags(tags, selectedTag);
+    },
 
     reviewDetail(review, relatedReviews, targets) {
       renderHeader();
@@ -251,27 +282,47 @@ export default (() => {
       ].forEach($dom => $domFragment.appendChild($dom));
 
       targets.$reviewDetail.appendChild($domFragment);
+
+      const $commentsWrap = document.querySelector('.reviewDetail__comments > ul');
+      if ($commentsWrap.innerHTML.trim() === '') {
+        document.querySelector('.reviewDetail__comments').remove();
+      }
     },
 
     addComments(review) {
-      const $addCommentCount = document.querySelector('.reviewDetail__addComments--count');
+      if (!document.querySelector('.reviewDetail__comments')) {
+        const $section = document.createElement('section');
+
+        const $ul = document.createElement('ul');
+        $section.className = 'reviewDetail__comments';
+        document.querySelector('.reviewDetail__addWrap').appendChild($section);
+        $section.appendChild($ul);
+      }
+
       const $commentsWrap = document.querySelector('.reviewDetail__comments > ul');
+      const $addCommentCount = document.querySelector('.reviewDetail__addComments--count');
       $addCommentCount.textContent = review[0].comments.length + '개의 댓글';
+
       $commentsWrap.innerHTML = review[0].comments
         .map(
           review =>
-            `<li class="reviewDetail__comments--items">
+            `<li class="reviewDetail__comments--items" data-commentId="${review.commentId}">
               <span class="reviewDetail__comments--user">${review.userId}</span>
               <span class="reviewDetail__comments--content">${review.content}</span>
+              <button class="reviewDetail__comments--delete">⌫</button>
+              <button class="reviewDetail__comments--update">🖊</button>
+              <input type="text" value="" class="reviewDetail__comments--updateInput hidden"></input>
             </li>`
         )
         .join('');
     },
 
-    search(reviews, targets) {
+    // updateComments(review) {},
+
+    search(reviews, totalNum) {
       renderHeader();
-      renderReviews(reviews, targets.$reviewList);
-      renderMessage(reviews.length);
+      renderReviews(reviews);
+      renderMessage(totalNum);
     },
   };
 })();

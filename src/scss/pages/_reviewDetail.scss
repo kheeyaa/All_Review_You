@@ -148,7 +148,6 @@
     }
 
     &--stars {
-      //TODO:별 스타일 적용
     }
 
     &--likesWrap {
@@ -188,6 +187,15 @@
       @include mobile {
         padding-right: rem(8px);
       }
+    }
+  }
+  &__manage {
+    width: 20%;
+    @include flexbox();
+    color: $gray2;
+    li {
+      margin-right: rem(10px);
+      cursor: pointer;
     }
   }
 
@@ -260,6 +268,7 @@
       padding: rem(10px) rem(10px) 0 rem(10px);
       display: flex;
       flex-flow: column;
+      position: relative;
     }
     &--items:after {
       display: block;
@@ -276,9 +285,37 @@
       padding: rem(14px) rem(5px);
       font-size: rem(16px);
     }
+    &--delete {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: rem(6px);
+      border: none !important;
+      font-size: rem(25px);
+      background: white;
+    }
+    &--update {
+      position: absolute;
+      top: rem(40px);
+      right: 0;
+      padding: rem(6px);
+      border: none !important;
+      font-size: rem(25px);
+      background: white;
+    }
+    &--updateInput {
+      border-radius: 8px;
+      padding: 8px;
+      margin: 12px 0px;
+      max-width: 95%;
+      @include boxShadow();
+
+      @include mobile {
+        max-width: 90%;
+      }
+    }
   }
 
-  // TODO: 관련 있는 리뷰 : 강희님 공통 사항 적용
   &__relatedReview {
     padding: rem(40px) rem(20px);
     &--title {
@@ -286,6 +323,11 @@
       text-align: center;
       margin: rem(40px) 0;
     }
+  }
+  &__toggleHeader {
+    text-align: center;
+    font-size: rem(20px);
+    padding: rem(30px);
   }
 }
 
