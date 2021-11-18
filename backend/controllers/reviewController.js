@@ -49,7 +49,7 @@ exports.sendReviewAndRelatedReviews = (req, res) => {
     ({ reviewId, tags }) => reviewId !== targetReview.reviewId && targetReview.tags.some(tag => tags.includes(tag))
   );
 
-  res.send([targetReview, relatedReview]);
+  res.send({ targetReview, relatedReview });
 };
 
 exports.sendFilterdReviews = (req, res) => {
@@ -102,18 +102,6 @@ exports.sendFilterdReviews = (req, res) => {
     tags: keyword ? null : tags,
     totalNum: keyword ? filteredReviews.length : null,
   });
-};
-
-exports.sendMyReviews = (req, res) => {
-  res.send(
-    Review.state
-      .filter(({ userId }) => userId === req.params.id)
-      .map(({ content, photos }, i, reviews) => ({
-        ...reviews[i],
-        content: content.slice(300),
-        photos: photos.slice(1),
-      }))
-  );
 };
 
 exports.changeLikes = (req, res) => {

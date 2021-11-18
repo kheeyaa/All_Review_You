@@ -145,7 +145,7 @@ export default (() => {
           </div>
         </div>
       </header>
-      <img class="reviewDetail__thumbnail" src="${thumbnail}"></img>
+      <img class="reviewDetail__thumbnail" src="${thumbnail || ''}"></img>
       <main class="reviewDetail__content"></main>`;
 
     const $reviewDetailContent = $newDiv.querySelector('.reviewDetail__content');
@@ -239,7 +239,6 @@ export default (() => {
       renderReviews(reviews);
 
       renderTags(tags, selectedTag);
-      // renderTags([...new Set(reviews.flatMap(review => review.tags))]);
     },
 
     addReviews(reviews) {
