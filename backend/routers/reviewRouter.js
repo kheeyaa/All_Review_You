@@ -6,6 +6,7 @@ const {
   sendFilterdReviews,
   changeLikes,
   createComment,
+  deleteOrUpdateComment,
   uploadPicture,
   deleteReview,
 } = require('../controllers/reviewController');
@@ -44,6 +45,9 @@ reviewRouter.post('/', checkLoggedIn, writeReview);
 reviewRouter.post('/picture', upload.single('thumbnail'), uploadPicture);
 
 // PATCH ---------------------------------------------------------------------------------------
+
+// reviews/review/id -> 댓글 수정 및 지우기
+reviewRouter.patch('/:id([0-9]+)', deleteOrUpdateComment);
 
 // reviews/likes
 reviewRouter.patch('/review/likes', changeLikes);
