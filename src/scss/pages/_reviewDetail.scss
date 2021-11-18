@@ -148,7 +148,6 @@
     }
 
     &--stars {
-      //TODO:별 스타일 적용
     }
 
     &--likesWrap {
@@ -260,6 +259,7 @@
       padding: rem(10px) rem(10px) 0 rem(10px);
       display: flex;
       flex-flow: column;
+      position: relative;
     }
     &--items:after {
       display: block;
@@ -276,9 +276,17 @@
       padding: rem(14px) rem(5px);
       font-size: rem(16px);
     }
+    &--delete {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: rem(20px);
+      border: none !important;
+      font-size: rem(25px);
+      background: white;
+    }
   }
 
-  // TODO: 관련 있는 리뷰 : 강희님 공통 사항 적용
   &__relatedReview {
     padding: rem(40px) rem(20px);
     &--title {

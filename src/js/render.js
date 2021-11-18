@@ -192,16 +192,16 @@ export default (() => {
         <ul>
           ${comments
             .map(
-              ({ userId, content }) => `
-          <li class="reviewDetail__comments--items">
+              ({ commentId, userId, content }) => `
+          <li class="reviewDetail__comments--items" data-commentId="${commentId}">
             <span class="reviewDetail__comments--user">${userId}</span>
             <span class="reviewDetail__comments--content">${content}</span>
+            <button class="reviewDetail__comments--delete">⌫</button>
           </li>`
             )
             .join('')}
         </ul>
       </section>`;
-
     return $newDiv;
   };
 
@@ -251,18 +251,34 @@ export default (() => {
       ].forEach($dom => $domFragment.appendChild($dom));
 
       targets.$reviewDetail.appendChild($domFragment);
+
+      const $commentsWrap = document.querySelector('.reviewDetail__comments > ul');
+      if ($commentsWrap.innerHTML.trim() === '') {
+        document.querySelector('.reviewDetail__comments').remove();
+      }
     },
 
     addComments(review) {
+      if (!document.querySelector('.reviewDetail__comments')) {
+        const $section = document.createElement('section');
+
+        const $ul = document.createElement('ul');
+        $section.className = 'reviewDetail__comments';
+        document.querySelector('.reviewDetail__addWrap').appendChild($section);
+        $section.appendChild($ul);
+      }
+
       const $addCommentCount = document.querySelector('.reviewDetail__addComments--count');
       const $commentsWrap = document.querySelector('.reviewDetail__comments > ul');
       $addCommentCount.textContent = review[0].comments.length + '개의 댓글';
+
       $commentsWrap.innerHTML = review[0].comments
         .map(
           review =>
-            `<li class="reviewDetail__comments--items">
+            `<li class="reviewDetail__comments--items" data-commentId="${review.commentId}">
               <span class="reviewDetail__comments--user">${review.userId}</span>
               <span class="reviewDetail__comments--content">${review.content}</span>
+              <button class="reviewDetail__comments--delete">⌫</button>
             </li>`
         )
         .join('');

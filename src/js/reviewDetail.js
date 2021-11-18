@@ -32,14 +32,27 @@ window.addEventListener('submit', async e => {
 
   if (curUserId.length > 0) {
     const { data: reviews } = await axios.post(window.location.pathname, {
-      params: {
-        inReviewId: window.location.pathname.split('/')[2], // 현재 접속한 reviewId 받아오기
-        inUserId: curUserId, // 현재 접속한 userId 받아오기
-        inContent: $reviewCommentInput.value,
-      },
+      inReviewId: window.location.pathname.split('/')[2], // 현재 접속한 reviewId 받아오기
+      inUserId: curUserId, // 현재 접속한 userId 받아오기
+      inContent: $reviewCommentInput.value,
     });
     render.addComments(reviews);
     $reviewCommentInput.value = '';
+  }
+});
+
+window.addEventListener('click', async e => {
+  if (!e.target.classList.contains('reviewDetail__comments--delete')) return;
+  const { data: curUserId } = await axios.get('/users/me');
+  const commentUserId = e.target.previousElementSibling.previousElementSibling.textContent;
+  const dataCommentId = e.target.closest('.reviewDetail__comments--items').dataset.commentid;
+
+  if (commentUserId === curUserId) {
+    const { data: reviews } = await axios.patch(window.location.pathname, {
+      inReviewId: window.location.pathname.split('/')[2],
+      dataCommentId,
+    });
+    render.addComments(reviews);
   }
 });
 

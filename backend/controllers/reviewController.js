@@ -100,8 +100,7 @@ exports.changeLikes = (req, res) => {
 };
 
 exports.createComment = (req, res) => {
-  const { params } = req.body;
-  const { inUserId, inContent, inReviewId } = params;
+  const { inUserId, inContent, inReviewId } = req.body;
   const state = [...Review.state];
 
   if (inContent.trim().length > 0) {
@@ -113,4 +112,22 @@ exports.createComment = (req, res) => {
     });
     res.send(Review.state.filter(({ reviewId }) => reviewId === +req.params.id));
   }
+};
+
+exports.deleteComment = (req, res) => {
+  const { inReviewId, dataCommentId } = req.body;
+  const state = [...Review.state];
+
+  state.forEach(({ reviewId, comments }, i) => {
+    if (+inReviewId === reviewId) {
+      console.log(state[i].comments);
+      // state[i].comments = [...state[i].comments, { commentId: generateId(), userId: inUserId, content: inContent }];
+      state[i].comments = state[i].comments.filter(comment => {
+        console.log(+dataCommentId !== comment.commentId);
+        return +dataCommentId !== comment.commentId;
+      });
+      console.log(state[i].comments);
+    }
+  });
+  res.send(Review.state.filter(({ reviewId }) => reviewId === +req.params.id));
 };

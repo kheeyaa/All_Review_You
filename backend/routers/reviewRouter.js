@@ -7,6 +7,7 @@ const {
   sendMyReviews,
   changeLikes,
   createComment,
+  deleteComment,
   uploadPicture,
 } = require('../controllers/reviewController');
 
@@ -38,6 +39,9 @@ reviewRouter.post('/', writeReview);
 reviewRouter.post('/picture', upload.single('thumbnail'), uploadPicture);
 
 // PATCH---------------------------------------------------------------------------------------
+
+// reviews/review/id -> 댓글 지우기
+reviewRouter.patch('/:id([0-9]+)', deleteComment);
 
 // reviews/likes
 reviewRouter.patch('/review/likes', changeLikes);
