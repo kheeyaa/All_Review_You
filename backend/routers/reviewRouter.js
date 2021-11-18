@@ -4,27 +4,33 @@ const {
   writeReview,
   sendReviewAndRelatedReviews,
   sendFilterdReviews,
-  sendMyReviews,
   changeLikes,
   createComment,
+  deleteOrUpdateComment,
   uploadPicture,
   deleteReview,
 } = require('../controllers/reviewController');
 
-const { upload } = require('../middleware');
+const { upload, checkLoggedIn } = require('../middleware');
 
 const { sendHtml } = require('../controllers/sendHtml');
 
 const reviewRouter = Router();
 
 // GET---------------------------------------------------------------------------------------
-
-// reviews/mine/ -> GET 내가 쓴 리뷰
-reviewRouter.get('/mine/:id', sendMyReviews);
-
 // reviews/id -> GET 특정 리뷰 for reviewDetail Page
 reviewRouter.get('/:id([0-9]+)', (req, res) => {
-  req.headers.accept.match(/text\/html/) ? sendHtml('reviewDetail', res) : sendReviewAndRelatedReviews(req, res);
+  res.format({
+    'text/html': () => {
+      sendHtml('reviewDetail', res);
+    },
+    // ajax 요청에 대해 json을 응답
+    'application/json': sendReviewAndRelatedReviews,
+    default: () => {
+      // log the request and respond with 406
+      res.status(406).send('Not Acceptable');
+    },
+  });
 });
 
 reviewRouter.get('/sort', sendFilterdReviews);
@@ -34,11 +40,14 @@ reviewRouter.get('/sort', sendFilterdReviews);
 // reviews/review/id -> 댓글 생성
 reviewRouter.post('/:id([0-9]+)', createComment);
 
-reviewRouter.post('/', writeReview);
+reviewRouter.post('/', checkLoggedIn, writeReview);
 
 reviewRouter.post('/picture', upload.single('thumbnail'), uploadPicture);
 
 // PATCH ---------------------------------------------------------------------------------------
+
+// reviews/review/id -> 댓글 수정 및 지우기
+reviewRouter.patch('/:id([0-9]+)', deleteOrUpdateComment);
 
 // reviews/likes
 reviewRouter.patch('/review/likes', changeLikes);

@@ -208,16 +208,18 @@ export default (() => {
         <ul>
           ${comments
             .map(
-              ({ userId, content }) => `
-          <li class="reviewDetail__comments--items">
+              ({ commentId, userId, content }) => `
+          <li class="reviewDetail__comments--items" data-commentId="${commentId}">
             <span class="reviewDetail__comments--user">${userId}</span>
             <span class="reviewDetail__comments--content">${content}</span>
+            <button class="reviewDetail__comments--delete">⌫</button>
+            <button class="reviewDetail__comments--update">🖊</button>
+            <input type="text" value="" class="reviewDetail__comments--updateInput hidden"></input>
           </li>`
             )
             .join('')}
         </ul>
       </section>`;
-
     return $newDiv;
   };
 
@@ -228,6 +230,7 @@ export default (() => {
     <section class="reviewDetail__relatedReview review-column-changewidth">
     <h2 class="reviewDetail__relatedReview--title">관련 있는 리뷰</h2>
     <div class="review-row review-column-changewidth">
+      <p class="reviewDetail__toggleHeader hidden">관련있는 리뷰가 없습니다.</p>
       <ul class="review__list">
       </ul>
     </div>
@@ -237,6 +240,11 @@ export default (() => {
     tagRelatedReviews.forEach(tagRelatedReview => {
       $reviewList.appendChild(createReview(tagRelatedReview));
     });
+
+    $newDiv.querySelector('.reviewDetail__toggleHeader').classList.toggle('hidden', $reviewList.querySelector('li'));
+    [...$reviewList.querySelectorAll('#rater')].forEach((el, i) =>
+      createReadOnlyRater(el, tagRelatedReviews[i].ratings)
+    );
 
     return $newDiv;
   };
@@ -248,7 +256,6 @@ export default (() => {
       renderReviews(reviews);
 
       renderTags(tags, selectedTag);
-      // renderTags([...new Set(reviews.flatMap(review => review.tags))]);
     },
 
     addReviews(reviews) {
@@ -274,22 +281,42 @@ export default (() => {
       ].forEach($dom => $domFragment.appendChild($dom));
 
       targets.$reviewDetail.appendChild($domFragment);
+
+      const $commentsWrap = document.querySelector('.reviewDetail__comments > ul');
+      if ($commentsWrap.innerHTML.trim() === '') {
+        document.querySelector('.reviewDetail__comments').remove();
+      }
     },
 
     addComments(review) {
-      const $addCommentCount = document.querySelector('.reviewDetail__addComments--count');
+      if (!document.querySelector('.reviewDetail__comments')) {
+        const $section = document.createElement('section');
+
+        const $ul = document.createElement('ul');
+        $section.className = 'reviewDetail__comments';
+        document.querySelector('.reviewDetail__addWrap').appendChild($section);
+        $section.appendChild($ul);
+      }
+
       const $commentsWrap = document.querySelector('.reviewDetail__comments > ul');
+      const $addCommentCount = document.querySelector('.reviewDetail__addComments--count');
       $addCommentCount.textContent = review[0].comments.length + '개의 댓글';
+
       $commentsWrap.innerHTML = review[0].comments
         .map(
           review =>
-            `<li class="reviewDetail__comments--items">
+            `<li class="reviewDetail__comments--items" data-commentId="${review.commentId}">
               <span class="reviewDetail__comments--user">${review.userId}</span>
               <span class="reviewDetail__comments--content">${review.content}</span>
+              <button class="reviewDetail__comments--delete">⌫</button>
+              <button class="reviewDetail__comments--update">🖊</button>
+              <input type="text" value="" class="reviewDetail__comments--updateInput hidden"></input>
             </li>`
         )
         .join('');
     },
+
+    // updateComments(review) {},
 
     search(reviews, totalNum) {
       renderHeader();

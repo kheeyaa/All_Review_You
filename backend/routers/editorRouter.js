@@ -1,19 +1,10 @@
 const { Router } = require('express');
 
 const { sendHtml } = require('../controllers/sendHtml');
+const { checkLoggedIn } = require('../middleware');
 
 const editorRouter = Router();
 
-editorRouter.get('/', (req, res) => {
-  res.format({
-    'text/html': () => {
-      sendHtml('editor', res);
-    },
-    'application/json': () => {},
-    default: () => {
-      res.status(406).send('Not Acceptable');
-    },
-  });
-});
+editorRouter.get('/', checkLoggedIn, (req, res) => sendHtml('editor', res));
 
 module.exports = editorRouter;

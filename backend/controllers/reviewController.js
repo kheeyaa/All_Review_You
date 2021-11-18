@@ -41,8 +41,11 @@ exports.writeReview = (req, res) => {
 };
 
 exports.uploadPicture = (req, res) => {
-  console.log(req.file);
-  res.send(`../images/${req.file.filename}`);
+  try {
+    res.send(`/images/${req.file.filename}`);
+  } catch (e) {
+    console.log(e.message);
+  }
 };
 
 exports.sendReviewAndRelatedReviews = (req, res) => {
@@ -51,7 +54,7 @@ exports.sendReviewAndRelatedReviews = (req, res) => {
     ({ reviewId, tags }) => reviewId !== targetReview.reviewId && targetReview.tags.some(tag => tags.includes(tag))
   );
 
-  res.send([targetReview, relatedReview]);
+  res.send({ targetReview, relatedReview });
 };
 
 exports.sendFilterdReviews = (req, res) => {
@@ -106,18 +109,6 @@ exports.sendFilterdReviews = (req, res) => {
   });
 };
 
-exports.sendMyReviews = (req, res) => {
-  res.send(
-    Review.state
-      .filter(({ userId }) => userId === req.params.id)
-      .map(({ content, photos }, i, reviews) => ({
-        ...reviews[i],
-        content: content.slice(300),
-        photos: photos.slice(1),
-      }))
-  );
-};
-
 exports.changeLikes = (req, res) => {
   const { curReviewId } = req.body;
 
@@ -135,15 +126,40 @@ exports.changeLikes = (req, res) => {
 };
 
 exports.createComment = (req, res) => {
-  const { params } = req.body;
-  const { inUserId, inContent, inReviewId } = params;
+  const { inUserId, inContent, inReviewId } = req.body;
   const state = [...Review.state];
 
   if (inContent.trim().length > 0) {
     state.forEach(({ reviewId, comments }, i) => {
-      const generateId = () => Math.max(...comments.map(cur => cur.commentId)) + 1;
+      const generateId = () => Math.max(...comments.map(cur => cur.commentId), 0) + 1;
       if (+inReviewId === reviewId) {
         state[i].comments = [...state[i].comments, { commentId: generateId(), userId: inUserId, content: inContent }];
+      }
+    });
+    res.send(Review.state.filter(({ reviewId }) => reviewId === +req.params.id));
+  }
+};
+
+exports.deleteOrUpdateComment = (req, res) => {
+  const { inReviewId, dataCommentId, mode, changedComment } = req.body;
+  const state = [...Review.state];
+
+  if (mode === 'delete') {
+    state.forEach(({ reviewId }, i) => {
+      if (+inReviewId === reviewId) {
+        state[i].comments = state[i].comments.filter(comment => +dataCommentId !== comment.commentId);
+      }
+    });
+    res.send(Review.state.filter(({ reviewId }) => reviewId === +req.params.id));
+  }
+  if (mode === 'edit') {
+    state.forEach(({ reviewId }, i) => {
+      if (+inReviewId === reviewId) {
+        state[i].comments.forEach(comment => {
+          if (+dataCommentId === comment.commentId) {
+            comment.content = changedComment;
+          }
+        });
       }
     });
     res.send(Review.state.filter(({ reviewId }) => reviewId === +req.params.id));
@@ -154,3 +170,8 @@ exports.deleteReview = (req, res) => {
   Review.delete(+req.params.id);
   res.send();
 };
+
+// exports.updateComment = (req, res) => {
+//   const { inReviewId, dataCommentId, changedComment } = req.body;
+//   console.log(inReviewId, dataCommentId, changedComment);
+// };

@@ -58,7 +58,7 @@ $modalContainer.addEventListener('click', e => {
     return;
   }
 
-  if (!e.target.closest('.modal') || e.target.closest('.cancel-button')) {
+  if (e.target.closest('.cancel-button')) {
     resetModalContent();
     $modalContainer.classList.add('hidden');
   }

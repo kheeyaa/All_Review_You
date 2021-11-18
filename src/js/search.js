@@ -3,6 +3,7 @@ import render from './render';
 import user from './user';
 import Observer from './Observer';
 import './utils/likes';
+import './utils/authModal.js';
 
 window.addEventListener('DOMContentLoaded', () => {
   console.log('hi');

@@ -27,7 +27,7 @@
       <nav class="nav nav-main">
         <h2 class="a11y-hidden">메뉴</h2>
         <ul class="nav__list">
-          <li class="nav__now" data-order="likes"><a href="/likes">좋아요순</a></li>
+          <li class="nav__now" data-order="likes"><a href="/">좋아요순</a></li>
           <li data-order="latest"><a href="/latest">최신순</a></li>
         </ul>
       </nav>
@@ -55,8 +55,8 @@
               <legend class="a11y-hidden">회원가입 정보</legend>
               <div class="input-wrapper">
                 <label class="a11y-hidden" for="signupId">아이디</label>
-                <input type="text" id="signupId" name="id" placeholder="아이디를 입력해주세요" />
-                <p class="error-message"></p>
+                <input type="text" id="signupId" name="id" placeholder="아이디를 입력해주세요" autocomplete="off" />
+                <p class="error-message error-result"></p>
               </div>
               <div class="input-wrapper">
                 <label class="a11y-hidden" for="signupPassword">비밀번호</label>
@@ -65,7 +65,7 @@
                   id="signupPassword"
                   name="password"
                   placeholder="비밀번호를 입력해주세요"
-                  autocomplete="on"
+                  autocomplete="off"
                 />
                 <p class="error-message"></p>
               </div>
@@ -76,11 +76,10 @@
                   id="repeatPassword"
                   name="repeatPassword"
                   placeholder="비밀번호를 한번 더 입력해주세요"
-                  autocomplete="on"
+                  autocomplete="off"
                 />
                 <p class="error-message"></p>
               </div>
-              <p class="error-message error-result"></p>
               <button type="submit" class="signup-button submit-button" disabled>회원가입</button>
             </fieldset>
           </form>
@@ -93,7 +92,8 @@
               <legend class="a11y-hidden">로그인 정보</legend>
               <div class="input-wrapper">
                 <label class="a11y-hidden" for="signinId">아이디</label>
-                <input type="text" id="signinId" name="id" placeholder="아이디를 입력해주세요" />
+                <input type="text" id="signinId" name="id" placeholder="아이디를 입력해주세요" autocomplete="off" />
+                <p class="error-message"></p>
               </div>
               <div class="input-wrapper">
                 <label class="a11y-hidden" for="signinPassword">비밀번호</label>
@@ -102,7 +102,7 @@
                   id="signinPassword"
                   name="password"
                   placeholder="비밀번호를 입력해주세요"
-                  autocomplete="on"
+                  autocomplete="off"
                 />
               </div>
               <p class="error-message error-result"></p>
