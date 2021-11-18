@@ -295,6 +295,11 @@
       margin: rem(40px) 0;
     }
   }
+  &__toggleHeader {
+    text-align: center;
+    font-size: rem(20px);
+    padding: rem(30px);
+  }
 }
 
 .review-column-changewidth {

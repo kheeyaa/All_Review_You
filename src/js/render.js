@@ -212,6 +212,7 @@ export default (() => {
     <section class="reviewDetail__relatedReview review-column-changewidth">
     <h2 class="reviewDetail__relatedReview--title">관련 있는 리뷰</h2>
     <div class="review-row review-column-changewidth">
+      <p class="reviewDetail__toggleHeader hidden">관련있는 리뷰가 없습니다.</p>
       <ul class="review__list">
       </ul>
     </div>
@@ -221,6 +222,8 @@ export default (() => {
     tagRelatedReviews.forEach(tagRelatedReview => {
       $reviewList.appendChild(createReview(tagRelatedReview));
     });
+
+    $newDiv.querySelector('.reviewDetail__toggleHeader').classList.toggle('hidden', $reviewList.querySelector('li'));
 
     return $newDiv;
   };
