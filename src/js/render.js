@@ -242,6 +242,9 @@ export default (() => {
     });
 
     $newDiv.querySelector('.reviewDetail__toggleHeader').classList.toggle('hidden', $reviewList.querySelector('li'));
+    [...$reviewList.querySelectorAll('#rater')].forEach((el, i) =>
+      createReadOnlyRater(el, tagRelatedReviews[i].ratings)
+    );
 
     return $newDiv;
   };
