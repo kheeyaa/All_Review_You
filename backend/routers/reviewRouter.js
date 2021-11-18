@@ -10,14 +10,13 @@ const {
   deleteReview,
 } = require('../controllers/reviewController');
 
-const { upload } = require('../middleware');
+const { upload, checkLoggedIn } = require('../middleware');
 
 const { sendHtml } = require('../controllers/sendHtml');
 
 const reviewRouter = Router();
 
 // GET---------------------------------------------------------------------------------------
-
 // reviews/id -> GET 특정 리뷰 for reviewDetail Page
 reviewRouter.get('/:id([0-9]+)', (req, res) => {
   res.format({
@@ -40,7 +39,7 @@ reviewRouter.get('/sort', sendFilterdReviews);
 // reviews/review/id -> 댓글 생성
 reviewRouter.post('/:id([0-9]+)', createComment);
 
-reviewRouter.post('/', writeReview);
+reviewRouter.post('/', checkLoggedIn, writeReview);
 
 reviewRouter.post('/picture', upload.single('thumbnail'), uploadPicture);
 

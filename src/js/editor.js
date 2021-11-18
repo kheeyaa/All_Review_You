@@ -49,6 +49,11 @@ document.querySelector('.submit').addEventListener('click', async () => {
 
   try {
     const { data } = await axios.post('/reviews', postBody);
+    if (!data.reviewId) {
+      window.location.href = '/';
+      alert('게시글 작성에 문제가 생겼습니다.');
+      return;
+    }
 
     window.location.href = `/reviews/${data.reviewId}`;
   } catch (e) {
@@ -64,10 +69,7 @@ $tagList.addEventListener('click', e => {
 });
 
 document.querySelector('.editor-tag').addEventListener('keydown', e => {
-  if (e.isComposing || e.keyCode === 229) {
-    return;
-  }
-  if (e.key !== 'Enter' || e.target.value.trim() === '') return;
+  if (e.key !== 'Enter' || e.target.value.trim() === '' || e.isComposing || e.keyCode === 229) return;
 
   if ([...$tagList.querySelectorAll('.tag')].some($tag => $tag.textContent === `#${e.target.value.trim()}`)) {
     e.target.value = '';
