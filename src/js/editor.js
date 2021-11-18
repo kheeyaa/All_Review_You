@@ -62,8 +62,16 @@ $tagList.addEventListener('click', e => {
   $tag.remove();
 });
 
-document.querySelector('.editor-tag').addEventListener('keyup', e => {
+document.querySelector('.editor-tag').addEventListener('keydown', e => {
+  if (e.isComposing || e.keyCode === 229) {
+    return;
+  }
   if (e.key !== 'Enter' || e.target.value.trim() === '') return;
+
+  if ([...$tagList.querySelectorAll('.tag')].some($tag => $tag.textContent === `#${e.target.value.trim()}`)) {
+    e.target.value = '';
+    return;
+  }
 
   const $li = document.createElement('li');
   $li.className = 'tag';

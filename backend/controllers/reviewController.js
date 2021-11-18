@@ -39,8 +39,11 @@ exports.writeReview = (req, res) => {
 };
 
 exports.uploadPicture = (req, res) => {
-  console.log(req.file);
-  res.send(`../images/${req.file.filename}`);
+  try {
+    res.send(`../images/${req.file.filename}`);
+  } catch (e) {
+    console.log(e.message);
+  }
 };
 
 exports.sendReviewAndRelatedReviews = (req, res) => {
