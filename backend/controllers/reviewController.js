@@ -40,7 +40,7 @@ exports.writeReview = (req, res) => {
 
 exports.uploadPicture = (req, res) => {
   try {
-    res.send(`../images/${req.file.filename}`);
+    res.send(`/images/${req.file.filename}`);
   } catch (e) {
     console.log(e.message);
   }
