@@ -46,6 +46,7 @@ document.querySelector('.submit').addEventListener('click', async () => {
     tags,
     ratings,
   };
+
   try {
     const { data } = await axios.post('/reviews', postBody);
     if (!data.reviewId) {
@@ -82,6 +83,9 @@ document.querySelector('.editor-tag').addEventListener('keydown', e => {
 
   e.target.value = '';
 });
+$imgThumbnail.addEventListener('click', () => {
+  $thumbnail.click();
+});
 
 $thumbnail.addEventListener('change', async () => {
   const formData = new FormData();
@@ -89,10 +93,10 @@ $thumbnail.addEventListener('change', async () => {
   try {
     const { data: url } = await axios.post('/reviews/picture', formData);
     thumbnail = url;
-    $imgThumbnail.style.setProperty('background-image', `url(${url})`);
-    $imgThumbnail.style.width = '200px';
-    $imgThumbnail.style.height = '200px';
+    $imgThumbnail.src = url;
+    console.log(url);
   } catch (e) {
+    alert('일시적인 오류로 사진 업로드를 실패했습니다.');
     console.error(e.message);
   }
 });
@@ -100,14 +104,3 @@ $thumbnail.addEventListener('change', async () => {
 document.querySelector('.exit').addEventListener('click', () => {
   window.history.back();
 });
-
-// document.querySelector('.load').addEventListener('click', async () => {
-//   try {
-//     const { data } = await axios.get('/reviews/5');
-//     const { title, content } = data;
-//     document.querySelector('#title').value = title;
-//     quill.setContents(content);
-//   } catch (e) {
-//     console.error(e.message);
-//   }
-// });
