@@ -4,23 +4,18 @@ const {
   writeReview,
   sendReviewAndRelatedReviews,
   sendFilterdReviews,
-  sendMyReviews,
   changeLikes,
   createComment,
   uploadPicture,
 } = require('../controllers/reviewController');
 
-const { upload } = require('../middleware');
+const { upload, checkLoggedIn } = require('../middleware');
 
 const { sendHtml } = require('../controllers/sendHtml');
 
 const reviewRouter = Router();
 
 // GET---------------------------------------------------------------------------------------
-
-// reviews/mine/ -> GET 내가 쓴 리뷰
-reviewRouter.get('/mine/:id', sendMyReviews);
-
 // reviews/id -> GET 특정 리뷰 for reviewDetail Page
 reviewRouter.get('/:id([0-9]+)', (req, res) => {
   req.headers.accept.match(/text\/html/) ? sendHtml('reviewDetail', res) : sendReviewAndRelatedReviews(req, res);
@@ -33,7 +28,7 @@ reviewRouter.get('/sort', sendFilterdReviews);
 // reviews/review/id -> 댓글 생성
 reviewRouter.post('/:id([0-9]+)', createComment);
 
-reviewRouter.post('/', writeReview);
+reviewRouter.post('/', checkLoggedIn, writeReview);
 
 reviewRouter.post('/picture', upload.single('thumbnail'), uploadPicture);
 
