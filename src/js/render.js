@@ -144,6 +144,10 @@ export default (() => {
             </div>
           </div>
         </div>
+        <ul class="reviewDetail__manage">
+          <li class="reviewDatail__manage--remove"><a>삭제</a></li>
+          <li class="reviewDatail__manage--edit"><a>수정</a></li>
+       </ul>
       </header>
       <img class="reviewDetail__thumbnail" src="${thumbnail}"></img>
       <main class="reviewDetail__content"></main>`;

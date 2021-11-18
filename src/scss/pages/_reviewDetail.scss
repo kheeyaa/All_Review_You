@@ -190,6 +190,15 @@
       }
     }
   }
+  &__manage {
+    width: 20%;
+    @include flexbox();
+    color: $gray2;
+    li {
+      margin-right: rem(10px);
+      cursor: pointer;
+    }
+  }
 
   &__thumbnail {
     img {
