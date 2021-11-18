@@ -28,6 +28,8 @@
   @include desktop {
     width: 20%;
     padding: rem(30px) rem(16px);
+    position: sticky;
+    top: 0px;
   }
   @include mobile {
     position: absolute;

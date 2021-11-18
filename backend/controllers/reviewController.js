@@ -54,7 +54,7 @@ exports.sendReviewAndRelatedReviews = (req, res) => {
     ({ reviewId, tags }) => reviewId !== targetReview.reviewId && targetReview.tags.some(tag => tags.includes(tag))
   );
 
-  res.send({ targetReview, relatedReview });
+  res.send([targetReview, relatedReview]);
 };
 
 exports.sendFilterdReviews = (req, res) => {
