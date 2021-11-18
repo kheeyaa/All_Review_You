@@ -271,8 +271,8 @@ export default (() => {
         $section.appendChild($ul);
       }
 
-      const $addCommentCount = document.querySelector('.reviewDetail__addComments--count');
       const $commentsWrap = document.querySelector('.reviewDetail__comments > ul');
+      const $addCommentCount = document.querySelector('.reviewDetail__addComments--count');
       $addCommentCount.textContent = review[0].comments.length + '개의 댓글';
 
       $commentsWrap.innerHTML = review[0].comments

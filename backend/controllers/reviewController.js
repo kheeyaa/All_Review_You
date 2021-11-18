@@ -105,7 +105,7 @@ exports.createComment = (req, res) => {
 
   if (inContent.trim().length > 0) {
     state.forEach(({ reviewId, comments }, i) => {
-      const generateId = () => Math.max(...comments.map(cur => cur.commentId)) + 1;
+      const generateId = () => Math.max(...comments.map(cur => cur.commentId), 0) + 1;
       if (+inReviewId === reviewId) {
         state[i].comments = [...state[i].comments, { commentId: generateId(), userId: inUserId, content: inContent }];
       }
@@ -118,15 +118,9 @@ exports.deleteComment = (req, res) => {
   const { inReviewId, dataCommentId } = req.body;
   const state = [...Review.state];
 
-  state.forEach(({ reviewId, comments }, i) => {
+  state.forEach(({ reviewId }, i) => {
     if (+inReviewId === reviewId) {
-      console.log(state[i].comments);
-      // state[i].comments = [...state[i].comments, { commentId: generateId(), userId: inUserId, content: inContent }];
-      state[i].comments = state[i].comments.filter(comment => {
-        console.log(+dataCommentId !== comment.commentId);
-        return +dataCommentId !== comment.commentId;
-      });
-      console.log(state[i].comments);
+      state[i].comments = state[i].comments.filter(comment => +dataCommentId !== comment.commentId);
     }
   });
   res.send(Review.state.filter(({ reviewId }) => reviewId === +req.params.id));
