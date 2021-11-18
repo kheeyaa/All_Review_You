@@ -201,10 +201,9 @@
   }
 
   &__thumbnail {
-    img {
-      display: block;
-      margin: 0 auto;
-    }
+    display: block;
+    margin: rem(50px) auto 0;
+    max-width: rem(600px);
   }
 
   // 본문
