@@ -62,11 +62,11 @@
       }
     }
     &__thumbnail {
-      margin-top: rem(30px);
+      margin: rem(30px) 0;
       .img-thumbnail {
         border-radius: 10px;
-        width: rem(300px);
-        height: rem(300px);
+        max-width: rem(300px);
+        aspect-ratio: 16/9;
         object-fit: cover;
         cursor: pointer;
       }
