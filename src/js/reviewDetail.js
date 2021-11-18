@@ -2,6 +2,7 @@ import axios from 'axios';
 import user from './user';
 import render from './render';
 import './utils/likes';
+import './utils/authModal.js';
 
 // DOM NODES
 const $reviewDetail = document.querySelector('.reviewDetail');

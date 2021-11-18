@@ -1,4 +1,5 @@
 import controller from './controller';
+import './utils/authModal.js';
 
 window.addEventListener('DOMContentLoaded', controller.init);
 
