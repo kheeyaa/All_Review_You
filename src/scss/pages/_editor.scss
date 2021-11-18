@@ -62,9 +62,13 @@
       }
     }
     &__thumbnail {
+      margin-top: rem(30px);
       .img-thumbnail {
-        background-size: cover;
-        background-position: no-repeat;
+        border-radius: 10px;
+        width: rem(300px);
+        height: rem(300px);
+        object-fit: cover;
+        cursor: pointer;
       }
     }
   }
