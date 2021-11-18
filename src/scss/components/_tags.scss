@@ -40,6 +40,10 @@
     &__list {
       @include flexbox;
       overflow-x: scroll;
+
+      .selectedTag a {
+        background-color: rgba($olive, 0.7);
+      }
     }
     .tag {
       word-wrap: keep-all;
