@@ -63,7 +63,7 @@ $tagList.addEventListener('click', e => {
 });
 
 document.querySelector('.editor-tag').addEventListener('keyup', e => {
-  if (e.key !== 'Enter') return;
+  if (e.key !== 'Enter' || e.target.value.trim() === '') return;
 
   const $li = document.createElement('li');
   $li.className = 'tag';
@@ -85,6 +85,10 @@ $thumbnail.addEventListener('change', async () => {
   } catch (e) {
     console.error(e.message);
   }
+});
+
+document.querySelector('.exit').addEventListener('click', () => {
+  window.history.back();
 });
 
 // document.querySelector('.load').addEventListener('click', async () => {
