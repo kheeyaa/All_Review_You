@@ -8,6 +8,7 @@ const {
   changeLikes,
   createComment,
   uploadPicture,
+  deleteReview,
 } = require('../controllers/reviewController');
 
 const { upload } = require('../middleware');
@@ -37,9 +38,13 @@ reviewRouter.post('/', writeReview);
 
 reviewRouter.post('/picture', upload.single('thumbnail'), uploadPicture);
 
-// PATCH---------------------------------------------------------------------------------------
+// PATCH ---------------------------------------------------------------------------------------
 
 // reviews/likes
 reviewRouter.patch('/review/likes', changeLikes);
+
+// DELETE ---------------------------------------------------------------------------------------
+
+reviewRouter.delete('/:id([0-9]+)', deleteReview);
 
 module.exports = reviewRouter;

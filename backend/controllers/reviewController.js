@@ -150,3 +150,8 @@ exports.createComment = (req, res) => {
     res.send(Review.state.filter(({ reviewId }) => reviewId === +req.params.id));
   }
 };
+
+exports.deleteReview = (req, res) => {
+  Review.delete(+req.params.id);
+  res.send();
+};
