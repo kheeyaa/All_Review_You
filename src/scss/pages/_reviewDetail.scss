@@ -189,6 +189,15 @@
       }
     }
   }
+  &__manage {
+    width: 20%;
+    @include flexbox();
+    color: $gray2;
+    li {
+      margin-right: rem(10px);
+      cursor: pointer;
+    }
+  }
 
   &__thumbnail {
     img {
@@ -280,10 +289,30 @@
       position: absolute;
       top: 0;
       right: 0;
-      padding: rem(20px);
+      padding: rem(6px);
       border: none !important;
       font-size: rem(25px);
       background: white;
+    }
+    &--update {
+      position: absolute;
+      top: rem(40px);
+      right: 0;
+      padding: rem(6px);
+      border: none !important;
+      font-size: rem(25px);
+      background: white;
+    }
+    &--updateInput {
+      border-radius: 8px;
+      padding: 8px;
+      margin: 12px 0px;
+      max-width: 95%;
+      @include boxShadow();
+
+      @include mobile {
+        max-width: 90%;
+      }
     }
   }
 

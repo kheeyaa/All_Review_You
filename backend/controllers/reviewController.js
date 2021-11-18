@@ -1,3 +1,4 @@
+const { mode } = require('../../webpack.config');
 const Review = require('../models/Review');
 
 exports.getOneReview = (req, res) => {
@@ -151,13 +152,37 @@ exports.createComment = (req, res) => {
 };
 
 exports.deleteComment = (req, res) => {
-  const { inReviewId, dataCommentId } = req.body;
+  const { inReviewId, dataCommentId, mode, changedComment } = req.body;
   const state = [...Review.state];
 
-  state.forEach(({ reviewId }, i) => {
-    if (+inReviewId === reviewId) {
-      state[i].comments = state[i].comments.filter(comment => +dataCommentId !== comment.commentId);
-    }
-  });
-  res.send(Review.state.filter(({ reviewId }) => reviewId === +req.params.id));
+  if (mode === 'delete') {
+    state.forEach(({ reviewId }, i) => {
+      if (+inReviewId === reviewId) {
+        state[i].comments = state[i].comments.filter(comment => +dataCommentId !== comment.commentId);
+      }
+    });
+    res.send(Review.state.filter(({ reviewId }) => reviewId === +req.params.id));
+  }
+  if (mode === 'edit') {
+    state.forEach(({ reviewId }, i) => {
+      if (+inReviewId === reviewId) {
+        state[i].comments.forEach(comment => {
+          if (+dataCommentId === comment.commentId) {
+            comment.content = changedComment;
+          }
+        });
+      }
+    });
+    res.send(Review.state.filter(({ reviewId }) => reviewId === +req.params.id));
+  }
 };
+
+exports.deleteReview = (req, res) => {
+  Review.delete(+req.params.id);
+  res.send();
+};
+
+// exports.updateComment = (req, res) => {
+//   const { inReviewId, dataCommentId, changedComment } = req.body;
+//   console.log(inReviewId, dataCommentId, changedComment);
+// };

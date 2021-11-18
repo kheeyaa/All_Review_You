@@ -144,8 +144,17 @@ export default (() => {
             </div>
           </div>
         </div>
+        ${
+          user.id === userId
+            ? `<ul class="reviewDetail__manage">
+                  <li class="reviewDatail__manage--remove"><a>삭제</a></li>
+                  <li class="reviewDatail__manage--edit"><a>수정</a></li>
+              </ul>`
+            : ''
+        }
+
       </header>
-      <img class="reviewDetail__thumbnail" src="${thumbnail}"></img>
+      ${thumbnail ? `<img class="reviewDetail__thumbnail" src="${thumbnail}"></img>` : ''}
       <main class="reviewDetail__content"></main>`;
 
     const $reviewDetailContent = $newDiv.querySelector('.reviewDetail__content');
@@ -204,6 +213,8 @@ export default (() => {
             <span class="reviewDetail__comments--user">${userId}</span>
             <span class="reviewDetail__comments--content">${content}</span>
             <button class="reviewDetail__comments--delete">⌫</button>
+            <button class="reviewDetail__comments--update">🖊</button>
+            <input type="text" value="" class="reviewDetail__comments--updateInput hidden"></input>
           </li>`
             )
             .join('')}
@@ -296,10 +307,14 @@ export default (() => {
               <span class="reviewDetail__comments--user">${review.userId}</span>
               <span class="reviewDetail__comments--content">${review.content}</span>
               <button class="reviewDetail__comments--delete">⌫</button>
+              <button class="reviewDetail__comments--update">🖊</button>
+              <input type="text" value="" class="reviewDetail__comments--updateInput hidden"></input>
             </li>`
         )
         .join('');
     },
+
+    // updateComments(review) {},
 
     search(reviews, totalNum) {
       renderHeader();
