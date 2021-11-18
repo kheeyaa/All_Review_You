@@ -7,8 +7,7 @@ const {
   sendMyReviews,
   changeLikes,
   createComment,
-  updateComment,
-  deleteComment,
+  deleteOrUpdateComment,
   uploadPicture,
   deleteReview,
 } = require('../controllers/reviewController');
@@ -42,11 +41,8 @@ reviewRouter.post('/picture', upload.single('thumbnail'), uploadPicture);
 
 // PATCH ---------------------------------------------------------------------------------------
 
-// reviews/review/id -> 댓글 지우기
-reviewRouter.patch('/:id([0-9]+)', deleteComment);
-
-// reviews/review/id -> 댓글 수정하기
-// reviewRouter.patch('/:id([0-9]+)', updateComment);
+// reviews/review/id -> 댓글 수정 및 지우기
+reviewRouter.patch('/:id([0-9]+)', deleteOrUpdateComment);
 
 // reviews/likes
 reviewRouter.patch('/review/likes', changeLikes);

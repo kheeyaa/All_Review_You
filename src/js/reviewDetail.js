@@ -97,7 +97,6 @@ window.addEventListener('click', async e => {
 
 // 댓글 수정 후 엔터
 window.addEventListener('keyup', async e => {
-  const content = e.target.parentNode.querySelector('.reviewDetail__comments--content');
   const inputComment = e.target.parentNode.querySelector('.reviewDetail__comments--updateInput');
   if (!inputComment) return;
   if (e.key === 'Enter') {
@@ -108,13 +107,6 @@ window.addEventListener('keyup', async e => {
       mode: 'edit',
       changedComment: inputComment.value,
     });
-    // console.log(reviews);
     render.addComments(reviews);
   }
 });
-
-// TODO: 입력창 눌렀을 때 로그인 안되있으면 모달창 나오게
-// window.addEventListener('click', async e => {
-//   if (e.target !== document.querySelector('.reviewDetail__addComments--input')) return;
-//   const { data: curUserId } = await axios.get('/users/me');
-// });

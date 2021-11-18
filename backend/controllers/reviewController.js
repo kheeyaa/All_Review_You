@@ -1,4 +1,3 @@
-const { mode } = require('../../webpack.config');
 const Review = require('../models/Review');
 
 exports.getOneReview = (req, res) => {
@@ -151,7 +150,7 @@ exports.createComment = (req, res) => {
   }
 };
 
-exports.deleteComment = (req, res) => {
+exports.deleteOrUpdateComment = (req, res) => {
   const { inReviewId, dataCommentId, mode, changedComment } = req.body;
   const state = [...Review.state];
 
