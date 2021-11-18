@@ -35,8 +35,6 @@ exports.writeReview = (req, res) => {
 
   Review.add(newReview);
 
-  console.log(JSON.stringify(newReview));
-
   res.send(newReview);
 };
 
@@ -60,7 +58,7 @@ exports.sendReviewAndRelatedReviews = (req, res) => {
 exports.sendFilterdReviews = (req, res) => {
   const { filter, selectedTag, keyword, reset } = req.query;
 
-  const { likesOrLatest, mineOrFavorite } = JSON.parse(filter);
+  const { likesOrLatest, mineOrFavorite } = JSON.parse(filter || '{}');
 
   if (reset) Review.reset();
 
@@ -117,7 +115,6 @@ exports.changeLikes = (req, res) => {
   const { likes } = review;
   const isLiked = review.likes.includes(req.userId);
 
-  // 기존의 review 데이터를 업데이트 해주어야함.
   isLiked
     ? Review.change(+curReviewId, { ...review, likes: likes.filter(like => like !== req.userId) })
     : Review.change(+curReviewId, { ...review, likes: [...likes, req.userId] });
@@ -170,8 +167,3 @@ exports.deleteReview = (req, res) => {
   Review.delete(+req.params.id);
   res.send();
 };
-
-// exports.updateComment = (req, res) => {
-//   const { inReviewId, dataCommentId, changedComment } = req.body;
-//   console.log(inReviewId, dataCommentId, changedComment);
-// };
