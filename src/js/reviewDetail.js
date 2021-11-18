@@ -2,6 +2,7 @@ import axios from 'axios';
 import user from './user';
 import render from './render';
 import './utils/likes';
+import './utils/authModal.js';
 
 // DOM NODES
 const $reviewDetail = document.querySelector('.reviewDetail');
@@ -25,11 +26,9 @@ const handleReveiwDetailManage = () => {
 // 디테일 페이지 렌더
 window.addEventListener('DOMContentLoaded', async () => {
   try {
-    // 리뷰 디테일 확인필요
-    const { data } = await axios.get(window.location.pathname, {
-      headers: { accept: 'application/json' },
-    });
+    const { data } = await axios.get(window.location.pathname);
     const [curReview, tagRelatedReviews] = data;
+
     const { data: curUserId } = await axios.get('/users/me');
 
     if (curUserId) user.login(curUserId);

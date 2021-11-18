@@ -4,7 +4,10 @@ const path = require('path');
 
 exports.checkLoggedIn = (req, res, next) => {
   const token = req.cookies.access_token;
-  if (!token) return res.status(401).send('접근할 수 없습니다.');
+  if (!token) {
+    res.status(401).redirect('/');
+    return;
+  }
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 

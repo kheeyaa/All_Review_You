@@ -11,9 +11,9 @@ export default (() => {
     );
   };
 
-  const fetchData = async (isInitFetch, params) => {
+  const fetchData = async (isDOMContentLoaded, params) => {
     try {
-      const results = isInitFetch
+      const results = isDOMContentLoaded
         ? await Promise.all([axios.get('/reviews/sort', { params }), axios.get('/users/me')])
         : [await axios.get('/reviews/sort', { params })];
 
@@ -25,24 +25,40 @@ export default (() => {
     }
   };
 
-  const manipulatePage = async (isInitFetch, params) => {
+  const manipulatePage = async (isDOMContentLoaded, params) => {
     const [likesOrLatest, mineOrFavorite] = [...document.querySelectorAll('.nav__now')].map($li => $li.dataset.order);
 
     const tag = document.querySelector('.selectedTag')?.dataset.tag;
 
     spinner(true);
-    const [reviews, tags, curUserId] = await fetchData(isInitFetch, {
+    const [reviews, tags, curUserId] = await fetchData(isDOMContentLoaded, {
       ...params,
       filter: { likesOrLatest, mineOrFavorite },
     });
     spinner(false);
 
-    if (isInitFetch && curUserId) user.login(curUserId);
+    if (isDOMContentLoaded && curUserId) user.login(curUserId);
 
     const observer = new Observer();
     observer.start();
 
     render.mypage(reviews, { tags, selectedTag: tag });
+  };
+
+  const createEndPoint = () =>
+    [...document.querySelectorAll('.nav__now')]
+      .map(({ dataset: { order } }) => (order === 'likes' || order === 'mine' ? '' : `/${order}`))
+      .join('') + (document.querySelector('.selectedTag')?.dataset.tag.replace(/.+/g, match => `/tag=${match}`) ?? '');
+
+  const pushHistory = () => {
+    const endPoint = createEndPoint();
+    const path = (window.location.pathname.match(/mypage/g) ? '/mypage' + endPoint : endPoint) || '/';
+
+    const [likesOrLatest, mineOrFavorite] = [...document.querySelectorAll('.nav__now')].map($li => $li.dataset.order);
+
+    const tag = document.querySelector('.selectedTag')?.dataset.tag;
+
+    window.history.pushState({ likesOrLatest, mineOrFavorite, tag }, null, path);
   };
 
   return {
@@ -58,6 +74,10 @@ export default (() => {
         $li.classList.toggle('nav__now', $li === e.target.parentNode);
       });
 
+      document.querySelector('.selectedTag')?.classList.remove('selectedTag');
+
+      // pushHistory();
+
       manipulatePage(false, { reset: 'reset' });
     },
 
@@ -71,7 +91,36 @@ export default (() => {
         $tag.classList.toggle('selectedTag', $tag === $seletedTag)
       );
 
+      // pushHistory();
+
       manipulatePage(false, { selectedTag: $seletedTag.dataset.tag, reset: 'reset' });
+    },
+
+    reload(e) {
+      const {
+        likesOrLatest,
+        mineOrFavorite,
+        tag: selectedTag,
+      } = e.state
+        ? e.state
+        : window.location.pathname.match(/mypage/)
+        ? { likesOrLatest: 'likes', mineOrFavorite: 'mine' }
+        : { likesOrLatest: 'likes' };
+
+      [...document.querySelectorAll('.nav-main li')].forEach($li => {
+        $li.classList.toggle('nav__now', $li.dataset.order === likesOrLatest);
+      });
+
+      if (mineOrFavorite)
+        [...document.querySelectorAll('.nav-sub li')].forEach($li => {
+          $li.classList.toggle('nav__now', $li.dataset.order === mineOrFavorite);
+        });
+
+      [...document.querySelectorAll('.tag')].forEach($tag =>
+        $tag.classList.toggle('selectedTag', $tag.dataset.tag === selectedTag)
+      );
+
+      manipulatePage(false, { selectedTag, reset: 'reset' });
     },
   };
 })();

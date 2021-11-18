@@ -32,7 +32,7 @@ export default (() => {
     $li.innerHTML = `
     <a href="/reviews/${reviewData.reviewId}">
       <div class="${page} review__img">
-        <img src="../images/default.svg" alt="" />
+        <img src="${reviewData.thumbnail || '../images/default.svg'}" alt="" />
       </div>
       <div class="${page} review__details">
         <h2 class="${page} title">${reviewData.title}</h2>
@@ -237,8 +237,13 @@ export default (() => {
     </section>`;
 
     const $reviewList = $newDiv.querySelector('.review__list');
-    tagRelatedReviews.forEach(tagRelatedReview => {
+    const MAX_RELATEDREVIEW_RENDER_COUNT = 6;
+    let RENDER_COUNT = 0;
+
+    tagRelatedReviews.some(tagRelatedReview => {
       $reviewList.appendChild(createReview(tagRelatedReview));
+      RENDER_COUNT++;
+      return RENDER_COUNT === MAX_RELATEDREVIEW_RENDER_COUNT;
     });
 
     $newDiv.querySelector('.reviewDetail__toggleHeader').classList.toggle('hidden', $reviewList.querySelector('li'));
@@ -256,7 +261,6 @@ export default (() => {
       renderReviews(reviews);
 
       renderTags(tags, selectedTag);
-      // renderTags([...new Set(reviews.flatMap(review => review.tags))]);
     },
 
     addReviews(reviews) {

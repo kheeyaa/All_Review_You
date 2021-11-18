@@ -40,7 +40,7 @@ exports.writeReview = (req, res) => {
 
 exports.uploadPicture = (req, res) => {
   try {
-    res.send(`../images/${req.file.filename}`);
+    res.send(`/images/${req.file.filename}`);
   } catch (e) {
     console.log(e.message);
   }
@@ -58,7 +58,7 @@ exports.sendReviewAndRelatedReviews = (req, res) => {
 exports.sendFilterdReviews = (req, res) => {
   const { filter, selectedTag, keyword, reset } = req.query;
 
-  const { likesOrLatest, mineOrFavorite } = JSON.parse(filter);
+  const { likesOrLatest, mineOrFavorite } = JSON.parse(filter || '{}');
 
   if (reset) Review.reset();
 
@@ -107,18 +107,6 @@ exports.sendFilterdReviews = (req, res) => {
   });
 };
 
-exports.sendMyReviews = (req, res) => {
-  res.send(
-    Review.state
-      .filter(({ userId }) => userId === req.params.id)
-      .map(({ content, photos }, i, reviews) => ({
-        ...reviews[i],
-        content: content.slice(300),
-        photos: photos.slice(1),
-      }))
-  );
-};
-
 exports.changeLikes = (req, res) => {
   const { curReviewId } = req.body;
 
@@ -127,7 +115,6 @@ exports.changeLikes = (req, res) => {
   const { likes } = review;
   const isLiked = review.likes.includes(req.userId);
 
-  // 기존의 review 데이터를 업데이트 해주어야함.
   isLiked
     ? Review.change(+curReviewId, { ...review, likes: likes.filter(like => like !== req.userId) })
     : Review.change(+curReviewId, { ...review, likes: [...likes, req.userId] });
@@ -180,8 +167,3 @@ exports.deleteReview = (req, res) => {
   Review.delete(+req.params.id);
   res.send();
 };
-
-// exports.updateComment = (req, res) => {
-//   const { inReviewId, dataCommentId, changedComment } = req.body;
-//   console.log(inReviewId, dataCommentId, changedComment);
-// };

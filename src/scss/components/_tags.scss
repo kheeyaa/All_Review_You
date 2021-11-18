@@ -19,9 +19,17 @@
     }
   }
 
+  &__list {
+    .selectedTag a {
+      background-color: rgba($olive, 0.7);
+    }
+  }
+
   @include desktop {
     width: 20%;
     padding: rem(30px) rem(16px);
+    position: sticky;
+    top: 0px;
   }
   @include mobile {
     position: absolute;

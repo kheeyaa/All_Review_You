@@ -5,7 +5,6 @@
   @include boxSizeMax;
   @include flexbox($flex-wrap: wrap, $align-items: flex-start);
   padding: rem(14px);
-  overflow: hidden;
   min-width: rem(300px);
 }
 

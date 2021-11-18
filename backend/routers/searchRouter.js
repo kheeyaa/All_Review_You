@@ -6,11 +6,15 @@ const { sendHtml } = require('../controllers/sendHtml');
 const searchRouter = Router();
 
 searchRouter.get('/', (req, res) => {
-  req.headers.accept.match(/text\/html/) ? sendHtml('search', res) : findSearchResult(req, res);
+  res.format({
+    'text/html': () => {
+      sendHtml('search', res);
+    },
+    'application/json': findSearchResult,
+    default: () => {
+      res.status(406).send('Not Acceptable');
+    },
+  });
 });
-
-// searchRouter.post('/:id', (req, res) => {});
-// searchRouter.put('/:id', (req, res) => {});
-// searchRouter.delete('/:id', (req, res) => {});
 
 module.exports = searchRouter;
