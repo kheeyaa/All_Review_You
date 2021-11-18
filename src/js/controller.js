@@ -61,6 +61,8 @@ export default (() => {
     window.history.pushState({ likesOrLatest, mineOrFavorite, tag }, null, path);
   };
 
+  const getEndPoint = () => {};
+
   return {
     init() {
       manipulatePage(true, { reset: 'reset' });
@@ -92,6 +94,18 @@ export default (() => {
       );
 
       // pushHistory();
+
+      const pathAttributes = {};
+
+      const pathAttributeKey = ['likesOrLatest', 'mineOrFavorite', 'tag'];
+
+      [new RegExp(/latest/), new RegExp(/favorite/), new RegExp(/(?<=tag=).+/)].forEach((regex, index) => {
+        const pathAttributeValue = window.decodeURI(window.location.pathname).match(regex);
+
+        pathAttributes[pathAttributeKey[index]] = pathAttributeValue && pathAttributeValue[0];
+      });
+
+      console.log(pathAttributes);
 
       manipulatePage(false, { selectedTag: $seletedTag.dataset.tag, reset: 'reset' });
     },
