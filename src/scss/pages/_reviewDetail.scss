@@ -26,7 +26,7 @@
     @include boxShadow();
     @include mobile {
       width: 100%;
-      padding: rem(10px);
+      padding: rem(20px);
     }
   }
 
@@ -36,7 +36,7 @@
     padding: rem(20px) 0;
 
     @include mobile {
-      font-size: rem(34px);
+      font-size: rem(40px);
     }
   }
 
@@ -75,7 +75,7 @@
       display: inline-block;
 
       @include mobile {
-        font-size: rem(16px);
+        font-size: rem(15px);
       }
     }
     &--beforeDay:before {
@@ -85,9 +85,6 @@
     &--beforeDay {
       font-size: rem(16px);
       color: $gray1;
-      // @include mobile {
-      //   font-size: rem(20px);
-      // }
     }
     &--tag {
       margin: rem(10px) 0;
@@ -125,12 +122,12 @@
       }
     }
     &--ratingText {
-      font-size: rem(20px);
+      // font-size: rem(20px);
       font-weight: bold;
       padding-right: rem(20px);
 
       @include mobile {
-        font-size: rem(20px);
+        // font-size: rem(20px);
         padding: rem(10px) 0;
       }
     }
@@ -143,7 +140,7 @@
       }
     }
     &--starsCount {
-      font-size: rem(16px);
+      // font-size: rem(16px);
       padding-right: rem(10px);
     }
 
@@ -164,12 +161,12 @@
     }
 
     &--likesText {
-      font-size: rem(20px);
+      // font-size: rem(20px);
       font-weight: bold;
       padding-right: rem(50px);
       @include mobile {
         padding: rem(10px) 0;
-        font-size: rem(20px);
+        // font-size: rem(20px);
       }
     }
 
@@ -183,7 +180,6 @@
     }
     &--likesCount {
       padding-right: rem(15px);
-      font-size: rem(16px);
 
       @include mobile {
         padding-right: rem(8px);
@@ -191,9 +187,9 @@
     }
   }
   &__manage {
-    width: 20%;
     @include flexbox();
     color: $gray2;
+    padding: rem(10px);
     li {
       margin-right: rem(10px);
       cursor: pointer;
@@ -201,19 +197,28 @@
   }
 
   &__thumbnail {
-    img {
-      display: block;
-      margin: 0 auto;
+    display: block;
+    margin: rem(50px) auto 0;
+
+    @include desktop {
+      width: 80%;
+    }
+    @include mobile {
+      width: 100%;
     }
   }
 
   // 본문
   &__content {
-    padding: rem(20px);
-    font-size: rem(20px);
-    @include mobile {
-      padding: rem(6px);
-      font-size: rem(18px);
+    padding: rem(20px) 0;
+
+    img {
+      @include desktop {
+        width: 80%;
+      }
+      @include mobile {
+        width: 100%;
+      }
     }
   }
 
@@ -291,7 +296,7 @@
   &__relatedReview {
     padding: rem(40px) rem(20px);
     &--title {
-      font-size: rem(24px);
+      font-size: rem(20x);
       text-align: center;
       margin: rem(40px) 0;
     }

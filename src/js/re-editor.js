@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         title: $title.value.trim(),
         reviewId: curReviewId,
         content: quill.getContents(),
-        thumbnail,
+        thumbnail: thumbnail || curThumbnail,
         tags,
         ratings,
         createdAt,
