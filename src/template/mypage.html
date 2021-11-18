@@ -25,24 +25,28 @@
       </header>
 
       <nav class="nav nav-main">
+        <h2 class="a11y-hidden">메인 메뉴</h2>
         <ul class="nav__list">
-          <li class="nav__now"><a href="" type="button">내가 작성한 리뷰</a></li>
-          <li><a href="" type="button">좋아한 리뷰</a></li>
-          <li><a href="" type="button">최근 읽은 리뷰</a></li>
+          <li class="nav__now" data-order="likes"><a href="/mypage">좋아요순</a></li>
+          <li data-order="latest"><a href="/mypage/latest">최신순</a></li>
         </ul>
       </nav>
 
       <nav class="nav nav-sub">
-        <h2 class="a11y-hidden">메뉴</h2>
+        <h2 class="a11y-hidden">서브 메뉴</h2>
         <ul class="nav__list">
-          <li class="nav__now" data-order="likes"><a href="/likes">좋아요순</a></li>
-          <li data-order="latest"><a href="/latest">최신순</a></li>
+          <li class="nav__now" data-order="mine"><a href="/mypage" type="button">내가 작성한 리뷰</a></li>
+          <li data-order="favorite"><a href="/mypage/favorite" type="button">좋아한 리뷰</a></li>
         </ul>
       </nav>
 
       <main class="mypage review-row">
         <h2 class="mypage a11y-hidden">리뷰 리스트</h2>
         <ul class="mypage review__list"></ul>
+        <div class="review-more__wrap">
+          <img class="loading" src="../images/loading.gif" alt="Loading..." />
+          <span class="review-more__text hidden">잠시만 기다려주세요.</span>
+        </div>
       </main>
 
       <aside class="tags">
