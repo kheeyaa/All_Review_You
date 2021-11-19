@@ -27,7 +27,10 @@ const handleReveiwDetailManage = () => {
 window.addEventListener('DOMContentLoaded', async () => {
   try {
     const { data } = await axios.get(window.location.pathname);
+
     const [curReview, tagRelatedReviews] = data;
+
+    document.title = curReview.title;
 
     const { data: curUserId } = await axios.get('/users/me');
 
@@ -63,6 +66,7 @@ window.addEventListener('submit', async e => {
 
 // 댓글 지우기
 window.addEventListener('click', async e => {
+  console.log(e.target);
   if (!e.target.classList.contains('reviewDetail__comments--delete')) return;
   const { data: curUserId } = await axios.get('/users/me');
   const commentUserId = e.target.previousElementSibling.previousElementSibling.textContent;
