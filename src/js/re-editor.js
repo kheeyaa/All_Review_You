@@ -34,9 +34,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       $lis.appendChild($li);
     });
     $tagList.appendChild($lis);
-    if (curThumbnail) {
-      $imgThumbnail.src = curThumbnail;
-    }
+    // $thumbnail.value = curThumbnail; // => 정책상 안됨...
+    if (curThumbnail) $imgThumbnail.src = curThumbnail;
 
     const quill = new Quill('#quill', {
       modules: {
