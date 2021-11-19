@@ -4,7 +4,6 @@ import render from './render';
 import './utils/likes';
 import './utils/authModal.js';
 
-// DOM NODES
 const $reviewDetail = document.querySelector('.reviewDetail');
 
 const handleReveiwDetailManage = () => {
@@ -23,7 +22,6 @@ const handleReveiwDetailManage = () => {
   };
 };
 
-// 디테일 페이지 렌더
 window.addEventListener('DOMContentLoaded', async () => {
   try {
     const { data } = await axios.get(window.location.pathname);
@@ -44,7 +42,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
-// 댓글 추가
 window.addEventListener('submit', async e => {
   if (!document.querySelector('.reviewDetail__addComments--form')) return;
   e.preventDefault();
@@ -55,8 +52,8 @@ window.addEventListener('submit', async e => {
 
   if (curUserId.length > 0) {
     const { data: reviews } = await axios.post(window.location.pathname, {
-      inReviewId: window.location.pathname.split('/')[2], // 현재 접속한 reviewId 받아오기
-      inUserId: curUserId, // 현재 접속한 userId 받아오기
+      inReviewId: window.location.pathname.split('/')[2],
+      inUserId: curUserId,
       inContent: $reviewCommentInput.value,
     });
     render.addComments(reviews);
@@ -64,7 +61,6 @@ window.addEventListener('submit', async e => {
   }
 });
 
-// 댓글 지우기
 window.addEventListener('click', async e => {
   console.log(e.target);
   if (!e.target.classList.contains('reviewDetail__comments--delete')) return;
@@ -82,7 +78,6 @@ window.addEventListener('click', async e => {
   }
 });
 
-// 댓글 수정 버튼 클릭
 window.addEventListener('click', async e => {
   if (!e.target.classList.contains('reviewDetail__comments--update')) return;
 
@@ -98,7 +93,6 @@ window.addEventListener('click', async e => {
   }
 });
 
-// 댓글 수정 후 엔터
 window.addEventListener('keyup', async e => {
   const inputComment = e.target.parentNode.querySelector('.reviewDetail__comments--updateInput');
   if (!inputComment) return;

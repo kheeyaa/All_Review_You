@@ -5,10 +5,6 @@ import Observer from './Observer';
 import './utils/likes';
 import './utils/authModal.js';
 
-window.addEventListener('DOMContentLoaded', () => {
-  console.log('hi');
-});
-
 document.querySelector('.search__form').onsubmit = async e => {
   e.preventDefault();
 
@@ -47,24 +43,3 @@ document.querySelector('.search__form').onsubmit = async e => {
 
   $searchInput.value = '';
 };
-
-// document.querySelector('.search__form').onsubmit = async e => {
-//   e.preventDefault();
-
-//   const $searchInput = e.target.querySelector('input');
-
-//   try {
-//     const { data: reviews } = await axios.get(`/search`, {
-//       params: {
-//         keyword: $searchInput.value.trim(),
-//       },
-//     });
-//     const { data: curUserId } = await axios.get('/users/me');
-
-//     render.search(reviews, { $reviewList: document.querySelector('.review__list') }, curUserId);
-//   } catch (e) {
-//     console.error(e);
-//   }
-
-//   $searchInput.value = '';
-// };
