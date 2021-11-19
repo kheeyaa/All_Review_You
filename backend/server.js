@@ -28,11 +28,5 @@ app.use('/search', searchRouter);
 app.use('/write', editorRouter);
 app.use('/edit', reEditorRouter);
 
-const { sendHtml } = require('./controllers/sendHtml');
-
-app.get('/latest', (req, res) => {
-  sendHtml('index', res);
-});
-
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server listening at http://localhost:${PORT}`));

@@ -1,12 +1,14 @@
 import controller from './controller';
-import './utils/authModal.js';
+import './utils/authModal';
 
-window.addEventListener('DOMContentLoaded', controller.init);
+window.addEventListener('DOMContentLoaded', () => {
+  controller.init('home');
+});
 
 document.querySelector('.nav__list').onclick = e => {
-  controller.sortByNav('nav-main', e);
+  controller.sortByNav('nav-main', e, 'home');
 };
 
-document.querySelector('.tags').onclick = controller.sortByTag;
-
-window.onpopstate = e => controller.reload(e);
+document.querySelector('.tags').onclick = e => {
+  controller.sortByTag(e, 'home');
+};

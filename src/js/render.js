@@ -61,24 +61,11 @@ export default (() => {
     document.querySelector('.search__message').textContent = `총 ${reviewsLen}개의 리뷰를 찾았습니다.`;
   };
 
-  const renderAddReviews = reviews => {
+  const renderReviews = (reviews, isReset) => {
     const $target = document.querySelector('.review__list');
 
-    const $domFragment = document.createDocumentFragment();
+    if (isReset) $target.innerHTML = '';
 
-    reviews.forEach(review => {
-      $domFragment.appendChild(createReview(review));
-    });
-
-    [...$domFragment.querySelectorAll('#rater')].forEach((el, i) => createReadOnlyRater(el, reviews[i].ratings));
-
-    $target.appendChild($domFragment);
-  };
-
-  const renderReviews = reviews => {
-    const $target = document.querySelector('.review__list');
-
-    $target.innerHTML = '';
     const $domFragment = document.createDocumentFragment();
 
     reviews.forEach(review => {
@@ -96,9 +83,9 @@ export default (() => {
     $target.innerHTML = tags
       .map(
         tag =>
-          `<li class="tag ${
-            tag === selectedTag ? 'selectedTag' : ''
-          }" data-tag="${tag}"><a href="" type="button">#${tag}</a></li>`
+          `<li class="tag ${tag === selectedTag ? 'selectedTag' : ''}" 
+            data-tag="${tag}"><a href="" type="button">#${tag}</a>
+          </li>`
       )
       .join('');
   };
@@ -220,6 +207,7 @@ export default (() => {
             .join('')}
         </ul>
       </section>`;
+
     return $newDiv;
   };
 
@@ -247,6 +235,7 @@ export default (() => {
     });
 
     $newDiv.querySelector('.reviewDetail__toggleHeader').classList.toggle('hidden', $reviewList.querySelector('li'));
+
     [...$reviewList.querySelectorAll('#rater')].forEach((el, i) =>
       createReadOnlyRater(el, tagRelatedReviews[i].ratings)
     );
@@ -258,21 +247,19 @@ export default (() => {
     home(reviews, { tags, selectedTag }) {
       renderHeader();
 
-      renderReviews(reviews);
+      renderReviews(reviews, true);
 
       renderTags(tags, selectedTag);
     },
 
     addReviews(reviews) {
-      renderAddReviews(reviews);
+      renderReviews(reviews, false);
     },
 
-    mypage(reviews, { tags, selectedTag }) {
+    mypage(reviews) {
       renderHeader();
 
-      renderReviews(reviews);
-
-      renderTags(tags, selectedTag);
+      renderReviews(reviews, true);
     },
 
     reviewDetail(review, relatedReviews, targets) {

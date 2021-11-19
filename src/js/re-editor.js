@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       $lis.appendChild($li);
     });
     $tagList.appendChild($lis);
-    // $thumbnail.value = curThumbnail; // => 정책상 안됨...
     if (curThumbnail) {
       $imgThumbnail.style.setProperty('background-image', `url(${curThumbnail})`);
       $imgThumbnail.style.width = '200px';
