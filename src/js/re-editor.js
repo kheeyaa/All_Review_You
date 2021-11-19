@@ -35,22 +35,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
     $tagList.appendChild($lis);
     if (curThumbnail) {
-      $imgThumbnail.style.setProperty('background-image', `url(${curThumbnail})`);
-      $imgThumbnail.style.width = '200px';
-      $imgThumbnail.style.height = '200px';
+      $imgThumbnail.src = curThumbnail;
     }
 
     const quill = new Quill('#quill', {
       modules: {
-        toolbar: [
-          ['bold', 'italic'],
-          ['link', 'blockquote', 'code-block', 'image'],
-          [{ list: 'ordered' }, { list: 'bullet' }],
-        ],
+        toolbar: [['bold'], ['image']],
       },
       placeholder: '내용을 입력하세요...',
       theme: 'snow',
     });
+
     quill.setContents(curContent);
 
     const myRater = rater({
@@ -109,16 +104,26 @@ document.addEventListener('DOMContentLoaded', async () => {
       e.target.value = '';
     });
 
+    $imgThumbnail.addEventListener('click', () => {
+      $thumbnail.click();
+    });
+
     $thumbnail.addEventListener('change', async () => {
       const formData = new FormData();
       formData.append('thumbnail', $thumbnail.files[0]);
       try {
         const { data: url } = await axios.post('/reviews/picture', formData);
         thumbnail = url;
-        $imgThumbnail.style.setProperty('background-image', `url(${url})`);
-        $imgThumbnail.style.width = '200px';
-        $imgThumbnail.style.height = '200px';
+        const img = document.createElement('img');
+        img.src = url;
+        img.onload = () => {
+          $imgThumbnail.src = url;
+        };
+        img.onerror = () => {
+          img.src = url;
+        };
       } catch (e) {
+        alert('일시적인 오류로 사진 업로드를 실패했습니다.');
         console.error(e.message);
       }
     });
