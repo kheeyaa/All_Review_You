@@ -12,11 +12,7 @@ const $imgThumbnail = document.querySelector('.img-thumbnail');
 
 const quill = new Quill('#quill', {
   modules: {
-    toolbar: [
-      ['bold', 'italic'],
-      ['link', 'blockquote', 'code-block', 'image'],
-      [{ list: 'ordered' }, { list: 'bullet' }],
-    ],
+    toolbar: [['bold'], ['image']],
   },
   placeholder: '내용을 입력하세요...',
   theme: 'snow',
