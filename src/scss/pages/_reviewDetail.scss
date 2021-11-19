@@ -208,6 +208,8 @@
   // 본문
   &__content {
     padding: rem(20px) 0;
+    line-height: rem(26px);
+    font-size: rem(18px);
 
     img {
       @include desktop {
