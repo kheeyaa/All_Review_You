@@ -64,9 +64,7 @@ $modalContainer.addEventListener('click', e => {
   }
 });
 
-$signupForm.addEventListener('input', () => {
-  checkSignupValid();
-});
+$signupForm.addEventListener('input', checkSignupValid);
 
 [$signinForm, $signupForm].forEach($form => {
   $form.addEventListener('submit', async e => {

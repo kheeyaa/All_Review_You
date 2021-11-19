@@ -25,7 +25,7 @@ export default (() => {
     }
   };
 
-  const manipulatePage = async (isDOMContentLoaded, params) => {
+  const manipulatePage = async (isDOMContentLoaded, params, page) => {
     const [likesOrLatest, mineOrFavorite] = [...document.querySelectorAll('.nav__now')].map($li => $li.dataset.order);
 
     const tag = document.querySelector('.selectedTag')?.dataset.tag;
@@ -42,31 +42,15 @@ export default (() => {
     const observer = new Observer();
     observer.start();
 
-    render.mypage(reviews, { tags, selectedTag: tag });
-  };
-
-  const createEndPoint = () =>
-    [...document.querySelectorAll('.nav__now')]
-      .map(({ dataset: { order } }) => (order === 'likes' || order === 'mine' ? '' : `/${order}`))
-      .join('') + (document.querySelector('.selectedTag')?.dataset.tag.replace(/.+/g, match => `/tag=${match}`) ?? '');
-
-  const pushHistory = () => {
-    const endPoint = createEndPoint();
-    const path = (window.location.pathname.match(/mypage/g) ? '/mypage' + endPoint : endPoint) || '/';
-
-    const [likesOrLatest, mineOrFavorite] = [...document.querySelectorAll('.nav__now')].map($li => $li.dataset.order);
-
-    const tag = document.querySelector('.selectedTag')?.dataset.tag;
-
-    window.history.pushState({ likesOrLatest, mineOrFavorite, tag }, null, path);
+    render[page](reviews, { tags, selectedTag: tag });
   };
 
   return {
-    init() {
-      manipulatePage(true, { reset: 'reset' });
+    init(page) {
+      manipulatePage(true, { reset: 'reset' }, page);
     },
 
-    sortByNav(className, e) {
+    sortByNav(className, e, page) {
       if (!e.target.matches('.nav__list a')) return;
       e.preventDefault();
 
@@ -76,12 +60,10 @@ export default (() => {
 
       document.querySelector('.selectedTag')?.classList.remove('selectedTag');
 
-      // pushHistory();
-
-      manipulatePage(false, { reset: 'reset' });
+      manipulatePage(false, { reset: 'reset' }, page);
     },
 
-    sortByTag(e) {
+    sortByTag(e, page) {
       if (!e.target.matches('.tag a')) return;
       e.preventDefault();
 
@@ -91,36 +73,7 @@ export default (() => {
         $tag.classList.toggle('selectedTag', $tag === $seletedTag)
       );
 
-      // pushHistory();
-
-      manipulatePage(false, { selectedTag: $seletedTag.dataset.tag, reset: 'reset' });
-    },
-
-    reload(e) {
-      const {
-        likesOrLatest,
-        mineOrFavorite,
-        tag: selectedTag,
-      } = e.state
-        ? e.state
-        : window.location.pathname.match(/mypage/)
-        ? { likesOrLatest: 'likes', mineOrFavorite: 'mine' }
-        : { likesOrLatest: 'likes' };
-
-      [...document.querySelectorAll('.nav-main li')].forEach($li => {
-        $li.classList.toggle('nav__now', $li.dataset.order === likesOrLatest);
-      });
-
-      if (mineOrFavorite)
-        [...document.querySelectorAll('.nav-sub li')].forEach($li => {
-          $li.classList.toggle('nav__now', $li.dataset.order === mineOrFavorite);
-        });
-
-      [...document.querySelectorAll('.tag')].forEach($tag =>
-        $tag.classList.toggle('selectedTag', $tag.dataset.tag === selectedTag)
-      );
-
-      manipulatePage(false, { selectedTag, reset: 'reset' });
+      manipulatePage(false, { selectedTag: $seletedTag.dataset.tag, reset: 'reset' }, page);
     },
   };
 })();
