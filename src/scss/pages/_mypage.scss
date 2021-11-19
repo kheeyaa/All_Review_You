@@ -1,0 +1,57 @@
+@use './../base' as *;
+@use './../components' as *;
+
+.mypage {
+  &.review-row {
+    @include desktop {
+      padding-right: rem(20px);
+      width: 100%;
+    }
+  }
+
+  &.review {
+    @include desktop {
+      &__list {
+        grid-template-areas: '. .';
+      }
+    }
+
+    &__card {
+      width: 100%;
+      height: 100%;
+    }
+
+    &__img {
+      aspect-ratio: 16 / 10;
+    }
+
+    &__details {
+      padding: rem(24px) rem(14px);
+    }
+  }
+
+  &.detail,
+  &.time {
+    margin-bottom: rem(8px);
+  }
+
+  &.likes {
+    &__container {
+      top: inherit;
+      bottom: rem(24px);
+    }
+    &__button {
+      border: 0;
+      padding: 0;
+      background-color: transparent;
+      img {
+        width: rem(23px);
+      }
+    }
+  }
+
+  &.rater__wrap {
+    left: rem(128px);
+    bottom: rem(32px);
+  }
+}

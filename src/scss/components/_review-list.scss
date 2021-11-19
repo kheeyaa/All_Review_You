@@ -1,0 +1,113 @@
+@use '../base/' as *;
+
+// .review-row {
+//   @include desktop {
+//     padding-right: rem(20px);
+//     width: 80%;
+//   }
+//   @include mobile {
+//     @include autoMargin;
+//     width: 100%;
+//   }
+//   .review {
+//     @include desktop {
+//       &__list {
+//         @include flexbox($justify-content: space-between, $flex-wrap: wrap);
+//       }
+//       &__card {
+//         width: 31%;
+//         min-height: rem(330px);
+//       }
+//     }
+
+//     @include mobile {
+//       &__list {
+//         width: 100%;
+//         @include flexbox($justify-content: space-between, $align-items: center, $flex-wrap: wrap);
+//       }
+//       &__card {
+//         min-height: rem(330px);
+//       }
+//       @media (max-width: 449px) {
+//         &__card {
+//           width: 100%;
+//           min-width: rem(300px);
+//         }
+//       }
+//       @media (min-width: 450px) {
+//         &__card {
+//           width: 48%;
+//         }
+//       }
+//       @media (min-width: 700px) {
+//         &__card {
+//           width: 31%;
+//         }
+//       }
+//     }
+//   }
+// }
+
+// .review-column {
+//   width: 100%;
+//   .review {
+//     &__list {
+//       @include autoMargin;
+//       @include flexbox($justify-content: center, $align-items: center, $direction: column);
+//     }
+//     @include desktop {
+//       &__card {
+//         min-width: rem(300px);
+//         max-width: rem(700px);
+//       }
+//     }
+//     @include mobile {
+//       &__card {
+//         width: 80%;
+//         min-width: rem(300px);
+//         max-width: rem(900px);
+//       }
+//     }
+//   }
+// }
+
+.review-row {
+  @include desktop {
+    padding-right: rem(10px);
+    width: 80%;
+  }
+  @include mobile {
+    @include autoMargin;
+    width: 100%;
+  }
+  .review {
+    &__list {
+      display: grid;
+      gap: rem(10px) rem(10px);
+    }
+    @include desktop {
+      &__list {
+        grid-template-areas: '. . .';
+      }
+    }
+    @media (max-width: rem(1000px)) {
+      &__list {
+        grid-template-areas: '. .';
+      }
+    }
+    @media (max-width: rem(600px)) {
+      &__list {
+        grid-template-areas: '.';
+      }
+    }
+  }
+}
+
+.review-column {
+  width: 100%;
+  .review {
+    &__card {
+      width: 100%;
+    }
+  }
+}

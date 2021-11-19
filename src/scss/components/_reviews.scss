@@ -1,0 +1,73 @@
+@use './../base' as *;
+
+.review {
+  &__card {
+    @include boxShadow;
+    border-radius: rem(10px);
+    overflow: hidden;
+    margin-bottom: rem(20px);
+    transition: transform 0.2s ease;
+    background-color: $white;
+  }
+  &__card:hover {
+    transform: translateY(rem(-10px));
+  }
+  &__img {
+    cursor: pointer;
+    width: 100%;
+    img {
+      width: 100%;
+      aspect-ratio: 10/6;
+      object-fit: cover;
+    }
+  }
+  &__details {
+    position: relative;
+    background-color: $white;
+    width: 100%;
+    padding: rem(14px);
+    @include flexbox($direction: column, $justify-content: space-between);
+    gap: rem(10px);
+    .title {
+      cursor: pointer;
+      font-weight: 800;
+      margin-bottom: rem(10px);
+    }
+    time {
+      color: $gray2;
+      font-size: rem(11px);
+    }
+    .author {
+      font-size: rem(14px);
+    }
+    .title,
+    time,
+    .author,
+    .detail {
+      // margin-bottom: rem(15px);
+    }
+    .detail {
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis; /* 말줄임 적용 */
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+  }
+}
+
+.review-more {
+  &__wrap {
+    width: 100%;
+    padding: rem(10px);
+    @include flexbox($justify-content: center, $align-items: center);
+  }
+  &__text {
+    padding: rem(10px) rem(20px);
+    background-color: $white;
+    border: 1px solid $gray2;
+    color: $gray2;
+    border-radius: rem(10px);
+  }
+}

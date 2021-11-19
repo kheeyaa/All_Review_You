@@ -1,0 +1,75 @@
+@use './../base' as *;
+@use './../components' as *;
+
+.header-search {
+  margin: rem(40px) 0;
+}
+.search-wrap {
+  @include boxSizeMax(700px);
+  @include flexbox($flex-wrap: wrap);
+  overflow: hidden;
+  width: 100%;
+}
+.search {
+  width: 100%;
+  @include flexbox($justify-content: center, $align-items: center, $direction: column);
+  margin-bottom: rem(40px);
+
+  &__form,
+  &__message {
+    position: relative;
+    width: 100%;
+  }
+  &__input {
+    width: 100%;
+    border: 0;
+    background-color: $white;
+    border: 1px solid $gray2;
+  }
+  &__input::placeholder {
+    color: $gray2;
+  }
+
+  &__img {
+    position: absolute;
+    left: rem(10px);
+    top: 50%;
+    transform: translate(0, -50%);
+    width: rem(40px);
+    img {
+      width: 100%;
+    }
+  }
+  &__message {
+    margin-top: rem(20px);
+  }
+
+  @include desktop {
+    &__input {
+      font-size: rem(25px);
+      padding: rem(16px);
+      padding-left: rem(60px);
+    }
+    &__img {
+      width: rem(30px);
+      left: rem(20px);
+      img {
+        width: 100%;
+      }
+    }
+  }
+  @include mobile {
+    &__input {
+      font-size: rem(18px);
+      padding: rem(10px);
+      padding-left: rem(40px);
+    }
+    &__img {
+      width: rem(20px);
+      left: rem(13px);
+      img {
+        width: 100%;
+      }
+    }
+  }
+}
