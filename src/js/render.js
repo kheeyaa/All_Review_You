@@ -154,9 +154,6 @@ export default (() => {
       $reviewDetailContent.innerHTML = $div.getElementsByClassName('ql-editor')[0].innerHTML;
     }
 
-    // ? $div.getElementsByClassName('ql-editor')[0].innerHTML
-    // : content;
-
     createReadOnlyRater($newDiv.querySelector('#rater'), ratings);
     return $newDiv;
   };
@@ -168,9 +165,7 @@ export default (() => {
     const { comments } = reviewData;
 
     $newDiv.innerHTML = `
-    <!-- 리뷰 본문 외 -->
       <h2 class="a11y-hidden">댓글</h2>
-      <!-- 댓글 작성하기-->
       <section class="reviewDetail__addComments">
         <h3 class="a11y-hidden">댓글 작성</h3>
         <form action="" class="reviewDetail__addComments--form">
@@ -189,7 +184,6 @@ export default (() => {
         </form>
       </section>
 
-      <!-- 댓글 리스트 -->
       <section class="reviewDetail__comments">
         <h3 class="a11y-hidden">댓글 리스트</h3>
         <ul>
@@ -308,11 +302,11 @@ export default (() => {
         .join('');
     },
 
-    // updateComments(review) {},
-
     search(reviews, totalNum) {
       renderHeader();
-      renderReviews(reviews);
+
+      renderReviews(reviews, true);
+
       renderMessage(totalNum);
     },
   };
