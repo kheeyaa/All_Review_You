@@ -83,6 +83,7 @@ document.querySelector('.editor-tag').addEventListener('keydown', e => {
 
   e.target.value = '';
 });
+
 $imgThumbnail.addEventListener('click', () => {
   $thumbnail.click();
 });

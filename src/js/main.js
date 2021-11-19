@@ -1,30 +1,14 @@
 import controller from './controller';
-import './utils/authModal.js';
+import './utils/authModal';
 
-window.addEventListener('DOMContentLoaded', controller.init);
+window.addEventListener('DOMContentLoaded', () => {
+  controller.init('home');
+});
 
 document.querySelector('.nav__list').onclick = e => {
-  controller.sortByNav('nav-main', e);
+  controller.sortByNav('nav-main', e, 'home');
 };
 
-document.querySelector('.tags').onclick = controller.sortByTag;
-
-// window.onpopstate = controller.reload;
-
-// window.onpopstate = async () => {
-//   const path = window.location.pathname.replace(/\//g, '');
-
-//   const order = path === 'latest' ? 'latest' : 'likes';
-
-//   document.querySelectorAll('.nav__list > li').forEach($li => {
-//     $li.classList.toggle('nav__now', $li.dataset.order === order);
-//   });
-
-//   try {
-//     const { data: reviews } = await axios.get(`/reviews/order-${order}`);
-
-//     render.home(reviews);
-//   } catch (e) {
-//     console.error(e);
-//   }
-// };
+document.querySelector('.tags').onclick = e => {
+  controller.sortByTag(e, 'home');
+};

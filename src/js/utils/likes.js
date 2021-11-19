@@ -27,7 +27,7 @@ if (document.querySelector('.review__list')) {
   };
 }
 if (document.querySelector('.reviewDetail')) {
-  document.querySelector('.reviewDetail').onclick = async e => {
+  document.querySelector('.reviewDetail').onclick = e => {
     if (!e.target.closest('.likes__button')) return;
     handleLikesClick(e.target.closest('.reviewDetail__header'));
   };
