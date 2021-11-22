@@ -1,6 +1,6 @@
 # 🫒 All Review You
 
-![image](https://user-images.githubusercontent.com/76723666/142566229-10907106-4ea2-4255-a53e-59618edfbcab.png)![Nov-19-2021 10-28-34](https://user-images.githubusercontent.com/50583262/142808455-bd730ac8-42fb-4565-b371-c1f339588408.gif)
+![image](https://user-images.githubusercontent.com/76723666/142566229-10907106-4ea2-4255-a53e-59618edfbcab.png)
 
 ## 기획 의도
 
