@@ -1,7 +1,6 @@
 # 🫒 All Review You
 
-![image](https://user-images.githubusercontent.com/76723666/142566229-10907106-4ea2-4255-a53e-59618edfbcab.png)
-
+![image](https://user-images.githubusercontent.com/76723666/142566229-10907106-4ea2-4255-a53e-59618edfbcab.png)![Nov-19-2021 10-28-34](https://user-images.githubusercontent.com/50583262/142808455-bd730ac8-42fb-4565-b371-c1f339588408.gif)
 
 ## 기획 의도
 
@@ -19,6 +18,8 @@
 
 ### 메인 페이지
 - 카테고리(태그) 분류하여 리뷰 렌더링
+<img src="https://user-images.githubusercontent.com/50583262/142808306-f090087d-31ac-4967-97a1-f177b444e8f8.gif"  width="600" />
+
 - 최신 순/ 좋아요 순 정렬
 - 무한 스크롤
 
@@ -43,11 +44,15 @@
 
 ### 로그인, 회원가입 페이지
 - 아이디 저장
+<img src="https://user-images.githubusercontent.com/50583262/142808521-38bdca14-8e5a-4a6f-aea8-a31663b749fd.gif"  width="600" />
+
 - 자동 로그인
 
 ### 마이 페이지
 - 자기가 작성한 리뷰 렌더링
 - 자기가 좋아요한 리뷰 렌더링
+<img src="https://user-images.githubusercontent.com/50583262/142808812-f7b13fc8-716c-4817-9180-7b699fea6665.gif"  width="600" />
+
 - 최근 본 리뷰 렌더링
 
 ### 리뷰 작성 페이지
