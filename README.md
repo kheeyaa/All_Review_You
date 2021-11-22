@@ -64,8 +64,12 @@
 - 작성된 리뷰 내용 렌더링 (+별점)
 - 좋아요 누르기
 - 댓글 기능
+![댓글추가수정삭제](https://user-images.githubusercontent.com/50583262/142807180-ecbe232c-856f-4893-8c89-4fadba748b97.gif)
+
 - 태그 기반으로 비슷한 유형의 게시글 렌더링
-    
+![추천리뷰](https://user-images.githubusercontent.com/50583262/142807203-7b1a5134-621a-4996-bf54-725b1bd3b013.gif)
+
+
 ## 기술 스택
 
 - HTML, CSS JavaScript
