@@ -3,7 +3,7 @@ const { Router } = require('express');
 const {
   writeReview,
   sendReviewAndRelatedReviews,
-  sendFilterdReviews,
+  sendFilteredReviews,
   changeLikes,
   createComment,
   deleteOrUpdateComment,
@@ -29,7 +29,7 @@ reviewRouter.get('/:id([0-9]+)', (req, res) => {
   });
 });
 
-reviewRouter.get('/sort', sendFilterdReviews);
+reviewRouter.get('/sort', sendFilteredReviews);
 
 reviewRouter.post('/:id([0-9]+)', createComment);
 
